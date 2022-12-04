@@ -141,7 +141,7 @@ Le espressioni logiche condizionali coinvolgono gli operatori logici AND e OR,
 il tipo di ritorno dell'espressione è booleano il cui valore è il risultato dell'operazione logica.
 \begin{enumerate}
     \item AND \verb|<booleano> && <booleano>|
-    \item OR \verb|<booleano> || <booleano>|
+    \item OR \verb=<booleano> || <booleano>=
 \end{enumerate}
 
 Le espressioni logiche condizionali cercano di valutare il minimo possibile per ottimizzare i controlli.
@@ -153,7 +153,7 @@ Le espressioni logiche binarie sono simili alle espressioni logiche condizionali
 entrambi gli operandi
 \begin{enumerate}
     \item AND \verb|<booleano> & <booleano>|
-    \item OR \verb|<booleano> | <booleano>|
+    \item OR \verb=<booleano> | <booleano>=
     \item XOR \verb|<booleano> ^ <booleano>|
     \item NOT \verb|!<booleano>|
 \end{enumerate}
@@ -227,7 +227,7 @@ mappatura dei giocatori è la seguente
 \[
 \begin{cases}
     r \% P  & r >= 0 \\
-    (P = |r| \% P) \% P & r < 0
+    (P - |r| \% P) \% P & r < 0
 \end{cases}
 \] 
 Dove:
@@ -237,6 +237,23 @@ Dove:
     \item \%: è l'operatore modulo
 \end{itemize}
 
+\subsubsection{Ordine di precedenza}
+L'ordine standard (senza modificatori di precedenza) di valutazione delle espressioni è il seguente:
+\begin{enumerate}
+    \item Espressioni d'istanziazione
+    \item Espressioni di chiamata
+    \item Espressioni di accesso
+    \item Espressioni matematiche
+    \item Espressioni giocatore
+    \item Espressioni di confronto
+    \item Espressioni di uguaglianza 
+    \item Espressioni logiche binarie 
+    \item Espressioni logiche condizionali 
+\end{enumerate}
+Se non specificato altrimenti le espressioni all'interno di una stessa categoria 
+si risolvo da sinistra verso destra. \\
+Qualsiasi espressione può essere inserita all'interno di parentesi tonde per aumentare 
+la priorità di valutazione, la valutazione partirà delle espressioni maggiormente innestate.
 
 \newpage
 \subsection{Istruzioni}
