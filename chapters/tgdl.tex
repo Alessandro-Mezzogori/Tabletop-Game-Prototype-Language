@@ -1,0 +1,274 @@
+\section{Nozioni Fondamentali}
+
+\subsection{Identificatori}
+Gli Identificatori sono una qualsiasi stringa di caratteri che inizia per un trattino basso "\_" o 
+per lettera, opzionalmente seguiti da un qualsiasi ammontare di lettere o numeri senza spazi.
+
+\subsection{Blocchi}
+I Blocchi sono un insieme struttura d'istruzioni, tag e altri blocchi.
+Un blocco si definisce come tutto il contenuto all'interno di una coppia di parentesi graffe,
+rispettivamente aperta e chiusa. 
+\\
+Il blocco definire l'ambito, o scope, e vita di una variabile definita al suo interno ovvero
+il suo campo d'azione che parte dall riga dov'è stata dichiarata fino alla fine del blocco 
+che contiene la sua dichiarazione.
+\\
+La Visibilità di una variabile si estende a tutti gli ambiti figli del blocco di dichiarazione, 
+dove figlio significa definito all'interno del padre (annidato).
+
+ 
+\subsection{Tags}
+I Tag sono delle parole chiave riservate che modificano il comportamento del blocco associato, 
+ogni tag descrive cosa è permesso definire al suo interno.
+All'interno della proposta è possibile che si trovi la dicitura "blocco <tag>" come abbreviazione
+per indicare la coppia tag e relativo blocco associato.
+
+ 
+\subsection{Commenti}
+I commenti sono linee di codice che vengono ignorare durante l'esecuzione del programma, 
+per commentare una riga è sufficiente inserire una doppia barra "//", qualsiasi scritta oltre 
+le due barre è considerata parte del commento.
+
+\section{Primitive del linguaggio}
+Tabletop Game Description Language si basa su un insieme di primitive da cui sono costruire tutte 
+le funzionalità del linguaggio.
+
+ 
+\subsection{Oggetti}
+Un oggetto è un'istanza di una certa classe, un blocco di memoria che viene allocato e configurato secondo
+le specifiche definite dalla classe. \\
+Gli oggetti hanno due comportamenti principali, gli oggetti valori e gli oggetti riferimento:
+\\
+Oggetti valore o Value objects, si riferiscono direttamente al valore, quando avviene una copia dell'oggetto
+viene creata una nuova istanza della stessa tipologia di oggetto che contiene lo stesso valore.
+Il comportamento degli oggetti valore è principalmente per i tipi primitivi come number, string, bool.
+\\
+Oggetti riferimento o Reference objects si riferiscono al blocco di memoria che gli è stato allocato,
+segue che quando un reference object è copiato in una nuova variabile, nel nuovo oggetto si copierà 
+il riferimento alla zona di memoria a cui l'oggetto originale si riferisce, evitando di allocare una
+nuova zona di memoria. 
+\\
+Una conseguenza importante del meccanismo dei riferimenti è che qualsiasi cambiamento effettuato su un
+oggetto riferimento sarà rispecchiato da tutti gli altri reference objects che possiedono lo stesso riferimento
+al blocco di memoria
+
+\newpage
+\subsection{Tipi primitivi}
+I tipi primitivi sono degli oggetti valore particolari che rappresentano i valori puri del linguaggio come
+i numeri, le stringhe di testo, i valori booleani.
+
+\subsubsection{Numeri}
+I numeri sono rappresentati dal tipo primitivo "number" che accoglie un qualsiasi numero tale che
+sia compreso tra \( \pm5.0*1-^{-324} \) e \(\mp 1.7*10^308\) con una precisione tra le 15 e le 17
+cifra, il tipo number equivale al tipo double presente in linguaggi come C, C\#, ecc...
+
+\subsubsection{Stringa}
+Il tipo stringa, o string, rappresenta una qualsiasi successione di caratteri codificata in UTF-16, 
+non ha una lunghezza massima predefinita.
+I valori string sono immutabili (ovvero non è modificabile), quando si eseguono delle espressioni
+che andrebbero a modificare il valore di una stringa, viene instanziata una nuova stringa con il valore
+modificato.
+
+\subsubsection{Booleano}
+Il tipo booleano, o bool, rappresenta una decisione binaria vera o false.
+Le variabili di tipo booleano dunque possono assumere due singoli valori rispettivamente 
+rappresentati dalle parole chiave "true" per il valore vero e "false" per il valore falso.
+
+\subsubsection{Null}
+Il valore null non è un tipo primitivo in se ma serve per indicare l'assenza del valore in una variabile,
+Ogni tipo può assumere il valore null.
+
+\newpage
+ 
+\subsection{Espressioni}
+Una espressione è una qualsiasi operazione che coinvolge zero o più operatori e uno o più operandi 
+(o espressioni) che può essere valutata all’interno del linguaggio. \\
+Ogni espressione ha un tipo di ritorno che indica il tipo dell’oggetto che sarà restituito dopo la valutazione 
+dell’espressione. \\
+Gli operatori sono predefiniti e si possono trovare tutti nella lista di definizione degli operatori. \\
+Le espressioni vengono classificate in base al tipo di ritorno o al numero di operatori.
+\\
+Nella definizione delle espressioni con il tipo del valore si intende una qualsiasi espressione che ritorna 
+un oggetto dello stesso tipo.
+
+\subsubsection{Espressioni letterali}
+Un’espressione letterale è un qualsiasi valore puro di un tipo primitivo (number, string, bool). \\
+Seguono alcuni esempi di espressioni letterali separata dalla virgola: 1, 0.2, “ciao mondo”, true, false
+
+\subsubsection{Espressioni matematiche}
+Un'espressione matematica è una qualsiasi operazione che coinvolge gli operatori matematici,
+hanno come tipo di ritorno il tipo number
+\\
+le seguenti sono tutte espressioni matematiche:
+\begin{itemize}
+    \item Addizione \verb|<numero> + <numero>|
+    \item Sottrazione \verb|<numero> - <numero>|
+    \item Prodotto \verb|<numero> * <numero>|
+    \item Divisione \verb|<numero> / <numero>|
+    \item Potenza \verb|<numero> ^ <numero>|
+    \item Modulo \verb|<numero> % <numero>|
+\end{itemize}
+l'ordine di precedenza per la valutazione segue quello matematico:
+\begin{enumerate}
+    \item Potenza
+    \item Prodotto, divisione e Modulo
+    \item Addizione e Sottrazione
+\end{enumerate}
+
+\subsubsection{Espressioni di confronto}
+Le espressioni di confronto coinvolgono gli operatori di maggioranza e minoranza, stretta e larga,
+il tipo di ritorno dell'espressione è un booleano il cui valore è il risultato del confronto.
+\begin{itemize}
+    \item Minore di \verb|<espressione> < <espressione>|
+    \item Maggiore di \verb|<espressione> > <espressione>|
+    \item Minore uguale di \verb|<espressione> <= <espressione>|
+    \item Maggiore uguale di \verb|<espressione> >= <espressione>|
+\end{itemize}
+
+\subsubsection{Espressioni di uguaglianza}
+Le espressioni di uguaglianza coinvolgono gli operatori di uguaglianza, 
+il tipo di ritorno dell'espressione è booleano il cui valore è il risultato dell'uguaglianza. 
+\\
+Come per le espressioni di confronto, il tipo delle due espressioni operandi deve essere il medesimo
+per avere una espressione di uguaglianza legale.
+\begin{itemize}
+    \item Uguale a \verb|<espressione> == <espression>|
+    \item Diverso da \verb|<espressione> != <espression>|
+\end{itemize}
+
+\subsubsection{Espressioni logiche condizionali}
+Le espressioni logiche condizionali coinvolgono gli operatori logici AND e OR,
+il tipo di ritorno dell'espressione è booleano il cui valore è il risultato dell'operazione logica.
+\begin{enumerate}
+    \item AND \verb|<booleano> && <booleano>|
+    \item OR \verb|<booleano> || <booleano>|
+\end{enumerate}
+
+Le espressioni logiche condizionali cercano di valutare il minimo possibile per ottimizzare i controlli.
+Se una espressione si rivela vera o falsa alla valutazione del primo operando l'operazione non 
+valuterà il secondo operando ma ritornerà direttamente il corrispettivo risultato.
+
+\subsubsection{Espressioni logiche binarie}
+Le espressioni logiche binarie sono simili alle espressioni logiche condizionali ma valutano sempre
+entrambi gli operandi
+\begin{enumerate}
+    \item AND \verb|<booleano> & <booleano>|
+    \item OR \verb|<booleano> | <booleano>|
+    \item XOR \verb|<booleano> ^ <booleano>|
+    \item NOT \verb|!<booleano>|
+\end{enumerate}
+
+\subsubsection{Espressioni di accesso}
+Le espressioni di accesso permettono d'interagire con i valori contenuti all'interno delle variabili.
+In base all'espressione si accederà a tipologie di oggetti diversi.
+
+\begin{itemize}
+    \item 
+    {
+        Accesso a membro: \verb|<oggetto>.<membro>| utilizza operatore di accesso \verb|.| per accedere
+        al valore di uno specifico membro di un oggetto.
+        Il tipo di ritorno dell'espressione è il tipo del membro a cui si sta accedendo.
+    }
+    \item 
+    {
+        Accesso tramite indice: \verb|<lista>[<numero>]| utilizza l'operatore di accesso tramite indice
+        \verb|[<numero>]| per accedere allo specifico indice della lista definito dall'numero all'interno
+        dell'operatore, ha come tipo di ritorno lo stesso tipo degli oggetti della lista.
+    }
+    \item 
+    {
+        Accesso a variabile: \verb|<identificatore>| l'identificatore unico deve appartenere ad variabile
+        per poter essere legale. Accede al valore contenuto nella variabile, il tipo di ritorno dell'espressione
+        è lo stesso tipo della variabile a cui si sta accedendo
+    }
+\end{itemize}
+
+\subsubsection{Espressione tipo}
+Le espressioni tipo o type expression, sono tutte quelle espressioni che si occupano della 
+gestione dei tipi degli oggetti:
+\begin{itemize}
+    \item
+    {
+        Controllo del tipo: \verb|<oggetto> is <tipo>| controlla se l'oggetto è del tipo richiesto.
+        L'espressione ha come tipo di ritorno un valore booleano cui valore corrisponde il risultato del controllo:
+        vero se l'oggetto è del tipo richiesto, falso altrimenti.
+    }
+    \item 
+    {
+        Conversione del tipo, type casting: \verb|<oggetto> as <tipo>| il type casting é utilizzato
+        per convertire un oggetto in un oggetto di tipo diverso, il tipo di ritorno é lo stesso del tipo richiesto.
+        Nel caso la conversione sia ammissibile l'espressione ristornerà il nuovo oggetto con il tipo prestabilito,
+        in caso contrario sarà ritornato un valore nullo.
+    }
+\end{itemize}
+
+\subsubsection{Espressioni d'istanziazione}
+L'espressione d'istanziazione \verb|new <tipo>()| è usata per creare una nuova istanza del tipo
+richiesto, il tipo di ritorno corrisponde al tipo richiesto.
+\\
+L'istanziazione di un oggetto può essere seguita da una lista d'inizializzazione per popolare 
+velocemente con dei valori il nuovo oggetto.
+
+\subsubsection{Espressione di chiamata}
+L'espressione di chiamata è utilizzata per chiamare l'esecuzione di una funzione 
+con degli specifici argomenti definiti nella lista degli argomenti.
+Il tipo di ritorno dell'espressione corrisponde al tipo di ritorno della funzione.
+
+\subsubsection{Espressione giocatore}
+Una espressione giocatore, o player expression, è un espressione speciale utilizzata per ritornare 
+un oggetto giocatore. 
+\\
+Gli oggetti giocatori sono identificati tramite un numero partendo da zero fino al numero di giocatori meno uno,
+questi identificatore numerici possono essere utilizzati all'interno delle espressioni giocatore, che equivale 
+a una espressione matematica il cui risultato è ristretto per poter essere mappato a un giocatore.
+\\
+La funzione che si occupa di riportare il risultato dell'espressione matematica nell'intervallo di 
+mappatura dei giocatori è la seguente
+\[
+\begin{cases}
+    r \% P  & r >= 0 \\
+    (P = |r| \% P) \% P & r < 0
+\end{cases}
+\] 
+Dove:
+\begin{itemize}
+    \item r: è il risultato dell'equivalente espressione matematica
+    \item P: è il numero di giocatori
+    \item \%: è l'operatore modulo
+\end{itemize}
+
+
+\newpage
+\subsection{Istruzioni}
+Tutte le operazioni matematiche sono scrivibili in maniera contratta se si assegna 
+vuole assegnare il loro risultato a una variabile mettendo l’operatore come 
+prefisso all’operatore di assegnamento (=).
+\newpage
+ 
+\section{Classi}
+
+ 
+\subsection{Attributi}
+
+\subsection{Visibilità}
+
+\subsection{Azioni}
+
+\section{Eventi}
+
+\section{Funzioni}
+
+\section{Interactables}
+
+\section{Mazzi}
+
+\section{Giocatori}
+
+\section{Boards}
+
+\section{Ereditarietà}
+
+
+
+
+

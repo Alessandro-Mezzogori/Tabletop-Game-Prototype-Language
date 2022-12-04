@@ -1,0 +1,86 @@
+\documentclass[12pt, oneside]{report}
+%\documentclass[12pt, twoside]{report}
+%TODO Ricordarsi di stampare con l'opzione twoside
+
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\graphicspath{"images/"}
+
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\usepackage{amsmath}
+
+%Custom header and foot
+%TODO Ricordarsi di utilizzare durante la stampa conl'opzione twoside
+%\fancyhead{}
+%\fancyhead[RO, LE]{Proposta sulla descrizione logica  di generici giochi da tavolo}
+%\fancyfoot{}
+%\fancyfoot[LE, RO]{\thepage}
+%\fancyfoot[LO, CE]{Capitolo \thechapter}
+%\fancyfoot[CO, RE]{Alessandro Mezzogori}
+
+\fancyhead{}
+\fancyhead[RO]{Proposta sulla descrizione logica  di generici giochi da tavolo}
+\fancyfoot{}
+\fancyfoot[RO]{\thepage}
+\fancyfoot[LO]{Capitolo \thechapter}
+\fancyfoot[CO]{Alessandro Mezzogori}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\headheight}{15pt}
+\addtolength{\topmargin}{-2.5pt}
+
+
+%Italian specific commands
+\usepackage[Italian]{babel}
+%-------------------------
+
+%After page command, blank page
+\newcommand{\blankpage}{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+}
+%------------------------------
+
+% Babel configuration 
+\addto\captionsitalian{ 
+    \renewcommand{\contentsname}{Sommario}
+}
+%------------------------------
+
+\title{
+    {Proposta sulla descrizione logica  di generici giochi da tavolo} \\
+    {\large Università di Modena e Reggio} \\
+}
+\author{Alessandro Mezzogori}
+\date{Domenica 4 Dicembre 2022}
+
+
+
+\begin{document}
+
+\maketitle
+\blankpage
+\tableofcontents
+
+\chapter{Introduzione}
+\input{chapters/introduzione.tex}
+
+\chapter{Game Description Language}
+\input{chapters/gdl.tex}
+
+\chapter{Tabletop Game Description Language}
+\input{chapters/tgdl.tex}
+
+\chapter{Conclusione}
+\input{chapters/conclusione.tex}
+
+\end{document}
