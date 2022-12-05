@@ -450,8 +450,8 @@ Se non specificato, il giocatore bersaglio di default dipende dalla visibilità 
 \end{itemize}
 
 \paragraph{Modificatore auto}
-Il modificatore auto o automatico non necessita di nessun input, il programma ha la responsabilitá di
-filtrare tutte le istanzi accettabili popolando la variabile definita dall'input. \\
+Il modificatore auto o automatico non necessita di nessun input, il programma ha la responsabilità di
+filtrare tutte le Istanza accettabili popolando la variabile definita dall'input. \\
 Possono presentarsi dei fallimenti inattesi nel caso l'input non sia opzionale,
 non si tratti di una lista e nessuna istanza soddisfi i filtri.
 
@@ -469,6 +469,25 @@ Gli input non opzionali garantiscono che forniranno dei valori non nulli oppure 
 \section{Eventi}
 
 \section{Funzioni}
+Le funzioni sono utilizzate per raggruppare e riutilizzare facilmente un insieme d'istruzioni 
+su uno specifico set d'input. \\ 
+Sono definite tramite il tag \verb|function <identificatore> <blocco funzione>|
+
+\subsubsection{Argomenti}
+Gli input funzionano esattamente come gli input delle azioni di una classe ma è 
+possibile definire un ulteriore tipologia d'input chiamata input della funzione,
+tramite il modificatore \verb|function|. \\
+Il modificatore obbliga a fornire tutti gli input che non possiedono un valore di default,
+ovvero che sono stati assegnati un valore null, quando si chiama la funzione.
+
+\subsubsection{Effetto}
+È equivalente al blocco effetto di un’azione. 
+In una funzione è possibile definire un solo blocco effetto.
+
+\subsubsection{Ritorno}
+Il tag di ritorno \verb|returns [<type>];| é un tag obbligatorio speciale non associato ad un blocco. \\
+Definisce il tipo di ritorno della funzione, nel caso non si ritorni nessun tipo é possibile 
+fornire il tag omettendo il tipo.
 
 \section{Interactables}
 
