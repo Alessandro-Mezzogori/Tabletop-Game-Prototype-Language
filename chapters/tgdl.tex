@@ -216,6 +216,14 @@ richiesto, il tipo di ritorno corrisponde al tipo richiesto.
 L'istanziazione di un oggetto può essere seguita da una lista d'inizializzazione per popolare 
 velocemente con dei valori il nuovo oggetto.
 
+\subsubsection{Espressione d'assegnamento}
+Sintassi: \verb|<espressione di accesso> = <espressione>;| \\
+L'espressione di assegnamento è utilizzata per assegnare il risultato di un espressione
+a una variabile, attributo o a uno specifico indice di una lista. \\
+Per avere un espressione di assegnamento legale è necessario che i tipi di ritorno
+delle due espressioni siano gli stessi. \\
+Il tipo di ritorno dell'espressione è nullo.
+
 \subsubsection{Espressione di chiamata}
 L'espressione di chiamata è utilizzata per chiamare l'esecuzione di una funzione 
 con degli specifici argomenti definiti nella lista degli argomenti.
@@ -266,7 +274,8 @@ la priorità di valutazione, la valutazione partirà delle espressioni maggiorme
 \subsection{Istruzioni}
 Le istruzioni, o statements, sono i macro comandi del linguaggio, ovvero una combinazione 
 di clausole ed espressioni usate per adempire a un compito preciso.
-Una definizione di dichiarazione finisce sempre con un punto e virgola \verb|;|
+Le istruzioni devono terminare con il carattere \verb|;|, ma nel caso sia possibile definire
+un blocco d'istruzioni associato è possibile omettere il \verb|;|
 
 \subsubsection{Istruzione di ritorno}
 Sintassi:   \verb|return [<espressione>];| \\
@@ -276,9 +285,77 @@ restituendo (o no) un risultato in base al tipo di ritorno della funzione. \\
 Il risultato restituito proviene dalla valutazione della espressione definita nella istruzione,
 nel caso si abbia un tipo di ritorno senza tipo bisogna omettere la espressione.
 
+\subsubsection{Istruzione espressione}
+Sintassi: \verb|<espressione>;| \\
+l'istruzione espressione, o expression statement, serve per eseguire una certa espressione; 
 
+
+\subsubsection{Istruzione di dichiarazione}
+Sintassi: \verb|<tipo> <identificatore> = <espressione>;| \\
+L'istruzione di dichiarazione è utilizzata per definire delle nuove variabili del tipo 
+richiesto e inizializzate con il risultato dell'espressione alla destra dell'operatore d'assegnamento. \\
+Le variabili dichiarate sono utilizzabili dopo la loro dichiarazione tramite l'identificatore, ovvero
+tramite una espressione di accesso. 
+
+\subsubsection{Istruzione di selezione}
+Sintassi: \verb|if(<espressione booleana>) <blocco istruzioni>| \\
+L'istruzione di selezione è utilizza per selezionare se eseguire o no il blocco d'istruzioni
+associato, rispettivamente se la valutazione della espressione booleana abbia esito vero o falso.
+
+\subsubsection{Istruzione Else}
+Sintassi \verb|else <blocco istruzioni>|. \\
+L'istruzione else permette di eseguire il blocco d'istruzioni associato quando l'espressione
+di selezione precedente sia risultata false. \\
+Una istruzione else è usabile solo direttamente successivamente a una istruzione di selezione.
+
+\subsubsection{Istruzione Else if}
+Sintassi: \verb|else if(<espressione booleana>) <blocco istruzioni>| \\
+L'istruzione else if equivale all'unione di un istruzione else e un Istruzione if poiché 
+eseguirà il blocco d'istruzioni associato solamente se l'espressione booleana della 
+istruzione precedente ha avuto esito falso e se il risultato della espressione booleana 
+dell'istruzione else if ha esito vero. \\
+Come per l'istruzione else è possibile definirla solo direttamente successivamente a un Istruzione 
+di selezione, è possibile concatenare molteplici else if poiché considerata anch'essa come 
+istruzione di selezione.
+
+\subsubsection{Istruzione while}
+Sintassi: \verb|while(<espressione boolena>) <blocco istruzioni>| \\
+L'istruzione while fa parte della categoria delle istruzioni di ciclo, viene usata per ripetere
+il blocco d'istruzioni associato fino a che l'espressione booleana, valutata precedentemente a ogni 
+esecuzione del blocco, non risulti falsa.
+
+\subsubsection{Istruzione for}
+Sintassi: \verb|for([<espressione> | <istruzione di dichiarazione>]; [<espressione booleana>]; [<espressione>]) <blocco istruzioni>| \\
+L'istruzione for é un altro modo per creare cicli, utilizzata principalmente come abbreviazione
+dell'istruzione while. \\
+Si divide in tre parti principali:
+\begin{enumerate}
+    \item {
+        Inizializzazione: è un espressione che viene valutata una volta all'inizio del ciclo, \\
+        é legale definire al posto di un espressione una istruzione di dichiarazione
+        (la variabile dichiarata avrà come ambito il blocco dell'istruzione for).
+    }
+    \item { 
+        Espressione di controllo: definisce se continuare a eseguire il ciclo se risulta vera 
+        o terminarlo se risulta falsa. \\
+        Se omessa verrà preso come default l'espressione letterale \verb|true| creando un ciclo infinito.
+    }
+    \item {
+        Espressione post ciclo: è un espressione che viene valutata dopo l'esecuzione del blocco di istruzinoi 
+        del ciclo ma prima della valutazione della espressione di controllo.
+    }
+\end{enumerate}
+
+\subsubsection{Istruzione continue}
+Sintassi: \verb|continue;|
+L'istruzione continue avvia una nuova iterazione dell'istruzione di ciclo più vicina che la racchiude.
+
+\subsubsection{Istruzione break}
+Sintassi: \verb|break;|
+L'istruzione break termina l'istruzione di ciclo più vicina che la racchiude.
 
 \section{Classi}
+
 
 
 
