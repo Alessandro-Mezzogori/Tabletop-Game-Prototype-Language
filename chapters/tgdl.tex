@@ -4,6 +4,13 @@
 Gli Identificatori sono una qualsiasi stringa di caratteri che inizia per un trattino basso "\_" o 
 per lettera, opzionalmente seguiti da un qualsiasi ammontare di lettere o numeri senza spazi.
 
+Un identificatore per essere legale deve essere unico all'interno del suo ambito di Visibilità,
+questo significa che deve essere diverso sia dagli altri identificatori ma anche da operatori e clausole.  
+
+\subsection{Operatore e Clausole}
+Gli operatori e le clausole sono delle parole chiave o simboli riservati che permettono rispettivamente
+la costruzione delle espressioni e delle istruzioni.
+
 \subsection{Blocchi}
 I Blocchi sono un insieme struttura d'istruzioni, tag e altri blocchi.
 Un blocco si definisce come tutto il contenuto all'interno di una coppia di parentesi graffe,
@@ -257,12 +264,23 @@ la priorità di valutazione, la valutazione partirà delle espressioni maggiorme
 
 \newpage
 \subsection{Istruzioni}
-Tutte le operazioni matematiche sono scrivibili in maniera contratta se si assegna 
-vuole assegnare il loro risultato a una variabile mettendo l’operatore come 
-prefisso all’operatore di assegnamento (=).
-\newpage
- 
+Le istruzioni, o statements, sono i macro comandi del linguaggio, ovvero una combinazione 
+di clausole ed espressioni usate per adempire a un compito preciso.
+Una definizione di dichiarazione finisce sempre con un punto e virgola \verb|;|
+
+\subsubsection{Istruzione di ritorno}
+Sintassi:   \verb|return [<espressione>];| \\
+L’istruzione di ritorno è utilizzata per finire l’esecuzione di un effetto,
+ritornando il controllo al codice che ha chiamato la funzione,
+restituendo (o no) un risultato in base al tipo di ritorno della funzione. \\
+Il risultato restituito proviene dalla valutazione della espressione definita nella istruzione,
+nel caso si abbia un tipo di ritorno senza tipo bisogna omettere la espressione.
+
+
+
 \section{Classi}
+
+
 
  
 \subsection{Attributi}
