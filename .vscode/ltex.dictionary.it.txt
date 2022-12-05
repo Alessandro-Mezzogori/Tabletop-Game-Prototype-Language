@@ -34,3 +34,5 @@ function
 action
 class
 block
+Triggers
+Inputs
