@@ -416,7 +416,55 @@ limitate a una sola istanza in tutto il programma. \\
 Tutti i giocatori possono accedere alle azioni delle classi globali.
 
 \subsection{Azioni}
-Le azioni rappresentano cosa possono fare i giocatori durante il corso del gioco. \\
+Le azioni rappresentano cosa possono fare i giocatori durante il corso del gioco, possono essere avviate
+automaticamente all'avvenire di certi eventi oppure invocate tramite un espressione di chiamata.\\
+Un'azione é definita all'interno di una classe tramite il relativo tag \verb|action <identificatore> <blocco azione>|.
+
+\subsubsection{Argomenti dell'azione}
+\begin{verbatim}
+[optional] [<modificatore>] input <tipo> <identificatore> [<filtro>]
+\end{verbatim}
+Gli argomenti o inputs di un’azione sono dei tag speciali che servono per definire delle variabili 
+inizializzate in base alla tipologia dell’argomenti e utilizzate all’interno dei 
+blocchi effetto di un’azione. \\
+La tipolgoia dell'input é definita dal suo modificatore che ne influenza il comportamento, 
+i due principali sono:
+
+\paragraph{Modificatore giocatore}
+Sintassi: \verb|player [<espressione giocatore>]| \\
+Detto anche modificatore player, è il default in caso di omissione del modificatore nella
+dichiarazione di un input. \\
+Un input con il modificatore giocatore chiede direttamente al giocatore bersaglio di 
+selezionare i valori con cui popolare l'input. \\
+Se non specificato, il giocatore bersaglio di default dipende dalla visibilità della classe:
+\begin{itemize}
+    \item Locale: il giocatore bersaglio è il proprietario della classe
+    \item Globale: il giocatore bersaglio é il giocatore attivo 
+    \item {
+        Gruppo, si hanno due casi:
+        \begin{itemize}
+            \item Se il giocatore attivo fa parte del gruppo sará utilizzato come giocatore bersaglio
+            \item Se il giocatore attivo non fa parte del gruppo, un giocatore a caso sará utilizzato come giocatore bersaglio
+        \end{itemize}
+    }
+\end{itemize}
+
+\paragraph{Modificatore auto}
+Il modificatore auto o automatico non necessita di nessun input, il programma ha la responsabilitá di
+filtrare tutte le istanzi accettabili popolando la variabile definita dall'input. \\
+\bold{Attenzione: } possono presentarsi dei fallimenti inattesi nel caso l'input non sia opzionale,
+non si tratti di una lista e nessuna istanza soddisfi i filtri.
+
+\paragraph{Opzionale}
+La parola chiave opzionale é un modificatore opzionale che permette alla variabile definita dall'input
+di assumere valore nullo quando l'input inizializza la variabile. \\ 
+Gli input non opzionali garantiscono che forniranno dei valori non nulli oppure l'azione non sarà eseguita
+
+\subsubsection{Filtri degli input}
+
+\subsubsection{Effetti}
+\subsubsection{Requisiti}
+\subsubsection{Triggers}
 
 \section{Eventi}
 
