@@ -29,3 +29,8 @@ if
 while
 for
 break
+attribute
+function
+action
+class
+block

@@ -15,6 +15,42 @@
 
 \usepackage{amsmath}
 
+% Custom listing 
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+
+\iffalse
+\lstdefinelanguage{TGDL}
+{
+    % list of keywords
+    morekeywords={
+        return, break, continue,
+        if, else, else if,
+        number, string, bool, player,
+        function, class, action,
+        effect, trigger, require, phase,
+        true, false,
+        this, attribute, returns, default,
+        interactable
+    },
+    sensitive=false,
+    morecomment=[l]{//},
+    morestring=[b]",
+    morestring=[b]',
+}
+
+\lstset{
+    language=TGDL,
+    numbers=none,
+    number:wstyle=\color{Purple},
+    keywordstyle=\color{Aquamarine},
+    commentstyle=\color{ForestGreen},
+    stringstyle=\color{Bittersweet},
+    tabsize=3
+}
+\fi
+
+
 %Custom header and foot
 %TODO Ricordarsi di utilizzare durante la stampa conl'opzione twoside
 %\fancyhead{}

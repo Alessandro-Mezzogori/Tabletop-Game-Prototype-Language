@@ -356,16 +356,67 @@ Sintassi: \verb|break;|
 L'istruzione break termina l'istruzione di ciclo più vicina che la racchiude.
 
 \section{Classi}
+Sintassi: \verb|<visibilità> class <identificatore> <blocco classe>|
+Una classe é utilizzata per definire un insieme di dati correlati, detti attributi, e di 
+comportamenti che li modificano.
 
+All'interno del blocco associato, detto blocco della classe o class block sono definibili
+solamente i seguenti tag:
+\begin{itemize}
+    \item attribute
+    \item function
+    \item action
+\end{itemize}
+Nel blocco è possibile riferirsi all'istanza stessa dell'oggetto tramite 
+la parola chiave \verb|this|.
 
-
-
- 
 \subsection{Attributi}
+Un attributo è una variabile associata alla class in cui é dichiarato, il valore in se della 
+variabile é legato all'oggetto ovvero all'istanza della classe. \\
+Per definire un attribute si utilizza il tag \verb|attribute| come nella seguente sintassi:
+\begin{verbatim}
+attribute <identificatore>
+{
+    returns <tipo>;     // definisce il tipo dell'attributo
+    default {           // definisce il valore di prima inizializzazione dell'attributo
+        returns <expressione di tipo>;
+    }
+}
+\end{verbatim}
+Essendo una sintassi prolissa, si offre un alternativa sintattica tramite l'utilizza
+delle istruzioni di dichiarazione e inizializzazione.
+\begin{verbatim}
+<tipo> <identificatore> = <default>; 
+\end{verbatim}
 
 \subsection{Visibilità}
+La visibilità di una classe definisce il suo comportamento e l'assegnamento rispetto al giocatore.
+
+\subsubsection{Visibilità locale}
+La visibilità locale o \verb|local| è considerata il default, ovvero se utilizzata se non è specificato
+altrimenti, possono esistere molteplici istanze di una classe locale create tramite l'espressione di istanziazione. \\
+In generale le classi locale servono per definire i ruoli, con le loro azioni, che i giocatori possono
+intraprendere nel corso della partita. \\
+Quando si assegna un'Istanza di una classe locale a un giocatore, il giocatore precedente perde la proprietà dell'istanza
+concedendola al giocatore assegnato.
+
+\subsubsection{Visibilità di gruppo}
+La visibilità di gruppo o \verb|group| è utilizzata per specificare delle classi le cui istanze possono
+essere condivise tra molteplici giocatori, cui possono accedere a le azioni fornite dalla classe come 
+se fosse di loro proprietà. \\
+Come  per le classi a visibilità locale si possono creare molteplici istanze tramite l'espressione di istanziazione. \\
+Il principale utilizzo di una classe di gruppo é per creare dei gruppi di giocatori che abbiano
+azioni e attributi comuni. \\
+Quando si assegna un giocatore a una istanza di una classe di gruppo non avviene nessun trasferimento
+di proprietà, ma si aggiunge all'insieme di giocatori che la condividono.
+
+\subsubsection{Visibilità globale}
+La visibilità globale o \verb|global| è utilizzata per specificare delle classi che sono 
+limitate a una sola istanza in tutto il programma. \\
+Tutti i giocatori possono accedere alle azioni delle classi globali.
 
 \subsection{Azioni}
+Le azioni rappresentano cosa possono fare i giocatori durante il corso del gioco. \\
 
 \section{Eventi}
 
