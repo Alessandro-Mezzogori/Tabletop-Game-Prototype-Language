@@ -504,8 +504,27 @@ istruzione di ritorno (il blocco di un filtro necessita di una istruzione di rit
 Per riutilizzare i filtri il modo consigliato è racchiudere la logica di decisione dentro una funzione
 che viene chiamata da dentro i filtri. 
 
-\subsubsection{Effetti}
+\subsubsection{Effetto}
+\begin{verbatim}
+effect <blocco istruzioni>
+\end{verbatim} 
+Il tag effetto identifica il blocco d'istruzioni che viene avviato quando i triggers della azione sono 
+soddisfatti. \\
+In un blocco effetto non è possibile definire l'istruzione di ritorno poiché l'azione è trattata come 
+una funzione senza tipo di ritorno, inoltre é possibile definire solo un tag effetto all'interno 
+di una stessa azione.
+
 \subsubsection{Requisiti}
+\begin{verbatim}
+require <blocco istruzioni> 
+\end{verbatim}
+I tag requisito di un azione vengono utilizzati per disabilitare la possibilità di avviare 
+l'azione tramite i triggers o istruzione di chiamata ( nel caso l'azione sia 
+disabilitata la chiamata non fallirá ma non avrà nessun effetto). \\
+I blocchi requisito come i blocchi filtro necessitano di un valore di ritorno booleano che indica 
+se l'azione è attiva o disabilitata, se sono presenti più di un tag requisito il risultato finale
+è composto da l'AND logico tra tutti i risultati dei blocchi requisito.
+
 \subsubsection{Triggers}
 
 \section{Eventi}
