@@ -422,7 +422,7 @@ Un'azione é definita all'interno di una classe tramite il relativo tag \verb|ac
 
 \subsubsection{Argomenti dell'azione}
 \begin{verbatim}
-[optional] [<modificatore>] input <tipo> <identificatore> [<filtro>]
+[optional] [<modificatore>] input <tipo> <identificatore> [<filtri>]
 \end{verbatim}
 Gli argomenti o inputs di un’azione sono dei tag speciali che servono per definire delle variabili 
 inizializzate in base alla tipologia dell’argomenti e utilizzate all’interno dei 
@@ -461,6 +461,48 @@ di assumere valore nullo quando l'input inizializza la variabile. \\
 Gli input non opzionali garantiscono che forniranno dei valori non nulli oppure l'azione non sarà eseguita
 
 \subsubsection{Filtri degli input}
+Un filtro di un input ha il compito di ridurre le possibili istanze selezionabili dall'input da tutte
+le istanze possibili del tipo dell'input. \\
+Esistono due modi principali per definirli:
+
+\paragraph{Intra input}
+Il metodo piú semplice per definire un tag é all'interno del blocco associato all'input.
+\begin{verbatim}
+[optional] [<modificatore>] input <tipo> <identificatore> 
+{
+    filter [<identificatore>] <blocco istruzioni>
+    filter [<identificatore>] <blocco istruzioni>
+    ...
+}
+\end{verbatim}
+È possibile semplificare ulteriormente la definizione se si ha bisogno di un solo filtro, omettendo
+il tag filter.
+\begin{verbatim}
+[optional] [<modificatore>] input <tipo> <identificatore> 
+{
+    <istruzioni>
+}
+\end{verbatim}
+I filtri sono eseguiti su ogni oggetto tracciato di quel tipo, l'oggetto corrente é utilizzabile 
+all'interno del blocco d'istruzioni tramite:
+\begin{itemize}
+    \item l'identificatore dell'input nel caso sia omesso l'identificatore del filtro
+    \item l'identificatore del filtro nel caso sia specificato
+\end{itemize}
+Il tipo della variabile dell'oggetto corrente dipende dal tipo richiesto nell'input:
+\begin{itemize}
+    \item Se l'input non è una lista allora il tipo del filtro sarà lo stesso del input 
+    \item { 
+        Se l'input è una lista allora il tipo del filtro sarà il tipo degli oggetti della lista. \\
+        Per accedere al singolo valore in filtro in questo caso è necessario definire il filtro esplicitamente.
+    }
+\end{itemize} 
+L'oggetto in esame sarà scartato o accettato in base al risultato booleano calcolato e restituito tramite 
+istruzione di ritorno (il blocco di un filtro necessita di una istruzione di ritorno per essere valido).
+
+\paragraph{Riusare i filtri}
+Per riutilizzare i filtri il modo consigliato è racchiudere la logica di decisione dentro una funzione
+che viene chiamata da dentro i filtri. 
 
 \subsubsection{Effetti}
 \subsubsection{Requisiti}

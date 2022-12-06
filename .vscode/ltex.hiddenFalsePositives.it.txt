@@ -9,3 +9,5 @@
 {"rule":"ST_01_005","sentence":"^\\QSintassi: \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q Detto anche modificatore player, è il default in caso di omissione del modificatore nella dichiarazione di un input.\\E$"}
 {"rule":"ITALIAN_WORD_REPEAT_RULE","sentence":"^\\QSe non specificato, il giocatore bersaglio rispetta le seguenti regole: Classe locale: il giocatore bersaglio è il proprietario della classe Classe globale: il giocatore bersaglio é il giocatore attivo Classe gruppo: si hanno due casi: Se il giocatore attivo fa parte del gruppo sará utilizzato come giocatore bersaglio Se il giocatore attivo non fa parte del gruppo, un giocatore a caso sará utilizzato come giocatore bersaglio\\E$"}
 {"rule":"ST_01_005","sentence":"^\\QGli input non opzionali garantiscono che forniranno dei valori non nulli oppure l'azione non sarà eseguita\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Q.\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Q[LO]Capitolo .\\E$"}
