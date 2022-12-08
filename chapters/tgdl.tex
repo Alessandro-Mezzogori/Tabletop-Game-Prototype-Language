@@ -225,9 +225,11 @@ delle due espressioni siano gli stessi. \\
 Il tipo di ritorno dell'espressione è nullo.
 
 \subsubsection{Espressione di chiamata}
-L'espressione di chiamata è utilizzata per chiamare l'esecuzione di una funzione 
-con degli specifici argomenti definiti nella lista degli argomenti.
-Il tipo di ritorno dell'espressione corrisponde al tipo di ritorno della funzione.
+Sintassi: \verb|<identificatore>(<lista argomenti>)|
+L'espressione di chiamata è utilizzata per chiamare l'esecuzione di della funzione con lo 
+stesso identificatore con degli specifici argomenti definiti nella lista degli argomenti. \\
+Il tipo di ritorno dell'espressione corrisponde al tipo di ritorno della funzione. \\
+L'espressione di chiamata è approfondita in \ref*{ChiamataFunzione}
 
 \subsubsection{Espressione giocatore}
 Una espressione giocatore, o player expression, è un espressione speciale utilizzata per ritornare 
@@ -358,8 +360,7 @@ L'istruzione break termina l'istruzione di ciclo più vicina che la racchiude.
 \section{Classi}
 Sintassi: \verb|<visibilità> class <identificatore> <blocco classe>|
 Una classe é utilizzata per definire un insieme di dati correlati, detti attributi, e di 
-comportamenti che li modificano.
-
+comportamenti che li modificano. \\
 All'interno del blocco associato, detto blocco della classe o class block sono definibili
 solamente i seguenti tag:
 \begin{itemize}
@@ -367,29 +368,34 @@ solamente i seguenti tag:
     \item function
     \item action
 \end{itemize}
-Nel blocco è possibile riferirsi all'istanza stessa dell'oggetto tramite 
-la parola chiave \verb|this|.
+Nel blocco è possibile riferirsi all'istanza stessa dell'oggetto tramite la parola chiave \verb|this|. \\
+Una certa istanza di una classe è assegnabile a un giocatore tramite la chiamata alla funzione predefinita \verb|assign(player <giocatore>)|. \\
+I comportamenti specifici durante l'assegnamento sono approfonditi in \ref*{VisibilitaClasse}
 
 \subsection{Attributi}
-Un attributo è una variabile associata alla class in cui é dichiarato, il valore in se della 
-variabile é legato all'oggetto ovvero all'istanza della classe. \\
+Un attributo è una variabile associata alla class in cui è dichiarato, il valore in se della 
+variabile è legato all'oggetto ovvero all'istanza della classe. \\
 Per definire un attribute si utilizza il tag \verb|attribute| come nella seguente sintassi:
-\begin{verbatim}
+\begin{lstlisting}
 attribute <identificatore>
 {
-    returns <tipo>;     // definisce il tipo dell'attributo
-    default {           // definisce il valore di prima inizializzazione dell'attributo
-        returns <expressione di tipo>;
-    }
+    returns <tipo>;     
+    value <expresione>;
 }
-\end{verbatim}
+\end{lstlisting}
+Dove:
+\begin{itemize}
+    \item \verb|returns|: definisce il tipo dell'attributo
+    \item \verb|value|: definisce il valore di prima inizializzazione dell'attributo tramite 
+    l'utilizzo di un espressione dello stesso tipo indicato nel \verb|returns|
+\end{itemize}
 Essendo una sintassi prolissa, si offre un alternativa sintattica tramite l'utilizza
 delle istruzioni di dichiarazione e inizializzazione.
-\begin{verbatim}
+\begin{lstlisting}
 <tipo> <identificatore> = <default>; 
-\end{verbatim}
+\end{lstlisting}
 
-\subsection{Visibilità}
+\subsection{Visibilità} \label{VisibilitaClasse}
 La visibilità di una classe definisce il suo comportamento e l'assegnamento rispetto al giocatore.
 
 \subsubsection{Visibilità locale}
@@ -418,16 +424,19 @@ Tutti i giocatori possono accedere alle azioni delle classi globali.
 \subsection{Azioni}
 Le azioni rappresentano cosa possono fare i giocatori durante il corso del gioco, possono essere avviate
 automaticamente all'avvenire di certi eventi oppure invocate tramite un espressione di chiamata.\\
-Un'azione é definita all'interno di una classe tramite il relativo tag \verb|action <identificatore> <blocco azione>|.
+Un'azione è definita all'interno di una classe tramite il relativo tag: \\
+\begin{lstlisting}
+action <identificatore> <blocco azione>
+\end{lstlisting}
 
 \subsubsection{Argomenti dell'azione}
-\begin{verbatim}
-[optional] [<modificatore>] input <tipo> <identificatore> [<filtri>]
-\end{verbatim}
-Gli argomenti o inputs di un’azione sono dei tag speciali che servono per definire delle variabili 
+\begin{lstlisting}
+[optional] [<mod>] input <tipo> <identificatore> [<filtri>]
+\end{lstlisting}
+Gli argomenti o input di un’azione sono dei tag speciali che servono per definire delle variabili 
 inizializzate in base alla tipologia dell’argomenti e utilizzate all’interno dei 
 blocchi effetto di un’azione. \\
-La tipolgoia dell'input é definita dal suo modificatore che ne influenza il comportamento, 
+La tipologia dell'input è definita dal suo modificatore (\verb|mod|) che ne influenza il comportamento, 
 i due principali sono:
 
 \paragraph{Modificatore giocatore}
@@ -463,27 +472,24 @@ Gli input non opzionali garantiscono che forniranno dei valori non nulli oppure 
 \subsubsection{Filtri degli input}
 Un filtro di un input ha il compito di ridurre le possibili istanze selezionabili dall'input da tutte
 le istanze possibili del tipo dell'input. \\
-Esistono due modi principali per definirli:
-
-\paragraph{Intra input}
-Il metodo piú semplice per definire un tag é all'interno del blocco associato all'input.
-\begin{verbatim}
+Si definiscono secondo la seguente sintassi:
+\begin{lstlisting}
 [optional] [<modificatore>] input <tipo> <identificatore> 
 {
     filter [<identificatore>] <blocco istruzioni>
     filter [<identificatore>] <blocco istruzioni>
     ...
 }
-\end{verbatim}
+\end{lstlisting}
 È possibile semplificare ulteriormente la definizione se si ha bisogno di un solo filtro, omettendo
-il tag filter.
-\begin{verbatim}
+il tag \verb|filter|.
+\begin{lstlisting}
 [optional] [<modificatore>] input <tipo> <identificatore> 
 {
     <istruzioni>
 }
-\end{verbatim}
-I filtri sono eseguiti su ogni oggetto tracciato di quel tipo, l'oggetto corrente é utilizzabile 
+\end{lstlisting}
+I filtri sono eseguiti su ogni oggetto tracciato di quel tipo, l'oggetto corrente è utilizzabile 
 all'interno del blocco d'istruzioni tramite:
 \begin{itemize}
     \item l'identificatore dell'input nel caso sia omesso l'identificatore del filtro
@@ -500,38 +506,77 @@ Il tipo della variabile dell'oggetto corrente dipende dal tipo richiesto nell'in
 L'oggetto in esame sarà scartato o accettato in base al risultato booleano calcolato e restituito tramite 
 istruzione di ritorno (il blocco di un filtro necessita di una istruzione di ritorno per essere valido).
 
-\paragraph{Riusare i filtri}
+\paragraph{Riutilizzo dei filtri}
 Per riutilizzare i filtri il modo consigliato è racchiudere la logica di decisione dentro una funzione
 che viene chiamata da dentro i filtri. 
 
 \subsubsection{Effetto}
-\begin{verbatim}
+\begin{lstlisting}
 effect <blocco istruzioni>
-\end{verbatim} 
+\end{lstlisting} 
 Il tag effetto identifica il blocco d'istruzioni che viene avviato quando i triggers della azione sono 
 soddisfatti. \\
 In un blocco effetto non è possibile definire l'istruzione di ritorno poiché l'azione è trattata come 
-una funzione senza tipo di ritorno, inoltre é possibile definire solo un tag effetto all'interno 
+una funzione senza tipo di ritorno, inoltre è possibile definire solo un tag effetto all'interno 
 di una stessa azione.
 
 \subsubsection{Requisiti}
-\begin{verbatim}
+\begin{lstlisting}
 require <blocco istruzioni> 
-\end{verbatim}
+\end{lstlisting}
 I tag requisito di un azione vengono utilizzati per disabilitare la possibilità di avviare 
-l'azione tramite i triggers o istruzione di chiamata ( nel caso l'azione sia 
-disabilitata la chiamata non fallirá ma non avrà nessun effetto). \\
+l'azione tramite i triggers o istruzione di chiamata (nel caso l'azione sia 
+disabilitata la chiamata non fallirà ma non avrà nessun effetto). \\
 I blocchi requisito come i blocchi filtro necessitano di un valore di ritorno booleano che indica 
 se l'azione è attiva o disabilitata, se sono presenti più di un tag requisito il risultato finale
 è composto da l'AND logico tra tutti i risultati dei blocchi requisito.
 
 \subsubsection{Triggers}
-\begin{verbatim}
+\begin{lstlisting}
 trigger <evento> <blocco istruzione>
-\end{verbatim}
+\end{lstlisting}
+I trigger di un azione sono i responsabili dell'avvio del flusso azione associato, 
+quando l'evento che il trigger osserva viene lanciato il blocco d'istruzioni viene eseguito; 
+nel caso si abbia un esito positivo, ovvero un valore restituito \verb|true|, 
+l'esecuzione dell'azione sarà avviata. \\
+Difatti il blocco d'istruzioni di un trigger, come i requisiti e blocchi filtro, necessita di un 
+valore di ritorno booleano per poter valutare se eseguire o no l'azione.
+
+\paragraph{Blocco trigger}
+Ogni trigger osserva un particolare evento che è accessibile nel blocco tramite la parola chiave 
+\verb|event|, usata per creare delle logiche di attivazione più sofisticate riutilizzando gli stessi eventi. \\
+
+\paragraph{Priorità dell'azione}
+L'architettura a eventi tramite i trigger introduce delle possibili condizioni di gara tra le varie azioni,
+per evitare delle esecuzioni in ordine inaspettato si introduce il concetto di priorità dell'azione. \\
+La priorità di un azione è un numero assegnato all'azione tramite la parola chiave \verb|prio <numero>|,
+le azioni cui trigger sono stati valutati a vero saranno eseguite in ordine dalla priorità maggiore
+alla priorità minore. \\
+Nel caso la priorità non sia stata definita oppure sia la stessa, si segue l'ordine di dichiarazione dell'azione.
 
 \section{Eventi}
+Gli eventi sono degli oggetti che sono lanciabili per avviare delle azioni che li osservano tramite i trigger. \\
+Un evento é definibile tramite la seguente sintassi
+\begin{lstlisting}
+event <identificatore> <blocco>
+\end{lstlisting}
+Il blocco di un evento ammette al suo interno solamente le dichiarazioni di attributi e di funzioni. \\
+Quando un evento viene lanciato i trigger che osservano quell'evento avviano immediatamente azioni corrispondenti,
+ma mettono in coda il loro avvio in base alla priorità dell'azione; questo implica
+una risoluzione dell'albero degli eventi/azioni in ampiezza (o Breadth First Search).
 
+\subsection{Eventi predefiniti}
+Gli eventi predefiniti sono degli eventi speciali che presenta dei comportamenti particolari rispetto 
+allo standard, in generale servono per delle interazioni dirette con i giocatori.
+Attualmente ne é definito solo uno: \\
+L'evento \verb|PlayerChoiceEvent| identifica un azione che è attivabile da un giocatore durante il suo turno. \\
+La struttura dell'evento é la seguente:
+\begin{lstlisting}
+event PlayerChoiceEvent
+{
+    player active; // il giocatore che attivato l'azione
+}
+\end{lstlisting}
 
 \section{Funzioni}
 Le funzioni sono utilizzate per raggruppare e riutilizzare facilmente un insieme d'istruzioni 
@@ -553,6 +598,16 @@ In una funzione è possibile definire un solo blocco effetto.
 Il tag di ritorno \verb|returns [<type>];| é un tag obbligatorio speciale non associato ad un blocco. \\
 Definisce il tipo di ritorno della funzione, nel caso non si ritorni nessun tipo é possibile 
 fornire il tag omettendo il tipo.
+
+\subsubsection{Chiamare una funzione} \label{ChiamataFunzione}
+Per chiamare una funzione si utilizza l'espressione di chiamata dove l'identificatore corrisponde al nome
+della funzione da chiamare. \\
+Per fornire alla funzione gli argomenti, ovvero gli input caratterizzati dal modificatore \verb|function|, si 
+utilizza la lista degli argomenti; in cui si indica l'identificatore dell'input da valorizzare, due punti e 
+infine un espressione dello stesso tipo dell'argomento; per fornirne molteplici basta separarli con una virgola. Esempio:
+\begin{lstlisting}
+hello(toPlayer: 1, msg: "hello world");
+\end{lstlisting}
 
 \section{Interactables}
 
