@@ -11,3 +11,7 @@
 {"rule":"ST_01_005","sentence":"^\\QGli input non opzionali garantiscono che forniranno dei valori non nulli oppure l'azione non sarà eseguita\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Q.\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Q[LO]Capitolo .\\E$"}
+{"rule":"MORFOLOGIK_RULE_IT_IT","sentence":"^\\QFacile fare giochi Portabile ( basta connessione a repository ) Facilmente capibile da altre persone bisogno di espansioni: Giochi simultanei Miglior sistema per gestire le boards Non é un sostituto della prototipizzazione in carta velocizza lo sviluppo dei giochi se si creano delle librerie\\E$"}
+{"rule":"MORFOLOGIK_RULE_IT_IT","sentence":"^\\QFacile fare giochi Portabile (basta connessione a repository) Facilmente capibile da altre persone bisogno di espansioni: Giochi simultanei Miglior sistema per gestire le boards Non é un sostituto della prototipizzazione in carta velocizza lo sviluppo dei giochi se si creano delle librerie\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qsensitive=false, morecomment=[l]//., morestring=[b]\", morestring=[b]' .\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Qsensitive=false, morecomment=[l]//., morestring=[b]\", morestring=[b]' .\\E$"}

@@ -30,20 +30,19 @@
 \lstdefinelanguage{TGDL}
 {
     % list of keywords
-    morekeywords={
-        return, break, continue,
-        if, else, else if,
-        number, string, bool, player,
-        function, class, action,
-        effect, trigger, require, phase,
-        true, false,
-        this, attribute, returns, default,
-        interactable
-    },
+    % morekeywords={
+    %     return, break, continue, if, else, else if,
+    %     number, string, bool, player,
+    %     function, class, action,
+    %     effect, trigger, require, phase,
+    %     true, false,
+    %     this, attribute, returns, default,
+    %     interactable
+    % },
     sensitive=false,
     morecomment=[l]{//},
     morestring=[b]",
-    morestring=[b]',
+    morestring=[b]'
 }
 
 \lstset{
@@ -53,7 +52,8 @@
     keywordstyle=\color{Aquamarine},
     commentstyle=\color{ForestGreen},
     stringstyle=\color{Bittersweet},
-    tabsize=3
+    tabsize=3,
+    escapeinside={(*}{*)}
 }
 \fi
 
@@ -63,6 +63,10 @@
     hidelinks=true,
     linktoc=all
 }
+
+\usepackage{csquotes}
+\usepackage{biblatex}
+\addbibresource{bibliografia.bib}
 
 
 %Custom header and foot
@@ -132,5 +136,7 @@
 
 \chapter{Conclusione}
 \input{chapters/conclusione.tex}
+
+\printbibliography
 
 \end{document}

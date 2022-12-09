@@ -7,7 +7,7 @@ per lettera, opzionalmente seguiti da un qualsiasi ammontare di lettere o numeri
 Un identificatore per essere legale deve essere unico all'interno del suo ambito di Visibilità,
 questo significa che deve essere diverso sia dagli altri identificatori ma anche da operatori e clausole.  
 
-\subsection{Operatore e Clausole}
+\subsection{Operatori e Clausole}
 Gli operatori e le clausole sono delle parole chiave o simboli riservati che permettono rispettivamente
 la costruzione delle espressioni e delle istruzioni.
 
@@ -22,14 +22,12 @@ che contiene la sua dichiarazione.
 \\
 La Visibilità di una variabile si estende a tutti gli ambiti figli del blocco di dichiarazione, 
 dove figlio significa definito all'interno del padre (annidato).
-
  
 \subsection{Tags}
 I Tag sono delle parole chiave riservate che modificano il comportamento del blocco associato, 
 ogni tag descrive cosa è permesso definire al suo interno.
 All'interno della proposta è possibile che si trovi la dicitura "blocco <tag>" come abbreviazione
 per indicare la coppia tag e relativo blocco associato.
-
  
 \subsection{Commenti}
 I commenti sono linee di codice che vengono ignorare durante l'esecuzione del programma, 
@@ -39,7 +37,6 @@ le due barre è considerata parte del commento.
 \section{Primitive del linguaggio}
 Tabletop Game Description Language si basa su un insieme di primitive da cui sono costruire tutte 
 le funzionalità del linguaggio.
-
  
 \subsection{Oggetti}
 Un oggetto è un'istanza di una certa classe, un blocco di memoria che viene allocato e configurato secondo
@@ -85,8 +82,45 @@ rappresentati dalle parole chiave "true" per il valore vero e "false" per il val
 Il valore null non è un tipo primitivo in se ma serve per indicare l'assenza del valore in una variabile,
 Ogni tipo può assumere il valore null.
 
+\subsection{Collezioni}
+Una collezione é un qualsiasi gruppo di oggetti che sono rappresentati come una singola unità,
+in altri linguaggi esistono varie tipologie di collezioni come array, hashtables, vectors, ect\dots \\
+Attualmente sono supportati due tipologie: lista e table
+
+\subsubsection{Liste}
+
+\subsubsection{Table}
+Ispirata dalla omonima struttura dati del famoso linguaggio di scripting \cite{LUA},
+sono array associativi, ovvero che possono essere indicizatti non solo con dei 
+numeri ma con qualsiasi oggetto eccetto il valore null. \\
+Per dichiarare una table si utilizza il tipo table:
+il tipo degli oggetti che si vuole raggruppare seguito da una coppia di parentesi 
+graffe \verb|<tipo>{}|. \\
+Inizializzazione é effetuata tramite un blocco in cui sono definibili delle coppie
+di espressioni separate da una virgola.
+\begin{lstlisting}
+<tipo>{} <identificatore> = {
+    {<espressione chiave>, <espressione valore>},
+    {<espressione chiave>, <espressione valore>},
+    ...
+};
+\end{lstlisting}
+Le espressioni saranno valutate nel momento in cui la variabile sarà inizializzata,
+per avere una definizione legale della table le espressioni valore devono avere 
+lo stesso tipo definito nella dichiarazione. \\
+In caso una espressione chiave venga valutata an null, il programma terminerà con errore.
+Le seguenti funzionionalità sono supportate per le table: \\
+\begin{center}
+\begin{tabular}{| c | c | c |}
+    \hline 
+    Funzione & Sintassi & Descrizione \\
+    \hline 
+    Lunghezza & <lista>.length & 
+    
+\end{tabular}
+\end{center}
+
 \newpage
- 
 \subsection{Espressioni}
 Una espressione è una qualsiasi operazione che coinvolge zero o più operatori e uno o più operandi 
 (o espressioni) che può essere valutata all’interno del linguaggio. \\
@@ -556,7 +590,7 @@ Nel caso la priorità non sia stata definita oppure sia la stessa, si segue l'or
 
 \section{Eventi}
 Gli eventi sono degli oggetti che sono lanciabili per avviare delle azioni che li osservano tramite i trigger. \\
-Un evento é definibile tramite la seguente sintassi
+Un evento è definibile tramite la seguente sintassi
 \begin{lstlisting}
 event <identificatore> <blocco>
 \end{lstlisting}
@@ -568,9 +602,9 @@ una risoluzione dell'albero degli eventi/azioni in ampiezza (o Breadth First Sea
 \subsection{Eventi predefiniti}
 Gli eventi predefiniti sono degli eventi speciali che presenta dei comportamenti particolari rispetto 
 allo standard, in generale servono per delle interazioni dirette con i giocatori.
-Attualmente ne é definito solo uno: \\
+Attualmente ne è definito solo uno: \\
 L'evento \verb|PlayerChoiceEvent| identifica un azione che è attivabile da un giocatore durante il suo turno. \\
-La struttura dell'evento é la seguente:
+La struttura dell'evento è la seguente:
 \begin{lstlisting}
 event PlayerChoiceEvent
 {
