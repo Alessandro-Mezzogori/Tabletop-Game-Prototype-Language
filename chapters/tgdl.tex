@@ -85,9 +85,56 @@ Ogni tipo può assumere il valore null.
 \subsection{Collezioni}
 Una collezione é un qualsiasi gruppo di oggetti che sono rappresentati come una singola unità,
 in altri linguaggi esistono varie tipologie di collezioni come array, hashtables, vectors, ect\dots \\
-Attualmente sono supportati due tipologie: lista e table
+Attualmente sono supportati due tipologie: lista e table.
 
 \subsubsection{Liste}
+Le liste forniscono un insieme di oggetti accessibili tramite indici numerici interi, che mantiene l'ordine di inserimento. \\
+Non hanno una dimensione fissa ma si adattano in base al numero di oggetti che contengono. \\
+Per dichiarara una lista si utilizza il tipo lista:
+Il tipo degli oggeti che si vuole raggruppare seguito da una coppia di parentesi quadre
+\lstinline{<tipo>[]}. \\
+L'inizializzazione é effettuata tramite un blocco in cui sono definibili un elenco di 
+espressioni, dello stesso tipo definito nella dichiarazione, separate da una virgola.
+\begin{lstlisting}
+<tipo>[] <identificatore> = {
+    <espressione tipo>,
+    <espressione tipo>,
+    ...
+};
+\end{lstlisting}
+La lista accetta anche valori nulli, l'indice corrispondente presenterà un valore nullo quando
+si farà accesso. \\
+Le seguenti funzionalità sono supportate dalle liste: \\
+\begin{center}
+\begin{tabular}{| c | c | p{5cm} |}
+    \hline 
+    Lunghezza & \lstinline|<lista>.lenght| & calcola il numero d'indici occupati \\
+    \hline
+    Accesso & \lstinline|<lista>[<numero>]| & accede all'indice numero, se non é intero la parte decimale verrà
+     troncata. \\
+    \hline
+    Aggiungere una lista & \lstinline|<lista>.append(<altra lista>)| & aggiunge tutti gli elementi di una lista in code \\
+    \hline
+    Rimuovere tutto & \lstinline|<lista>.clear()|& rimuove tutti gli oggetti dalla lista\\
+    \hline
+    Contiene valore & \lstinline|<lista>.contains(<oggetto>)| & ritorna true se la lista contiene lo stesso 
+    oggetto, falso altrimento \\ 
+    \hline
+    Trova indice & \lstinline|<lista>.indexOf(<oggetto>)|& restituisce l'indice del primo oggetto corrispondente,
+    altrimenti -1 \\
+    \hline
+    Rimuovi elemento & \lstinline|<lista>.remove(<oggetto>)|& rimuove il primo oggetto corrispondente che trova,
+    sposta il resto della lista avanti di una posizione \\
+    \hline    
+    Rimuovi elemento ad indice & \lstinline|<lista>.removeAt(<indice>)|& rimuove l'oggetto all'indice corrispondente,
+    sposta il resto della lista avanti di una posizione \\
+    \hline    
+    Ordinamento casuale & \lstinline|<lista>.shuffle()| & Mescola casualmente la lista \\
+    \hline
+    Copia & \lstinline|<lista>.copy()| & Crea una copia shallow della lista
+    \hline
+\end{tabular}
+\end{center}
 
 \subsubsection{Table}
 Ispirata dalla omonima struttura dati del famoso linguaggio di scripting \cite{LUA},
@@ -95,7 +142,7 @@ sono array associativi, ovvero che possono essere indicizatti non solo con dei
 numeri ma con qualsiasi oggetto eccetto il valore null. \\
 Per dichiarare una table si utilizza il tipo table:
 il tipo degli oggetti che si vuole raggruppare seguito da una coppia di parentesi 
-graffe \verb|<tipo>{}|. \\
+graffe \lstinline|<tipo>{}|. \\
 Inizializzazione é effetuata tramite un blocco in cui sono definibili delle coppie
 di espressioni separate da una virgola.
 \begin{lstlisting}
@@ -111,12 +158,20 @@ lo stesso tipo definito nella dichiarazione. \\
 In caso una espressione chiave venga valutata an null, il programma terminerà con errore.
 Le seguenti funzionionalità sono supportate per le table: \\
 \begin{center}
-\begin{tabular}{| c | c | c |}
+\begin{tabular}{| c | c | p{5cm}|}
     \hline 
     Funzione & Sintassi & Descrizione \\
     \hline 
-    Lunghezza & <lista>.length & 
-    
+    Lunghezza & \lstinline|<table>.length| & calcola quante coppie sono presenti all'interno \\
+    \hline
+    Accesso & \lstinline|<table>[<chiave>]| & ritorna il valore o null se la chiave non é presente \\ 
+    \hline
+    Rimuovere tutto & \lstinline|<table>.clear()| & elimina tutte le coppie contenute nella table \\
+    \hline
+    Copia & \lstinline|<table>.copy()| & crea una copia shallow della table \\
+    \hline
+    Rimozione coppia & \lstinline|<table>[<chiave>]| = null & rimuove una coppia chiave/valore dalla table \\
+    \hline
 \end{tabular}
 \end{center}
 
@@ -142,12 +197,12 @@ hanno come tipo di ritorno il tipo number
 \\
 le seguenti sono tutte espressioni matematiche:
 \begin{itemize}
-    \item Addizione \verb|<numero> + <numero>|
-    \item Sottrazione \verb|<numero> - <numero>|
-    \item Prodotto \verb|<numero> * <numero>|
-    \item Divisione \verb|<numero> / <numero>|
-    \item Potenza \verb|<numero> ^ <numero>|
-    \item Modulo \verb|<numero> % <numero>|
+    \item Addizione \lstinline|<numero> + <numero>|
+    \item Sottrazione \lstinline|<numero> - <numero>|
+    \item Prodotto \lstinline|<numero> * <numero>|
+    \item Divisione \lstinline|<numero> / <numero>|
+    \item Potenza \lstinline|<numero> ^ <numero>|
+    \item Modulo \lstinline|<numero> % <numero>|
 \end{itemize}
 l'ordine di precedenza per la valutazione segue quello matematico:
 \begin{enumerate}
@@ -160,10 +215,10 @@ l'ordine di precedenza per la valutazione segue quello matematico:
 Le espressioni di confronto coinvolgono gli operatori di maggioranza e minoranza, stretta e larga,
 il tipo di ritorno dell'espressione è un booleano il cui valore è il risultato del confronto.
 \begin{itemize}
-    \item Minore di \verb|<espressione> < <espressione>|
-    \item Maggiore di \verb|<espressione> > <espressione>|
-    \item Minore uguale di \verb|<espressione> <= <espressione>|
-    \item Maggiore uguale di \verb|<espressione> >= <espressione>|
+    \item Minore di \lstinline|<espressione> < <espressione>|
+    \item Maggiore di \lstinline|<espressione> > <espressione>|
+    \item Minore uguale di \lstinline|<espressione> <= <espressione>|
+    \item Maggiore uguale di \lstinline|<espressione> >= <espressione>|
 \end{itemize}
 
 \subsubsection{Espressioni di uguaglianza}
@@ -173,16 +228,16 @@ il tipo di ritorno dell'espressione è booleano il cui valore è il risultato de
 Come per le espressioni di confronto, il tipo delle due espressioni operandi deve essere il medesimo
 per avere una espressione di uguaglianza legale.
 \begin{itemize}
-    \item Uguale a \verb|<espressione> == <espression>|
-    \item Diverso da \verb|<espressione> != <espression>|
+    \item Uguale a \lstinline|<espressione> == <espression>|
+    \item Diverso da \lstinline|<espressione> != <espression>|
 \end{itemize}
 
 \subsubsection{Espressioni logiche condizionali}
 Le espressioni logiche condizionali coinvolgono gli operatori logici AND e OR,
 il tipo di ritorno dell'espressione è booleano il cui valore è il risultato dell'operazione logica.
 \begin{enumerate}
-    \item AND \verb|<booleano> && <booleano>|
-    \item OR \verb=<booleano> || <booleano>=
+    \item AND \lstinline|<booleano> && <booleano>|
+    \item OR \lstinline=<booleano> || <booleano>=
 \end{enumerate}
 
 Le espressioni logiche condizionali cercano di valutare il minimo possibile per ottimizzare i controlli.
@@ -193,10 +248,10 @@ valuterà il secondo operando ma ritornerà direttamente il corrispettivo risult
 Le espressioni logiche binarie sono simili alle espressioni logiche condizionali ma valutano sempre
 entrambi gli operandi
 \begin{enumerate}
-    \item AND \verb|<booleano> & <booleano>|
-    \item OR \verb=<booleano> | <booleano>=
-    \item XOR \verb|<booleano> ^ <booleano>|
-    \item NOT \verb|!<booleano>|
+    \item AND \lstinline|<booleano> & <booleano>|
+    \item OR \lstinline=<booleano> | <booleano>=
+    \item XOR \lstinline|<booleano> ^ <booleano>|
+    \item NOT \lstinline|!<booleano>|
 \end{enumerate}
 
 \subsubsection{Espressioni di accesso}
@@ -206,19 +261,19 @@ In base all'espressione si accederà a tipologie di oggetti diversi.
 \begin{itemize}
     \item 
     {
-        Accesso a membro: \verb|<oggetto>.<membro>| utilizza operatore di accesso \verb|.| per accedere
+        Accesso a membro: \lstinline|<oggetto>.<membro>| utilizza operatore di accesso \lstinline|.| per accedere
         al valore di uno specifico membro di un oggetto.
         Il tipo di ritorno dell'espressione è il tipo del membro a cui si sta accedendo.
     }
     \item 
     {
-        Accesso tramite indice: \verb|<lista>[<numero>]| utilizza l'operatore di accesso tramite indice
-        \verb|[<numero>]| per accedere allo specifico indice della lista definito dall'numero all'interno
-        dell'operatore, ha come tipo di ritorno lo stesso tipo degli oggetti della lista.
+        Accesso tramite indice: \lstinline|<collezione>[<chiave>]| utilizza l'operatore di accesso tramite un indice
+        \lstinline|[<chiave>]| per accedere alla variabile associata della lista. \\
+        Ha come tipo di ritorno lo stesso tipo degli oggetti della lista.
     }
     \item 
     {
-        Accesso a variabile: \verb|<identificatore>| l'identificatore unico deve appartenere ad variabile
+        Accesso a variabile: \lstinline|<identificatore>| l'identificatore unico deve appartenere ad variabile
         per poter essere legale. Accede al valore contenuto nella variabile, il tipo di ritorno dell'espressione
         è lo stesso tipo della variabile a cui si sta accedendo
     }
@@ -230,13 +285,13 @@ gestione dei tipi degli oggetti:
 \begin{itemize}
     \item
     {
-        Controllo del tipo: \verb|<oggetto> is <tipo>| controlla se l'oggetto è del tipo richiesto.
+        Controllo del tipo: \lstinline|<oggetto> is <tipo>| controlla se l'oggetto è del tipo richiesto.
         L'espressione ha come tipo di ritorno un valore booleano cui valore corrisponde il risultato del controllo:
         vero se l'oggetto è del tipo richiesto, falso altrimenti.
     }
     \item 
     {
-        Conversione del tipo, type casting: \verb|<oggetto> as <tipo>| il type casting é utilizzato
+        Conversione del tipo, type casting: \lstinline|<oggetto> as <tipo>| il type casting é utilizzato
         per convertire un oggetto in un oggetto di tipo diverso, il tipo di ritorno é lo stesso del tipo richiesto.
         Nel caso la conversione sia ammissibile l'espressione ristornerà il nuovo oggetto con il tipo prestabilito,
         in caso contrario sarà ritornato un valore nullo.
@@ -244,14 +299,14 @@ gestione dei tipi degli oggetti:
 \end{itemize}
 
 \subsubsection{Espressioni d'istanziazione}
-L'espressione d'istanziazione \verb|new <tipo>()| è usata per creare una nuova istanza del tipo
+L'espressione d'istanziazione \lstinline|new <tipo>()| è usata per creare una nuova istanza del tipo
 richiesto, il tipo di ritorno corrisponde al tipo richiesto.
 \\
 L'istanziazione di un oggetto può essere seguita da una lista d'inizializzazione per popolare 
 velocemente con dei valori il nuovo oggetto.
 
 \subsubsection{Espressione d'assegnamento}
-Sintassi: \verb|<espressione di accesso> = <espressione>;| \\
+Sintassi: \lstinline|<espressione di accesso> = <espressione>;| \\
 L'espressione di assegnamento è utilizzata per assegnare il risultato di un espressione
 a una variabile, attributo o a uno specifico indice di una lista. \\
 Per avere un espressione di assegnamento legale è necessario che i tipi di ritorno
@@ -259,7 +314,7 @@ delle due espressioni siano gli stessi. \\
 Il tipo di ritorno dell'espressione è nullo.
 
 \subsubsection{Espressione di chiamata}
-Sintassi: \verb|<identificatore>(<lista argomenti>)|
+Sintassi: \lstinline|<identificatore>(<lista argomenti>)|
 L'espressione di chiamata è utilizzata per chiamare l'esecuzione di della funzione con lo 
 stesso identificatore con degli specifici argomenti definiti nella lista degli argomenti. \\
 Il tipo di ritorno dell'espressione corrisponde al tipo di ritorno della funzione. \\
@@ -311,11 +366,11 @@ la priorità di valutazione, la valutazione partirà delle espressioni maggiorme
 \subsection{Istruzioni}
 Le istruzioni, o statements, sono i macro comandi del linguaggio, ovvero una combinazione 
 di clausole ed espressioni usate per adempire a un compito preciso.
-Le istruzioni devono terminare con il carattere \verb|;|, ma nel caso sia possibile definire
-un blocco d'istruzioni associato è possibile omettere il \verb|;|
+Le istruzioni devono terminare con il carattere \lstinline|;|, ma nel caso sia possibile definire
+un blocco d'istruzioni associato è possibile omettere il \lstinline|;|
 
 \subsubsection{Istruzione di ritorno}
-Sintassi:   \verb|return [<espressione>];| \\
+Sintassi:   \lstinline|return [<espressione>];| \\
 L’istruzione di ritorno è utilizzata per finire l’esecuzione di un effetto,
 ritornando il controllo al codice che ha chiamato la funzione,
 restituendo (o no) un risultato in base al tipo di ritorno della funzione. \\
@@ -323,30 +378,30 @@ Il risultato restituito proviene dalla valutazione della espressione definita ne
 nel caso si abbia un tipo di ritorno senza tipo bisogna omettere la espressione.
 
 \subsubsection{Istruzione espressione}
-Sintassi: \verb|<espressione>;| \\
+Sintassi: \lstinline|<espressione>;| \\
 l'istruzione espressione, o expression statement, serve per eseguire una certa espressione; 
 
 
 \subsubsection{Istruzione di dichiarazione}
-Sintassi: \verb|<tipo> <identificatore> = <espressione>;| \\
+Sintassi: \lstinline|<tipo> <identificatore> = <espressione>;| \\
 L'istruzione di dichiarazione è utilizzata per definire delle nuove variabili del tipo 
 richiesto e inizializzate con il risultato dell'espressione alla destra dell'operatore d'assegnamento. \\
 Le variabili dichiarate sono utilizzabili dopo la loro dichiarazione tramite l'identificatore, ovvero
 tramite una espressione di accesso. 
 
 \subsubsection{Istruzione di selezione}
-Sintassi: \verb|if(<espressione booleana>) <blocco istruzioni>| \\
+Sintassi: \lstinline|if(<espressione booleana>) <blocco istruzioni>| \\
 L'istruzione di selezione è utilizza per selezionare se eseguire o no il blocco d'istruzioni
 associato, rispettivamente se la valutazione della espressione booleana abbia esito vero o falso.
 
 \subsubsection{Istruzione Else}
-Sintassi \verb|else <blocco istruzioni>|. \\
+Sintassi \lstinline|else <blocco istruzioni>|. \\
 L'istruzione else permette di eseguire il blocco d'istruzioni associato quando l'espressione
 di selezione precedente sia risultata false. \\
 Una istruzione else è usabile solo direttamente successivamente a una istruzione di selezione.
 
 \subsubsection{Istruzione Else if}
-Sintassi: \verb|else if(<espressione booleana>) <blocco istruzioni>| \\
+Sintassi: \lstinline|else if(<espressione booleana>) <blocco istruzioni>| \\
 L'istruzione else if equivale all'unione di un istruzione else e un Istruzione if poiché 
 eseguirà il blocco d'istruzioni associato solamente se l'espressione booleana della 
 istruzione precedente ha avuto esito falso e se il risultato della espressione booleana 
@@ -356,13 +411,13 @@ di selezione, è possibile concatenare molteplici else if poiché considerata an
 istruzione di selezione.
 
 \subsubsection{Istruzione while}
-Sintassi: \verb|while(<espressione boolena>) <blocco istruzioni>| \\
+Sintassi: \lstinline|while(<espressione boolena>) <blocco istruzioni>| \\
 L'istruzione while fa parte della categoria delle istruzioni di ciclo, viene usata per ripetere
 il blocco d'istruzioni associato fino a che l'espressione booleana, valutata precedentemente a ogni 
 esecuzione del blocco, non risulti falsa.
 
 \subsubsection{Istruzione for}
-Sintassi: \verb|for([<espressione> | <istruzione di dichiarazione>]; [<espressione booleana>]; [<espressione>]) <blocco istruzioni>| \\
+Sintassi: \lstinline|for([<espressione> | <istruzione di dichiarazione>]; [<espressione booleana>]; [<espressione>]) <blocco istruzioni>| \\
 L'istruzione for é un altro modo per creare cicli, utilizzata principalmente come abbreviazione
 dell'istruzione while. \\
 Si divide in tre parti principali:
@@ -375,7 +430,7 @@ Si divide in tre parti principali:
     \item { 
         Espressione di controllo: definisce se continuare a eseguire il ciclo se risulta vera 
         o terminarlo se risulta falsa. \\
-        Se omessa verrà preso come default l'espressione letterale \verb|true| creando un ciclo infinito.
+        Se omessa verrà preso come default l'espressione letterale \lstinline|true| creando un ciclo infinito.
     }
     \item {
         Espressione post ciclo: è un espressione che viene valutata dopo l'esecuzione del blocco di istruzinoi 
@@ -384,15 +439,15 @@ Si divide in tre parti principali:
 \end{enumerate}
 
 \subsubsection{Istruzione continue}
-Sintassi: \verb|continue;|
+Sintassi: \lstinline|continue;|
 L'istruzione continue avvia una nuova iterazione dell'istruzione di ciclo più vicina che la racchiude.
 
 \subsubsection{Istruzione break}
-Sintassi: \verb|break;|
+Sintassi: \lstinline|break;|
 L'istruzione break termina l'istruzione di ciclo più vicina che la racchiude.
 
 \section{Classi}
-Sintassi: \verb|<visibilità> class <identificatore> <blocco classe>|
+Sintassi: \lstinline|<visibilita> class <identificatore> <blocco classe>|
 Una classe é utilizzata per definire un insieme di dati correlati, detti attributi, e di 
 comportamenti che li modificano. \\
 All'interno del blocco associato, detto blocco della classe o class block sono definibili
@@ -402,14 +457,14 @@ solamente i seguenti tag:
     \item function
     \item action
 \end{itemize}
-Nel blocco è possibile riferirsi all'istanza stessa dell'oggetto tramite la parola chiave \verb|this|. \\
-Una certa istanza di una classe è assegnabile a un giocatore tramite la chiamata alla funzione predefinita \verb|assign(player <giocatore>)|. \\
+Nel blocco è possibile riferirsi all'istanza stessa dell'oggetto tramite la parola chiave \lstinline|this|. \\
+Una certa istanza di una classe è assegnabile a un giocatore tramite la chiamata alla funzione predefinita \lstinline|assign(player <giocatore>)|. \\
 I comportamenti specifici durante l'assegnamento sono approfonditi in \ref*{VisibilitaClasse}
 
 \subsection{Attributi}
 Un attributo è una variabile associata alla class in cui è dichiarato, il valore in se della 
 variabile è legato all'oggetto ovvero all'istanza della classe. \\
-Per definire un attribute si utilizza il tag \verb|attribute| come nella seguente sintassi:
+Per definire un attribute si utilizza il tag \lstinline|attribute| come nella seguente sintassi:
 \begin{lstlisting}
 attribute <identificatore>
 {
@@ -419,9 +474,9 @@ attribute <identificatore>
 \end{lstlisting}
 Dove:
 \begin{itemize}
-    \item \verb|returns|: definisce il tipo dell'attributo
-    \item \verb|value|: definisce il valore di prima inizializzazione dell'attributo tramite 
-    l'utilizzo di un espressione dello stesso tipo indicato nel \verb|returns|
+    \item \lstinline|returns|: definisce il tipo dell'attributo
+    \item \lstinline|value|: definisce il valore di prima inizializzazione dell'attributo tramite 
+    l'utilizzo di un espressione dello stesso tipo indicato nel \lstinline|returns|
 \end{itemize}
 Essendo una sintassi prolissa, si offre un alternativa sintattica tramite l'utilizza
 delle istruzioni di dichiarazione e inizializzazione.
@@ -433,7 +488,7 @@ delle istruzioni di dichiarazione e inizializzazione.
 La visibilità di una classe definisce il suo comportamento e l'assegnamento rispetto al giocatore.
 
 \subsubsection{Visibilità locale}
-La visibilità locale o \verb|local| è considerata il default, ovvero se utilizzata se non è specificato
+La visibilità locale o \lstinline|local| è considerata il default, ovvero se utilizzata se non è specificato
 altrimenti, possono esistere molteplici istanze di una classe locale create tramite l'espressione di istanziazione. \\
 In generale le classi locale servono per definire i ruoli, con le loro azioni, che i giocatori possono
 intraprendere nel corso della partita. \\
@@ -441,7 +496,7 @@ Quando si assegna un'Istanza di una classe locale a un giocatore, il giocatore p
 concedendola al giocatore assegnato.
 
 \subsubsection{Visibilità di gruppo}
-La visibilità di gruppo o \verb|group| è utilizzata per specificare delle classi le cui istanze possono
+La visibilità di gruppo o \lstinline|group| è utilizzata per specificare delle classi le cui istanze possono
 essere condivise tra molteplici giocatori, cui possono accedere a le azioni fornite dalla classe come 
 se fosse di loro proprietà. \\
 Come  per le classi a visibilità locale si possono creare molteplici istanze tramite l'espressione di istanziazione. \\
@@ -451,7 +506,7 @@ Quando si assegna un giocatore a una istanza di una classe di gruppo non avviene
 di proprietà, ma si aggiunge all'insieme di giocatori che la condividono.
 
 \subsubsection{Visibilità globale}
-La visibilità globale o \verb|global| è utilizzata per specificare delle classi che sono 
+La visibilità globale o \lstinline|global| è utilizzata per specificare delle classi che sono 
 limitate a una sola istanza in tutto il programma. \\
 Tutti i giocatori possono accedere alle azioni delle classi globali.
 
@@ -470,11 +525,11 @@ action <identificatore> <blocco azione>
 Gli argomenti o input di un’azione sono dei tag speciali che servono per definire delle variabili 
 inizializzate in base alla tipologia dell’argomenti e utilizzate all’interno dei 
 blocchi effetto di un’azione. \\
-La tipologia dell'input è definita dal suo modificatore (\verb|mod|) che ne influenza il comportamento, 
+La tipologia dell'input è definita dal suo modificatore (\lstinline|mod|) che ne influenza il comportamento, 
 i due principali sono:
 
 \paragraph{Modificatore giocatore}
-Sintassi: \verb|player [<espressione giocatore>]| \\
+Sintassi: \lstinline|player [<espressione giocatore>]| \\
 Detto anche modificatore player, è il default in caso di omissione del modificatore nella
 dichiarazione di un input. \\
 Un input con il modificatore giocatore chiede direttamente al giocatore bersaglio di 
@@ -516,7 +571,7 @@ Si definiscono secondo la seguente sintassi:
 }
 \end{lstlisting}
 È possibile semplificare ulteriormente la definizione se si ha bisogno di un solo filtro, omettendo
-il tag \verb|filter|.
+il tag \lstinline|filter|.
 \begin{lstlisting}
 [optional] [<modificatore>] input <tipo> <identificatore> 
 {
@@ -571,19 +626,19 @@ trigger <evento> <blocco istruzione>
 \end{lstlisting}
 I trigger di un azione sono i responsabili dell'avvio del flusso azione associato, 
 quando l'evento che il trigger osserva viene lanciato il blocco d'istruzioni viene eseguito; 
-nel caso si abbia un esito positivo, ovvero un valore restituito \verb|true|, 
+nel caso si abbia un esito positivo, ovvero un valore restituito \lstinline|true|, 
 l'esecuzione dell'azione sarà avviata. \\
 Difatti il blocco d'istruzioni di un trigger, come i requisiti e blocchi filtro, necessita di un 
 valore di ritorno booleano per poter valutare se eseguire o no l'azione.
 
 \paragraph{Blocco trigger}
 Ogni trigger osserva un particolare evento che è accessibile nel blocco tramite la parola chiave 
-\verb|event|, usata per creare delle logiche di attivazione più sofisticate riutilizzando gli stessi eventi. \\
+\lstinline|event|, usata per creare delle logiche di attivazione più sofisticate riutilizzando gli stessi eventi. \\
 
 \paragraph{Priorità dell'azione}
 L'architettura a eventi tramite i trigger introduce delle possibili condizioni di gara tra le varie azioni,
 per evitare delle esecuzioni in ordine inaspettato si introduce il concetto di priorità dell'azione. \\
-La priorità di un azione è un numero assegnato all'azione tramite la parola chiave \verb|prio <numero>|,
+La priorità di un azione è un numero assegnato all'azione tramite la parola chiave \lstinline|prio <numero>|,
 le azioni cui trigger sono stati valutati a vero saranno eseguite in ordine dalla priorità maggiore
 alla priorità minore. \\
 Nel caso la priorità non sia stata definita oppure sia la stessa, si segue l'ordine di dichiarazione dell'azione.
@@ -603,7 +658,7 @@ una risoluzione dell'albero degli eventi/azioni in ampiezza (o Breadth First Sea
 Gli eventi predefiniti sono degli eventi speciali che presenta dei comportamenti particolari rispetto 
 allo standard, in generale servono per delle interazioni dirette con i giocatori.
 Attualmente ne è definito solo uno: \\
-L'evento \verb|PlayerChoiceEvent| identifica un azione che è attivabile da un giocatore durante il suo turno. \\
+L'evento \lstinline|PlayerChoiceEvent| identifica un azione che è attivabile da un giocatore durante il suo turno. \\
 La struttura dell'evento è la seguente:
 \begin{lstlisting}
 event PlayerChoiceEvent
@@ -615,12 +670,12 @@ event PlayerChoiceEvent
 \section{Funzioni}
 Le funzioni sono utilizzate per raggruppare e riutilizzare facilmente un insieme d'istruzioni 
 su uno specifico set d'input. \\ 
-Sono definite tramite il tag \verb|function <identificatore> <blocco funzione>|
+Sono definite tramite il tag \lstinline|function <identificatore> <blocco funzione>|
 
 \subsubsection{Argomenti}
 Gli input funzionano esattamente come gli input delle azioni di una classe ma è 
 possibile definire un ulteriore tipologia d'input chiamata input della funzione,
-tramite il modificatore \verb|function|. \\
+tramite il modificatore \lstinline|function|. \\
 Il modificatore obbliga a fornire tutti gli input che non possiedono un valore di default,
 ovvero che sono stati assegnati un valore null, quando si chiama la funzione.
 
@@ -629,14 +684,14 @@ ovvero che sono stati assegnati un valore null, quando si chiama la funzione.
 In una funzione è possibile definire un solo blocco effetto.
 
 \subsubsection{Ritorno}
-Il tag di ritorno \verb|returns [<type>];| é un tag obbligatorio speciale non associato ad un blocco. \\
+Il tag di ritorno \lstinline|returns [<type>];| é un tag obbligatorio speciale non associato ad un blocco. \\
 Definisce il tipo di ritorno della funzione, nel caso non si ritorni nessun tipo é possibile 
 fornire il tag omettendo il tipo.
 
 \subsubsection{Chiamare una funzione} \label{ChiamataFunzione}
 Per chiamare una funzione si utilizza l'espressione di chiamata dove l'identificatore corrisponde al nome
 della funzione da chiamare. \\
-Per fornire alla funzione gli argomenti, ovvero gli input caratterizzati dal modificatore \verb|function|, si 
+Per fornire alla funzione gli argomenti, ovvero gli input caratterizzati dal modificatore \lstinline|function|, si 
 utilizza la lista degli argomenti; in cui si indica l'identificatore dell'input da valorizzare, due punti e 
 infine un espressione dello stesso tipo dell'argomento; per fornirne molteplici basta separarli con una virgola. Esempio:
 \begin{lstlisting}
