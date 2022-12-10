@@ -88,15 +88,15 @@ in altri linguaggi esistono varie tipologie di collezioni come array, hashtables
 Attualmente sono supportati due tipologie: lista e table.
 
 \subsubsection{Liste}
-Le liste forniscono un insieme di oggetti accessibili tramite indici numerici interi, che mantiene l'ordine di inserimento. \\
+Le liste forniscono un insieme di oggetti accessibili tramite indici numerici interi, che mantiene l'ordine d'inserimento. \cite{CSharpLang} \\
 Non hanno una dimensione fissa ma si adattano in base al numero di oggetti che contengono. \\
-Per dichiarara una lista si utilizza il tipo lista:
-Il tipo degli oggeti che si vuole raggruppare seguito da una coppia di parentesi quadre
-\lstinline{<tipo>[]}. \\
-L'inizializzazione é effettuata tramite un blocco in cui sono definibili un elenco di 
+Per dichiarara una lista si utilizza il tipo lista, composto dalla parola chiave 
+\lstinline|List| e una coppia di parentesi angolate con all'loro interno Il tipo degli 
+oggetti che si vuole raggruppare \lstinline|List<<tipo>>|. \\
+L'inizializzazione é effettuata tramite un blocco in cui è definibile un elenco di 
 espressioni, dello stesso tipo definito nella dichiarazione, separate da una virgola.
 \begin{lstlisting}
-<tipo>[] <identificatore> = {
+List<<tipo>> <identificatore> = {
     <espressione tipo>,
     <espressione tipo>,
     ...
@@ -126,12 +126,12 @@ Le seguenti funzionalità sono supportate dalle liste: \\
     Rimuovi elemento & \lstinline|<lista>.remove(<oggetto>)|& rimuove il primo oggetto corrispondente che trova,
     sposta il resto della lista avanti di una posizione \\
     \hline    
-    Rimuovi elemento ad indice & \lstinline|<lista>.removeAt(<indice>)|& rimuove l'oggetto all'indice corrispondente,
+    Rimuovi elemento all'indice & \lstinline|<lista>.removeAt(<indice>)|& rimuove l'oggetto all'indice corrispondente,
     sposta il resto della lista avanti di una posizione \\
     \hline    
     Ordinamento casuale & \lstinline|<lista>.shuffle()| & Mescola casualmente la lista \\
     \hline
-    Copia & \lstinline|<lista>.copy()| & Crea una copia shallow della lista
+    Copia & \lstinline|<lista>.copy()| & Crea una copia shallow della lista \\
     \hline
 \end{tabular}
 \end{center}
@@ -140,13 +140,13 @@ Le seguenti funzionalità sono supportate dalle liste: \\
 Ispirata dalla omonima struttura dati del famoso linguaggio di scripting \cite{LUA},
 sono array associativi, ovvero che possono essere indicizatti non solo con dei 
 numeri ma con qualsiasi oggetto eccetto il valore null. \\
-Per dichiarare una table si utilizza il tipo table:
-il tipo degli oggetti che si vuole raggruppare seguito da una coppia di parentesi 
-graffe \lstinline|<tipo>{}|. \\
+Per dichiarare una table si utilizza il tipo table, composto dalla parola chiave
+\lstinline|Table| e una coppia di parentesi angolate con all'loro interno Il tipo degli 
+oggeti  che si vuole raggruppare \lstinline|Table<<tipo>>|. \\
 Inizializzazione é effetuata tramite un blocco in cui sono definibili delle coppie
 di espressioni separate da una virgola.
 \begin{lstlisting}
-<tipo>{} <identificatore> = {
+Table<<tipo>> <identificatore> = {
     {<espressione chiave>, <espressione valore>},
     {<espressione chiave>, <espressione valore>},
     ...
@@ -176,6 +176,24 @@ Le seguenti funzionionalità sono supportate per le table: \\
 \end{center}
 
 \newpage
+
+\subsubsection{Stack}
+Gli stack sono una raccolta di oggetti di tipo LIFO (Last-in, First-out) \cite{CSharpLang}.
+Per dichiarare uno stack si utilizza il tipo stack, composto dalla parola chiave \lstinline|Stack|
+e una coppia di parentesi angolate con all'loro interno il tipo degli oggetti che si vuole raggruppare
+\lstinline|Stack<<tipo>>|. \\
+L'inizializzazione é effettuata tramite un blocco in cui è definibile un elenco di espressioni,
+dello stesso tipo definito nella dichiarazione, separate da una virgola.
+\begin{lstlisting}
+Stack<<tipo>> <identificatore> = {
+    <espressione tipo>,
+    <espressione tipo>,
+    ...
+}
+\end{lstlisting}
+Lo stack non accetta valori nulli, 
+
+
 \subsection{Espressioni}
 Una espressione è una qualsiasi operazione che coinvolge zero o più operatori e uno o più operandi 
 (o espressioni) che può essere valutata all’interno del linguaggio. \\
@@ -433,7 +451,7 @@ Si divide in tre parti principali:
         Se omessa verrà preso come default l'espressione letterale \lstinline|true| creando un ciclo infinito.
     }
     \item {
-        Espressione post ciclo: è un espressione che viene valutata dopo l'esecuzione del blocco di istruzinoi 
+        Espressione post ciclo: è un espressione che viene valutata dopo l'esecuzione del blocco d'istruzinoi 
         del ciclo ma prima della valutazione della espressione di controllo.
     }
 \end{enumerate}
@@ -445,6 +463,21 @@ L'istruzione continue avvia una nuova iterazione dell'istruzione di ciclo più v
 \subsubsection{Istruzione break}
 Sintassi: \lstinline|break;|
 L'istruzione break termina l'istruzione di ciclo più vicina che la racchiude.
+
+\subsection{Direttive}
+Le direttive sono istruzioni particolare definite solamente all'inizio del file, esterne a 
+tutti i blocchi.
+
+\subsubsection{Direttiva d'importazione}
+Le direttive d'importazione sono utilizzate per utilizzare il codice definito in un altro
+file, evitando dei possibili conflitti e permettendo di avere un progetto ben organizzato. \\
+Per maggiori informazioni vedere \ref{MultipleFiles}
+
+\subsubsection{Direttiva di gioco}
+La direttiva di gioco ha il compito di definire il nome del progetto e il file principale
+che deve contenere il tag \lstinline|setup|; é utilizzabile solamente all'inizio del file 
+come primo elemento. \\
+
 
 \section{Classi}
 Sintassi: \lstinline|<visibilita> class <identificatore> <blocco classe>|
@@ -489,7 +522,7 @@ La visibilità di una classe definisce il suo comportamento e l'assegnamento ris
 
 \subsubsection{Visibilità locale}
 La visibilità locale o \lstinline|local| è considerata il default, ovvero se utilizzata se non è specificato
-altrimenti, possono esistere molteplici istanze di una classe locale create tramite l'espressione di istanziazione. \\
+altrimenti, possono esistere molteplici istanze di una classe locale create tramite l'espressione d'istanziazione. \\
 In generale le classi locale servono per definire i ruoli, con le loro azioni, che i giocatori possono
 intraprendere nel corso della partita. \\
 Quando si assegna un'Istanza di una classe locale a un giocatore, il giocatore precedente perde la proprietà dell'istanza
@@ -499,7 +532,7 @@ concedendola al giocatore assegnato.
 La visibilità di gruppo o \lstinline|group| è utilizzata per specificare delle classi le cui istanze possono
 essere condivise tra molteplici giocatori, cui possono accedere a le azioni fornite dalla classe come 
 se fosse di loro proprietà. \\
-Come  per le classi a visibilità locale si possono creare molteplici istanze tramite l'espressione di istanziazione. \\
+Come  per le classi a visibilità locale si possono creare molteplici istanze tramite l'espressione d'istanziazione. \\
 Il principale utilizzo di una classe di gruppo é per creare dei gruppi di giocatori che abbiano
 azioni e attributi comuni. \\
 Quando si assegna un giocatore a una istanza di una classe di gruppo non avviene nessun trasferimento
@@ -670,7 +703,10 @@ event PlayerChoiceEvent
 \section{Funzioni}
 Le funzioni sono utilizzate per raggruppare e riutilizzare facilmente un insieme d'istruzioni 
 su uno specifico set d'input. \\ 
-Sono definite tramite il tag \lstinline|function <identificatore> <blocco funzione>|
+Sono definite tramite il tag 
+\begin{lstlisting}
+function <identificatore> <blocco funzione>
+\end{lstlisting}
 
 \subsubsection{Argomenti}
 Gli input funzionano esattamente come gli input delle azioni di una classe ma è 
@@ -684,7 +720,7 @@ ovvero che sono stati assegnati un valore null, quando si chiama la funzione.
 In una funzione è possibile definire un solo blocco effetto.
 
 \subsubsection{Ritorno}
-Il tag di ritorno \lstinline|returns [<type>];| é un tag obbligatorio speciale non associato ad un blocco. \\
+Il tag di ritorno \lstinline|returns [<type>];| é un tag obbligatorio speciale non associato a un blocco. \\
 Definisce il tipo di ritorno della funzione, nel caso non si ritorni nessun tipo é possibile 
 fornire il tag omettendo il tipo.
 
@@ -699,14 +735,101 @@ hello(toPlayer: 1, msg: "hello world");
 \end{lstlisting}
 
 \section{Interactables}
+Sintassi: \lstinline|interactable <identificatore> <blocco>| \\
+Un interagibile é una classa particolare specializzata per modellare i componenti che interagiscono
+direttamente con il giocatore, come le pedine, carte, ecc... \\
+All'interno del blocco identificatore é possibile, come nelle classi, definire attributi,
+funzioni e azioni al suo interno. 
+\paragraph{Proprietario}
+Il proprietario di un interactable é assegnato tramite la stessa sintassi delle classi,
+difatti tutte le nozioni sulla visibilità di una classe si applicano agli interactables.
+
+\subsection{Placeables}
+I placeables
 
 \section{Mazzi}
 
+
 \section{Giocatori}
+I giocatori sono rappresentati da un numero intero che parte da zero al numero di giocatori meno uno. \\
+-
+
+\section{Turni}
+Il turno definisce quale tra i giocatori viene definito attivo e il metodo di default
+per trasferire il controllo. \\
+Il turno definibile piú semplice é il seguente:
+\begin{lstlisting}
+turn <identificatore>
+{
+    default
+    {
+        // Passa il controllo al giocatore successivo 
+        // usando una espressione giocatore
+        return turn.active() + 1;
+    }
+}
+\end{lstlisting}
+Si possono definire molteplici turni che sono attivabili in qualsiasi momento lo si desideri 
+attraverso la funzione \lstinline|turns.use(string turn, optional string phase)|, dove
+turn e phase sono rispettivamente l'identificatore del turno della fase prescelti. \\
+Quando la funzione use é chiamata, il turno attivo è disattivato e sostituito da quello richiesto.
+
+\subsection{Definizione default del turno}
+Il turno di default, o tag di default del turno, é un blocco di istruzioni di tipo player
+che viene chiamato quando la funzione senza parametri \lstinline|turn.pass()| viene chiamata. \\
+Definisce il passaggio di controllo da giocatore a giocatore e di fase in fase di default,
+per definirlo si utilizza l'omonimo tag:
+\begin{lstlisting}
+turn <identificatore>
+{
+    default
+    {
+        <istruzioni>
+        // il tag di default deve ritornare un oggetto non nullo di tipo player
+    }
+}
+\end{lstlisting}
+Alcune funzioni molto utili per creare dei turni complessi si trovano tra le 
+funzioni generali dei turni e dei giocatori, come \lstinline|turn.phase.active()| e
+\lstinline|player.active()|.
+
+\subsection{Funzioni dei turni}
+Le funzioni generali sono delle utilità che forniscono dei metodo per la gestione
+dei turni, come trovare chi é il giocatore attivo oppure passare alla prossima 
+fase / giocatore in base alla implementazione del default. \\
+
+\begin{tabular}{|c|c|p{5cm}|}
+   \hline 
+   Turno attivo & \lstinline|turn.active()| & Restituisce il turno attivo \\
+   \hline
+   Fase attiva & \lstinline|turn.phase.active()| & Restituisce la fase del turno attiva \\
+   \hline
+   Passare al turno & \lstinline|turn.pass(player p, optional string phase)| & 
+   Passa il controllo al giocatore richiesto, 
+   e se specificata nella specifica fase \\
+   \hline
+   Passare il turno & \lstinline|turn.pass()| & Passa il controllo al prossimo giocatore, valutato dal tag di defualt \\
+   \hline 
+\end{tabular}
 
 \section{Boards}
 
 \section{Ereditarietà}
+
+\section{Moltiplici file} \label{MultipleFiles}
+L'utilizzo di piú di un file é supportato attraverso l'utilizzo di speciali sintassi
+chiamate direttive d'importazione. 
+\begin{lstlisting}
+import "<percorso relativo al file>" [as <identificatore>];
+\end{lstlisting}
+Nella dichiarazione dell'importazione è possible assegnare un identificatore al file, 
+attraverso il quale si accederà alle definizioni contenute all'interno di esso. \\
+Nel caso sia omesso, tutte le definizioni all'interno del file importato non devono avere
+conflitti con gli identificatori del file in cui si importano. \\
+Le direttive d'importazione sono definibili solamente all'esterno di qualsiasi blocco,
+prima di qualsiasi definizione o tag. 
+
+
 
 
 
