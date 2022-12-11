@@ -85,7 +85,7 @@ Ogni tipo può assumere il valore null.
 \subsection{Collezioni}
 Una collezione é un qualsiasi gruppo di oggetti che sono rappresentati come una singola unità,
 in altri linguaggi esistono varie tipologie di collezioni come array, hashtables, vectors, ect\dots \\
-Attualmente sono supportati due tipologie: lista e table.
+Attualmente sono supportati due tipologie: lista, table, stack.
 
 \subsubsection{Liste}
 Le liste forniscono un insieme di oggetti accessibili tramite indici numerici interi, che mantiene l'ordine d'inserimento. \cite{CSharpLang} \\
@@ -189,9 +189,18 @@ Stack<<tipo>> <identificatore> = {
     <espressione tipo>,
     <espressione tipo>,
     ...
-}
+};
 \end{lstlisting}
-Lo stack non accetta valori nulli, 
+Lo stack accetta valori nulli nelle funzioni di push ma non lo aggiunge allo stack, trattandolo quindi
+come un noop (no operation). \\
+Le seguenti funzionalità sono supportate:
+\begin{tabular}{|c|c|p{5cm}|}
+    Lunghezza & \lstinline|<stack>.lenght()|& Restituisce il numero di oggetti nello stack \\
+    Inserimento & \lstinline|<stack>.push(<tipo>)| & Inserisce in cima allo stack un oggetto \\
+    Inserimento in fronte& \lstinline|<stack>.push_front(<tipo>)| & Inserisce in fronte allo stack un oggetto \\
+    Pop & \lstinline|<stack>.pop()| & Rimuovare e restituisce l'oggetto in cima allo stack\\
+    Pop in fronte& \lstinline|<stack>.pop_front()| & Rimuove e resistuisce l'oggeto in fronte allo stack\\
+\end{tabular}
 
 
 \subsection{Espressioni}
@@ -756,8 +765,9 @@ funzioni e azioni al suo interno.
 Il proprietario di un interactable é assegnato tramite la stessa sintassi delle classi,
 difatti tutte le nozioni sulla visibilità di una classe si applicano agli interactables.
 
-\subsection{Placeables}
-I placeables
+\paragraph{Interazione con la board}
+Gli interagibili possono essere piazzati nelle tile di una board, nel momento in cui sono piazzati
+in una tile, l'attributo \lstinline|<tile| viene valorizatto con la tile in cui è stato messo. \\
 
 \section{Mazzi}
 
@@ -768,13 +778,17 @@ questo permette di avere una corrispondenza uno a uno utilizzabile in delle espr
 per selezionare un altro giocatore da un certo di partenza (\ref{EspressioniGiocatore}). \\
 
 \subsection{Funzioni dei giocatori}
-Le funzioni generali dei giocatori fornisco delle utilità globali per recuperare informazioni su i players. \\
+Le funzioni generali dei giocatori fornisco delle utilità globali 
+per recuperare informazioni su i players. \\
+\begin{center}
 \begin{tabular}{|c|c|p{5cm}|}
     \hline
     Tutti i giocatori & \lstinline|player.all()| & Restituisce una lista contenente tutti i giocatori \\
     \hline
     Giocatore attivo & \lstinline|player.active()| & Restituisce il giocatore attualmente attivo \\
+    \hline
 \end{tabular}
+\end{center}
 
 \section{Turni}
 Il turno definisce quale tra i giocatori viene definito attivo e il metodo di default
@@ -797,7 +811,7 @@ turn e phase sono rispettivamente l'identificatore del turno della fase prescelt
 Quando la funzione use é chiamata, il turno attivo è disattivato e sostituito da quello richiesto.
 
 \subsection{Definizione default del turno}
-Il turno di default, o tag di default del turno, é un blocco di istruzioni di tipo player
+Il turno di default, o tag di default del turno, é un blocco d'istruzioni di tipo player
 che viene chiamato quando la funzione senza parametri \lstinline|turn.pass()| viene chiamata. \\
 Definisce il passaggio di controllo da giocatore a giocatore e di fase in fase di default,
 per definirlo si utilizza l'omonimo tag:
@@ -816,7 +830,7 @@ funzioni generali dei turni e dei giocatori, come \lstinline|turn.phase.active()
 \lstinline|player.active()|.
 
 \subsection{Funzioni dei turni}
-Le funzioni generali sono delle utilità che forniscono dei metodo per la gestione
+Le funzioni generali sono delle utilità che forniscono dei metodi per la gestione
 dei turni, come trovare chi é il giocatore attivo oppure passare alla prossima 
 fase / giocatore in base alla implementazione del default. \\
 
