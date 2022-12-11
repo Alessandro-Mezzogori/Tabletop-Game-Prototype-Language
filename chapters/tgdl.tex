@@ -338,7 +338,7 @@ stesso identificatore con degli specifici argomenti definiti nella lista degli a
 Il tipo di ritorno dell'espressione corrisponde al tipo di ritorno della funzione. \\
 L'espressione di chiamata è approfondita in \ref*{ChiamataFunzione}
 
-\subsubsection{Espressione giocatore}
+\subsubsection{Espressione giocatore} \label{EspressioniGiocatore}
 Una espressione giocatore, o player expression, è un espressione speciale utilizzata per ritornare 
 un oggetto giocatore. 
 \\
@@ -464,6 +464,15 @@ L'istruzione continue avvia una nuova iterazione dell'istruzione di ciclo più v
 Sintassi: \lstinline|break;|
 L'istruzione break termina l'istruzione di ciclo più vicina che la racchiude.
 
+\subsubsection{Istruzione di fine partita}
+Sintassi: \lstinline|winner <lista di lista di giocatori>;| \\
+L'istruzione di fine partita, detta anche di vittoria, termina l'esecuzione del gioco definendo 
+le classifica finale come definita dal argomento passato: le posizioni sono definite come una lista di giocatori,
+se due o piú giocatori si trovano a parimerito é sufficiente inserirli nella lista all'indice corrispondente 
+alla loro posizione, dove l'indice zero rappresenta il primo posto. \\
+Nel caso si abbia bisogno di un solo vincitore é possibile utilizzare una sintassi abbreviata: 
+\lstinline|winner <giocatore>;| 
+
 \subsection{Direttive}
 Le direttive sono istruzioni particolare definite solamente all'inizio del file, esterne a 
 tutti i blocchi.
@@ -541,7 +550,10 @@ di proprietà, ma si aggiunge all'insieme di giocatori che la condividono.
 \subsubsection{Visibilità globale}
 La visibilità globale o \lstinline|global| è utilizzata per specificare delle classi che sono 
 limitate a una sola istanza in tutto il programma. \\
-Tutti i giocatori possono accedere alle azioni delle classi globali.
+Tutti i giocatori possono accedere alle azioni delle classi globali. \\
+L'istanza é accessibile in qualsiasi blocco che accetti delle espressioni di accesso utilizzando 
+l'identificatore della classe come se fosse l'identificatore della variabile (meccanismo di accesso 
+simile alle classi statiche di altri linguaggi)
 
 \subsection{Azioni}
 Le azioni rappresentano cosa possono fare i giocatori durante il corso del gioco, possono essere avviate
@@ -640,7 +652,7 @@ Il tag effetto identifica il blocco d'istruzioni che viene avviato quando i trig
 soddisfatti. \\
 In un blocco effetto non è possibile definire l'istruzione di ritorno poiché l'azione è trattata come 
 una funzione senza tipo di ritorno, inoltre è possibile definire solo un tag effetto all'interno 
-di una stessa azione.
+di una stessa azione.  \\
 
 \subsubsection{Requisiti}
 \begin{lstlisting}
@@ -751,8 +763,18 @@ I placeables
 
 
 \section{Giocatori}
-I giocatori sono rappresentati da un numero intero che parte da zero al numero di giocatori meno uno. \\
--
+I giocatori sono rappresentati da un numero intero che parte da zero al numero di giocatori meno uno,
+questo permette di avere una corrispondenza uno a uno utilizzabile in delle espressioni matematiche
+per selezionare un altro giocatore da un certo di partenza (\ref{EspressioniGiocatore}). \\
+
+\subsection{Funzioni dei giocatori}
+Le funzioni generali dei giocatori fornisco delle utilità globali per recuperare informazioni su i players. \\
+\begin{tabular}{|c|c|p{5cm}|}
+    \hline
+    Tutti i giocatori & \lstinline|player.all()| & Restituisce una lista contenente tutti i giocatori \\
+    \hline
+    Giocatore attivo & \lstinline|player.active()| & Restituisce il giocatore attualmente attivo \\
+\end{tabular}
 
 \section{Turni}
 Il turno definisce quale tra i giocatori viene definito attivo e il metodo di default
