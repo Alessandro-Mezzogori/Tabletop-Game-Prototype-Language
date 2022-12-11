@@ -195,11 +195,18 @@ Lo stack accetta valori nulli nelle funzioni di push ma non lo aggiunge allo sta
 come un noop (no operation). \\
 Le seguenti funzionalità sono supportate:
 \begin{tabular}{|c|c|p{5cm}|}
+    \hline
     Lunghezza & \lstinline|<stack>.lenght()|& Restituisce il numero di oggetti nello stack \\
+    \hline
     Inserimento & \lstinline|<stack>.push(<tipo>)| & Inserisce in cima allo stack un oggetto \\
+    \hline
     Inserimento in fronte& \lstinline|<stack>.push_front(<tipo>)| & Inserisce in fronte allo stack un oggetto \\
+    \hline
     Pop & \lstinline|<stack>.pop()| & Rimuovare e restituisce l'oggetto in cima allo stack\\
+    \hline
     Pop in fronte& \lstinline|<stack>.pop_front()| & Rimuove e resistuisce l'oggeto in fronte allo stack\\
+    \hline
+    Copia & \lstinline|<stack>.clone()| & Restituisce una copia shallow dello stack \\
 \end{tabular}
 
 
@@ -768,6 +775,8 @@ difatti tutte le nozioni sulla visibilità di una classe si applicano agli inter
 \paragraph{Interazione con la board}
 Gli interagibili possono essere piazzati nelle tile di una board, nel momento in cui sono piazzati
 in una tile, l'attributo \lstinline|<tile| viene valorizatto con la tile in cui è stato messo. \\
+Per muovere un interagibile ad una tile si utilizza la funzione \lstinline|move_to(tile t)| che
+sposta interagibile alla tile passata come argomento. \\ 
 
 \section{Mazzi}
 
