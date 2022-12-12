@@ -775,7 +775,7 @@ difatti tutte le nozioni sulla visibilità di una classe si applicano agli inter
 \paragraph{Interazione con la board}
 Gli interagibili possono essere piazzati nelle tile di una board, nel momento in cui sono piazzati
 in una tile, l'attributo \lstinline|<tile| viene valorizatto con la tile in cui è stato messo. \\
-Per muovere un interagibile ad una tile si utilizza la funzione \lstinline|move_to(tile t)| che
+Per muovere un interagibile a una tile si utilizza la funzione \lstinline|move_to(tile t)| che
 sposta interagibile alla tile passata come argomento. \\ 
 
 \section{Mazzi}
@@ -857,7 +857,106 @@ fase / giocatore in base alla implementazione del default. \\
    \hline 
 \end{tabular}
 
-\section{Boards}
+\section{Tabellone}
+I tabelloni sono delle classi specializzate, definite attraverso la parola chiave \lstinline|board|,
+che rappresentano le tabelle di gioco, ovvero un oggetto con cui
+il giocatore puó interagire piazzando delle pedine, giocando carte, ecc... \\ 
+\begin{lstlisting}
+board <identificatore> <blocco>
+\end{lstlisting}
+
+\subsection{Tessere}
+Le tessere sono delle classi specializzate, definite attraverso la parola chiave \lstinline|tile|,
+che rappresentano una singola tessera o all'interno di un gruppo del tabellone. \\
+\begin{lstlisting}
+tile <identificatore> <blocco attributi o funzioni>
+\end{lstlisting}
+All'interno del blocco di una tessera è possibile definire solamente delle funzioni o degli attributi. \\ 
+Ogni tessera possiede degli attributi predefiniti:
+\begin{center}
+\begin{tabular}{|c|c|p{5cm}|}
+    \hline 
+    Gruppo di appartenza & \lstinline|<tessera>.group| & Riferimento al gruppo di appartenza della tessera \\ 
+    \hline
+    Connessioni & \lstinline|<tessera>.connections| & Lista delle connessioni della tessera \\
+    \hline 
+\end{tabular}
+\end{center}
+
+\subsection{Gruppi}
+I gruppi sono dei tag che permetteno di creare degli insiemi di tessere all'interno di una board,
+sono definiti tramite la seguente sintassi:
+\begin{lstlisting}
+group <identificatore> 
+{
+    geometry <geometria tessera>;
+    grid 
+    {
+        <matrice di tessere>
+    }
+}
+\end{lstlisting}
+Per accedere direttamente a un gruppo dal tabellone si utilizza la table dei gruppi:
+dove la chiave equivale all'identificatore del gruppo e il valore è il gruppo stesso.
+
+\subsubsection{Geometria tessera}
+Esistono 3 possibili geometrie supportate: quadrate (\lstinline|square|), 
+esagonali (\lstinline|hex|), adiacenti (\lstinline|graph|). \\
+La geometria di una tessera all'interno del gruppo definisce come si definiscono all'interno del gruppo: \\
+
+\paragraph{Geometria quadrata}
+Non possiede nessun tratto particolare, 
+il gruppo con questa geometria ha il suo punto di origine in alto a sinistra (0,0). 
+
+\paragraph{Geometria esagonale}
+In questo caso é necessario definire un ulteriore tag body-less chiamato \lstinline|orientation <orientazione>|,
+infatti la geometria esagonlale possiede due possibili orientazioni, \lstinline|row| (esagono a punta in alto) 
+o \lstinline|column| (esagono con faccia in alto); 
+le orientazioni cambiano come la definizione del gruppo è interpretata:
+\begin{itemize}
+    \item Nel caso dell'orientazione row: si hanno le righe pari spostate di una unitá verso destra
+    \item Nel caso dell'orientazione col: si hanno le colonne pari spostate di una unitá verso il bassso.
+\end{itemize}
+
+% TODO tikz grafo per esplicitare il concetto di direzione
+
+\paragraph{Geometria adiacente}
+È utilizzata per poter rappresentare qualsiasi tipo di tabella creando un grafo bidirezionale, dove
+i nodi sono le tessere e le connessioni sono degli oggetti connessione. \\ 
+Non é possibile utilizzare il tag \lstinline|grid| per definire una geometria adiacente ma é 
+necessario utilizzare il tag \lstinline|default| accoppiato
+alla manipolazione manuale sia delle tessere che delle adiacenze di un gruppo.
+
+\subsubsection{Tessera bianca}
+La geometrie quadrate ed esagonali possiedono la tessera bianca che rappresenta lo spazio vuoto, 
+definita tramite la lettera \lstinline|b| all'interno di un gruppo; oppure tramite la tile \lstinline{BlankTile}
+se si utilizza al di fuori della definizione di un gruppo.  
+
+\subsubsection{Recuperare delle specifiche tessere}
+Per accedere a una specifica tessera nei casi di geometrie regolari, si puó utilizzare la doppia
+indicizzazione del gruppo, trattandolo come se fosse una matrice di tessere. \\
+I significati dei due indici cambiano in base alla geometria del gruppo:
+\begin{itemize}
+    \item Quadrata: il primo indice è la colonna, il secondo è la riga.
+    \item Esagonale colonna: il primo indice è la colonna, il secondo é la riga.
+    \item Esagonale riga: il primo indice è la riga, il secondo è la colonna.
+\end{itemize}
+Non è possibile accedere alle tessere di una geometria adiacente tramite indice poichè per definizinoe
+non possiede una struttura regolare facilmente mappabile uno a uno con una griglia. 
+
+\subsubsection{Default}
+Il tag \lstinline|default <blocco istruzioni>| viene eseguito appena dopo l'istanziazione 
+del gruppo in cui è definito. \\
+Permette la modifica non standard di un gruppo, conferendo maggior controllo sulle relazioni tra le tessere 
+e i gruppi.
+
+\subsubsection{Connessioni tra tessere}
+La connesione tra due tessere viene modellata tramite la classe specializzata:
+\begin{lstlisting}
+connection <Identificatori> <blocco attributo o funzione>
+\end{lstlisting}
+Possiede un attributo predefinito \lstinline|tile to| che deve essere popolato con la tessera 
+destinataria della connessione.
 
 \section{Ereditarietà}
 
