@@ -207,8 +207,10 @@ Le seguenti funzionalità sono supportate:
     Pop in fronte& \lstinline|<stack>.pop_front()| & Rimuove e resistuisce l'oggeto in fronte allo stack\\
     \hline
     Copia & \lstinline|<stack>.clone()| & Restituisce una copia shallow dello stack \\
+    \hline
+    Ordinamento casuale & \lstinline|<stack>.shuffle()| & Mescola casualmente lo stack\\
+    \hline
 \end{tabular}
-
 
 \subsection{Espressioni}
 Una espressione è una qualsiasi operazione che coinvolge zero o più operatori e uno o più operandi 
@@ -768,6 +770,7 @@ Un interagibile é una classa particolare specializzata per modellare i componen
 direttamente con il giocatore, come le pedine, carte, ecc... \\
 All'interno del blocco identificatore é possibile, come nelle classi, definire attributi,
 funzioni e azioni al suo interno. 
+
 \paragraph{Proprietario}
 Il proprietario di un interactable é assegnato tramite la stessa sintassi delle classi,
 difatti tutte le nozioni sulla visibilità di una classe si applicano agli interactables.
@@ -778,7 +781,52 @@ in una tile, l'attributo \lstinline|<tile| viene valorizatto con la tile in cui 
 Per muovere un interagibile a una tile si utilizza la funzione \lstinline|move_to(tile t)| che
 sposta interagibile alla tile passata come argomento. \\ 
 
+
 \section{Mazzi}
+I mazzi sono delle classi specializzate che utilizzano la collezione \lstinline|Stack| 
+Si definiscono come le classi tramite la keyword \lstinline|stack|
+\begin{lstlisting}
+stack <identificatore> 
+{ 
+    returns <interagibile>;
+}
+\end{lstlisting}
+All'interno di uno stack si possono definire attributi e funzioni, 
+é necessario definire il tipo d'interagibile che è contenuto all'interno del mazzo.  
+
+\subsection{Operazioni}
+Le operazioni effettuabili su un mazzo sono le stesse che possono essere eseguito su una 
+collezione \lstinline|Stack|. \\
+Inoltre sono presenti le seguenti funzioni
+\begin{center}
+\begin{tabular}{|c|c|p{5cm}|}
+    \hline
+    Rimescola il mazzo corrente & \lstinline|<mazzo>.shuffle()| & rimescola il mazzo corrente ignorando gli scarti \\
+    \hline
+    Rimescola con scarti & \lstinline|<mazzo>.reshuffle()| & Rimescola il mazzo compreso gli scarti \\ 
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection{Scarti di un mazzo}
+Per rimuovere un interagibile dal gioco è necessario chiamare la funzione predefinita 
+\lstinline|<interactable>.discard(stack discard_stack)|, la funzione marca l'interagibile come scartato
+attraverso un flag predefinito \lstinline|bool discarded| e lo aggiunge allo stack passato 
+come argomento della funzione. \\
+Ogni mazzo possiede di uno stack predefinito chiamato \lstinline|<stack>.discard_stack| che 
+viene svuotato durante la chiamata \lstinline|reshuffle()|.
+
+\subsection{Inizializzare un mazzo}
+Per creare la configurazione iniziale di un mazzo bisogna utilizzare in combinazione il tag 
+default e le funzioni della collezione \lstinline|Stack|,  
+infatti il cui blocco default viene avviato dopo la creazione dell'istanza 
+ma prima che sia restituita dall'espressione d'istanziazione. \\
+\begin{lstlisting}
+default
+{
+    <istruzioni per creare un mazzo di default> 
+}
+\end{lstlisting}
 
 
 \section{Giocatori}
@@ -961,6 +1009,7 @@ destinataria della connessione.
 \section{Ereditarietà}
 Ereditarietà consente di definire delle classi derivate che ereditano o eseguono un override degli attributi, funzioni e azioni 
 da una certa classe base \\
+
 \paragraph{Ereditare da una classe base} 
 Significa avere accesso a tutte le funzionalità della classe padre come se appartenessero alla classe figlia,
 ovvero tramite l'operatore di auto riferimento \lstinline|this|.
@@ -974,13 +1023,17 @@ Un tipo derivato é anche dello stesso tipo di tutti i suoi tipi base, ovvero tu
 della classe figlia restituiranno il valore \lstinline|true| se confrontate con una classe 
 antenata nella espressione di controllo del tipo. 
 
-\paragraph{Conversione del tipo}
+\subsection{Conversione del tipo}
 Un tipo base é convertibile a un tipo antenato senza dover utilizzare l'operatore di casting,
 questa operazione è chiamata "upcasting", convertire un tipo derivato a un tipo base. \\
 È importante sapere che e funzioni e azioni chiamate dal tipo convertito avranno 
 lo stesso comportamento che avrebbero se fossero chiamate su il tipo derivato. \\
 Il caso contrario, il "downcasting" o conversione da tipo base a tipo derivato, è ammessa solamente
-se in origine l'istanza era del tipo derivato o figlia del tipo derivito.
+se in origine l'istanza era del tipo derivato o figlia del tipo derivato. \\
+
+\paragraph{Collezioni}
+Le collezioni possono essere convertite ad altre collezioni il cui tipo che contengono segua 
+comunque le regole di upcasting e downcasting sopra definite. 
 
 \subsection{Override}
 Override permette di ridefinire il comportamente di una funzione o azione modificandone
@@ -1008,8 +1061,6 @@ Inoltre all'interno del blocco della classe derivata è possibile avviare la imp
 della base tramite il riferimento alla base \lstinline|base|, che racchiude
 tutte le funzionalità definite nella classe padre. \\
 
-\subsection{Interfaccie}
-
 \section{Moltiplici file} \label{MultipleFiles}
 L'utilizzo di piú di un file é supportato attraverso l'utilizzo di speciali sintassi
 chiamate direttive d'importazione. 
@@ -1036,9 +1087,3 @@ setup
     ...
 }
 \end{lstlisting}
-
-
-
-
-
-
