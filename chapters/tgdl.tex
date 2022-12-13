@@ -959,6 +959,56 @@ Possiede un attributo predefinito \lstinline|tile to| che deve essere popolato c
 destinataria della connessione.
 
 \section{Ereditarietà}
+Ereditarietà consente di definire delle classi derivate che ereditano o eseguono un override degli attributi, funzioni e azioni 
+da una certa classe base \\
+\paragraph{Ereditare da una classe base} 
+Significa avere accesso a tutte le funzionalità della classe padre come se appartenessero alla classe figlia,
+ovvero tramite l'operatore di auto riferimento \lstinline|this|.
+\begin{lstlisting}
+class base {}
+class derived : base {}
+\end{lstlisting}
+
+\paragraph{Controllo sul tipo}
+Un tipo derivato é anche dello stesso tipo di tutti i suoi tipi base, ovvero tutte le istanze
+della classe figlia restituiranno il valore \lstinline|true| se confrontate con una classe 
+antenata nella espressione di controllo del tipo. 
+
+\paragraph{Conversione del tipo}
+Un tipo base é convertibile a un tipo antenato senza dover utilizzare l'operatore di casting,
+questa operazione è chiamata "upcasting", convertire un tipo derivato a un tipo base. \\
+È importante sapere che e funzioni e azioni chiamate dal tipo convertito avranno 
+lo stesso comportamento che avrebbero se fossero chiamate su il tipo derivato. \\
+Il caso contrario, il "downcasting" o conversione da tipo base a tipo derivato, è ammessa solamente
+se in origine l'istanza era del tipo derivato o figlia del tipo derivito.
+
+\subsection{Override}
+Override permette di ridefinire il comportamente di una funzione o azione modificandone
+il tag effetto. \\ 
+Per definire un override di una funzione é sufficiente definire nella classe derivante
+un azione o funzione con lo stesso identificatore definito nella classe padre con la 
+parola chiave \lstinline|override|:
+\begin{lstlisting}
+class Base 
+{
+    function A { 
+        effect { // esegui istruzioni } 
+    }
+}
+
+class Derived : Base
+{
+    override function A { 
+        effect { // esegui altre istruzioni }
+    }
+}
+\end{lstlisting}
+Nell'effetto dell'override è possibile accedere agli stessi input dell'originale. 
+Inoltre all'interno del blocco della classe derivata è possibile avviare la implementazione 
+della base tramite il riferimento alla base \lstinline|base|, che racchiude
+tutte le funzionalità definite nella classe padre. \\
+
+\subsection{Interfaccie}
 
 \section{Moltiplici file} \label{MultipleFiles}
 L'utilizzo di piú di un file é supportato attraverso l'utilizzo di speciali sintassi
