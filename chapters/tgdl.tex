@@ -491,6 +491,13 @@ alla loro posizione, dove l'indice zero rappresenta il primo posto. \\
 Nel caso si abbia bisogno di un solo vincitore é possibile utilizzare una sintassi abbreviata: 
 \lstinline|winner <giocatore>;| 
 
+\subsubsection{Istruzione di input}
+Sintassi: \lstinline|[optional] [<mod>] input <tipo> <identificatore> [<filtri>];|
+Ha lo stesso comportamento degli input di azioni e funzioni \ref{InputAzione}, la variabile
+creata dall'input ha visibilità dello scope in cui è definita. \\
+Non sono ammessi modificatori \lstinline|function| \ref{ModificatoreFunction}.
+
+
 \subsection{Direttive}
 Le direttive sono istruzioni particolare definite solamente all'inizio del file, esterne a 
 tutti i blocchi.
@@ -581,7 +588,7 @@ Un'azione è definita all'interno di una classe tramite il relativo tag: \\
 action <identificatore> <blocco azione>
 \end{lstlisting}
 
-\subsubsection{Argomenti dell'azione}
+\subsubsection{Argomenti dell'azione} \label{InputAzione}
 \begin{lstlisting}
 [optional] [<mod>] input <tipo> <identificatore> [<filtri>]
 \end{lstlisting}
@@ -738,7 +745,7 @@ Sono definite tramite il tag
 function <identificatore> <blocco funzione>
 \end{lstlisting}
 
-\subsubsection{Argomenti}
+\subsubsection{Argomenti} \label{ModificatoreFunction}
 Gli input funzionano esattamente come gli input delle azioni di una classe ma è 
 possibile definire un ulteriore tipologia d'input chiamata input della funzione,
 tramite il modificatore \lstinline|function|. \\
@@ -1087,3 +1094,16 @@ setup
     ...
 }
 \end{lstlisting}
+
+\section{Gestione della memoria}
+Il linguaggio possiede una gestione automatica della memoria tramite garbage collector.
+
+\subsection{Garbage Collector}
+Il garbage collector si occupa di liberare la memoria degli oggetti che sono usciti 
+dalla loro visibilità e non possiedono nessun'altro riferimento, rendendo di fatto 
+inaccessibile la specifica istanza. \\
+
+\subsection{Input injector}
+L'input injector é un componente del linguaggio che si occupa tenere traccia degli
+oggetti che hanno uno o piú riferimenti visibili per poterli utilizzare all'interno 
+dei tag input, tramite i filtri oppure direttamente creando una collezione adatta. 
