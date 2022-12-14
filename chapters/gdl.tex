@@ -1,10 +1,53 @@
-\begin{itemize}
-    \item Cos'è 
-    \item dove è nata
-    \item motivi perché nata
-    \item sintassi
-    \item usi
-\end{itemize}
+\section{Cos'è} % TODO titolo migliore
+Parte del "General Game Playing Project" dell'università di Stanford,
+è stata concepita da Michael Genesereth come una rappresentazione di alto livello per 
+il formalismo di descrivere le regole di qualsiasi gioco. \\
+Basato sulla concenzione dei giochi da tavolo come macchine a stati finiti in cui il singolo stato
+è un record di un database,
+permette di condividere un singolo agente, con la conoscenza logica della sintassi di gdl,
+attraverso molteplici possibili giochi; al contrario dei modelli super specializzati in uno solo o 
+in un piccolo insieme come DeepMind AlphaStar \cite{AlphaStar},
+che ha superato i limiti umani nel famoso videogioco di strategia in tempo reale "StarCraft 2",
+o DeepMind AlphaZero \cite{AlphaZero} che conquistò scacchi, shogi e Go. \\
+
+\section{Sintassi}
+La sintassi originale di Game Description Language è molto semplice, composta da solo nove parole chiave:
+\begin{center}
+\begin{tabular}{|c|p{5cm}|}
+    \hline
+    role(r) & definisce un ruolo r \\
+    \hline
+    base(p) & definisce una proposizione base p \\
+    \hline
+    action(a) & definisce un azione possibile a \\
+    \hline
+    init(p) & definisce che la proposizione p é vera nello stato iniziale del gioco \\ 
+    \hline
+    legal(a) & definisce il giocatore in controllo puó legalmente eseguire l'azione a \\
+    \hline
+    goal(r, n) & definisce che lo stato corrente ha punteggio n per il giocatore r \\
+    \hline
+    terminal & definisce che lo stato corrente é uno stato finale del gioco \\ 
+    \hline
+\end{tabular}
+\end{center}
+Inoltre per avere un programma legale, gdl richiede una definizione precisa di role, base, action, init;
+le ultime tre definite attraverso l'operatore di definizione é \lstinline|:-|. \\
+\begin{lstlisting}[caption=Esempio: definizione cella di tris]
+base(cell(M,N,x)) :- index(M) & index(N)
+base(cell(M,N,o)) :- index(M) & index(N)
+base(cell(M,N,b)) :- index(M) & index(N)
+\end{lstlisting}
+
+% continue da link http://ggp.stanford.edu/chapters/chapter_02.html
+
+\subsection{Estensioni}
+% Menziona le estensioni GDL 2 e GDL 3 e rispettivamente cosa aggiungono 
+
+\section{Utilizzi principali}
+% Machine learning ( esempi di utilizzo in machine learnign ? )
+% General game playing competition
+
 
 \section{Distanza dal modello mentale dei giochi}
 Il suo utilità nel ambito di descrivere i giochi come cambiamenti di stati 
