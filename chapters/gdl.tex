@@ -9,52 +9,87 @@ attraverso molteplici possibili giochi; al contrario dei modelli super specializ
 in un piccolo insieme come DeepMind AlphaStar \cite{AlphaStar},
 che ha superato i limiti umani nel famoso videogioco di strategia in tempo reale "StarCraft 2",
 o DeepMind AlphaZero \cite{AlphaZero} che conquistò scacchi, shogi e Go. \\
+La flessibilitá dei giocatori generali apre la possibilitá di creare dei modelli d'intelligenza artificiale 
+che possa dedurre dalla sola descrizione logica un metodo efficacie per risolvere qualsiasi tipologia di gioco,
+sia complessa come scacchi e go ma anche semplice come tris.  
 
 \section{Sintassi}
-La sintassi originale di Game Description Language è molto semplice, composta da solo nove parole chiave:
+Esistono quattro classi di simboli: le costanti di oggetto, 
+le costanti di funzione, le costanti di relazione e le variabili. \\
+\begin{itemize}
+    \item Termine: é o una costante di oggetto o una variabile o un termine funzionale.
+    \item Atomo: é un espressione formata dalla relazione tra una costante e n termini
+    \item Letterale: un atomo o la negazione di un atomo
+    \item {
+        Regola: un espressione composta da una testa, l'operator \lstinline|:-| e una congiunzione, 
+        marcata dall'operatore \lstinline|&|, di zero o piú letterali.
+    }
+\end{itemize}
 \begin{center}
 \begin{tabular}{|c|p{5cm}|}
     \hline
-    role(r) & definisce un ruolo r \\
+    role(r) & definisce un ruolo \lstinline|r| nel gioco \\
     \hline
-    base(p) & definisce una proposizione base p \\
+    base(p) & definisce una proposizione base \lstinline|p| del gioco \\
     \hline
-    action(a) & definisce un azione possibile a \\
+    input(r, a) & definisce \lstinline|a| come un azione del ruolo \lstinline|r| \\
     \hline
-    init(p) & definisce che la proposizione p é vera nello stato iniziale del gioco \\ 
+    init(p) & definisce la proposizione \lstinline|p| come vera nello stato iniziale del gioco \\ 
     \hline
-    legal(a) & definisce il giocatore in controllo puó legalmente eseguire l'azione a \\
+    true(p) & definisce la proposizione \lstinline|p| come vera nello stato corrente del gioco \\
     \hline
-    goal(r, n) & definisce che lo stato corrente ha punteggio n per il giocatore r \\
+    does(r, a) & definisce che il giocatore \lstinline|r| esegue l'azione \lstinline|a| \\
     \hline
-    terminal & definisce che lo stato corrente é uno stato finale del gioco \\ 
+    next(p) & definisce la proposizion \lstinline|p| come vera nello stato successivo \\
+    \hline
+    legal(r, a) & definisce che é legale per il ruolo \lstinline|r| eseguire l'azione \lstinline|a| \\
+    \hline
+    goal(r, n) & definisce che lo stato corrente ha utilità \lstinline|n| per il giocatore \lstinline|r| \\
+    \hline
+    terminale & definisce lo stato corrente come uno stato terminale \\ 
     \hline
 \end{tabular}
 \end{center}
-Inoltre per avere un programma legale, gdl richiede una definizione precisa di role, base, action, init;
-le ultime tre definite attraverso l'operatore di definizione é \lstinline|:-|. \\
+Inoltre per avere un programma legale si hanno le seguenti regole:
+\begin{itemize}
+    \item Si richiede una definizione precisa di role, base, action e init
+    \item Bisogna definire legal, goal e terminal in funzione di una relazione true 
+    \item Bisogna definire next in termini di relazioni true e does
+    \item Bisogna che non ci siano regole con nessuna di relazione true o does nella testa
+\end{itemize} 
 \begin{lstlisting}[caption=Esempio: definizione cella di tris]
 base(cell(M,N,x)) :- index(M) & index(N)
 base(cell(M,N,o)) :- index(M) & index(N)
 base(cell(M,N,b)) :- index(M) & index(N)
 \end{lstlisting}
+Oltre alle primitive di gdl é possibile definire delle proprie relazioni come nell'esempio seguente:
+\begin{lstlisting}[caption=colonnet e righe in tris]
+line(X) :- row(M,X)
+line(X) :- column(M,X)
 
-% continue da link http://ggp.stanford.edu/chapters/chapter_02.html
+row(M,X) :- 
+    true(cell(M,1,X)) &
+    true(cell(M,2,X)) &
+    true(cell(M,3,X)) 
+
+column(M,X) :- 
+    true(cell(1,M,X)) &
+    true(cell(2,M,X)) &
+    true(cell(3,M,X)) 
+\end{lstlisting} 
+
 
 \subsection{Estensioni}
-% Menziona le estensioni GDL 2 e GDL 3 e rispettivamente cosa aggiungono 
+La sintassi originale di Game Description Language venne poi estesa da Michael Thielscher per le descrizioni di giochi 
+a informazione incompleta \cite*{GDL2} e per aggiungere l'introspezione al linguaggio  \cite*{GDL3}
 
-\section{Utilizzi principali}
-% Machine learning ( esempi di utilizzo in machine learnign ? )
-% General game playing competition
-
-
-\section{Distanza dal modello mentale dei giochi}
-Il suo utilità nel ambito di descrivere i giochi come cambiamenti di stati 
-utile per intelligenza artificiale, in ambito umano a meno che uno non sia 
-abituato lo rende più complesso da capire. 
+\section{Distanza dal giocatore umano}
+Se un giocatore generale artificiale beneficia enormemente dalla descrizione logica di un gioco, 
+e quindi dalla sua interpretazione come macchina a stati finiti, un umano al contrario non razionalizza
+un gioco da tavolo come una serie di stati ma piú come 
 
 \begin{itemize}
+    \item mancanza di un linguaggio per protipizzare giochi interagenti con umani
     \item Difficile da capire un gioco come sequenza di stati legali
     \item Difficile capire significa anche da scrivere
     \item inadatto per creare dei prototipi veloci per testare 
