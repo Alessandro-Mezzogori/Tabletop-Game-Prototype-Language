@@ -2,6 +2,8 @@
 %\documentclass[12pt, twoside]{report}
 %TODO Ricordarsi di stampare con l'opzione twoside
 
+\usepackage{array}
+
 \usepackage{times}
 
 \usepackage[utf8]{inputenc}
@@ -26,7 +28,6 @@
 \usepackage{listings}
 \usepackage[dvipsnames]{xcolor}
 
-\iffalse
 \lstdefinelanguage{TGDL}
 {
     % list of keywords
@@ -48,14 +49,11 @@
 \lstset{
     language=TGDL,
     numbers=none,
-    number:wstyle=\color{Purple},
-    keywordstyle=\color{Aquamarine},
-    commentstyle=\color{ForestGreen},
-    stringstyle=\color{Bittersweet},
+    %basicstyle=\lst@ifdisplaystyle\color{blue}\fi,
+    basicstyle=\ttfamily,
     tabsize=3,
     escapeinside={(*}{*)}
 }
-\fi
 
 \usepackage{hyperref}
 \hypersetup{
