@@ -11,7 +11,7 @@ Gli operatori e le clausole sono delle parole chiave o simboli riservati che per
 la costruzione delle espressioni e delle istruzioni.
 
 \subsection{Blocchi}
-I Blocchi sono un insieme struttura d'istruzioni, tag e altri blocchi.
+I blocchi sono un insieme struttura d'istruzioni, tag e altri blocchi.
 Un blocco si definisce come tutto il contenuto all'interno di una coppia di parentesi graffe,
 rispettivamente aperta e chiusa. 
 \\
@@ -25,7 +25,7 @@ dove figlio significa definito all'interno del padre (annidato).
 \subsection{Tags}
 I Tag sono delle parole chiave riservate che modificano il comportamento del blocco associato, 
 ogni tag descrive cosa è permesso definire al suo interno. \\
-All'interno della proposta è possibile che si trovi la dicitura blocco $<$tag$>$ come abbreviazione
+All'interno della proposta è possibile che si trovi la dicitura blocco tag come abbreviazione
 per indicare la coppia tag e relativo blocco associato.
  
 \subsection{Commenti}
@@ -34,13 +34,13 @@ Per commentare una riga è sufficiente inserire una doppia barra "//", qualsiasi
 le due barre è considerata parte del commento.
 
 \section{Primitive del linguaggio}
-Tabletop Game Description Language si basa su un insieme di primitive da cui sono costruire tutte 
+Tabletop Game Prototype Language si basa su un insieme di primitive da cui sono costruire tutte 
 le funzionalità del linguaggio.
  
 \subsection{Oggetti}
 Un oggetto è un'istanza di una certa classe, un blocco di memoria che viene allocato e configurato secondo
 le specifiche definite dalla classe. \\
-Gli oggetti hanno due comportamenti principali:
+Gli oggetti hanno due comportamenti principali, ispirati dal linguaggio C\# \cite{CSharpLang}:
 \paragraph{Oggetti valore} Detti anche Value objects, 
 si riferiscono direttamente al valore. Quando avviene una copia dell'oggetto
 viene creata una nuova istanza della stessa tipologia di oggetto che contiene lo stesso valore.
@@ -55,7 +55,6 @@ Una conseguenza importante del meccanismo dei riferimenti è che qualsiasi cambi
 oggetto riferimento sarà rispecchiato da tutti gli altri reference objects che possiedono lo stesso riferimento
 al blocco di memoria
 
-\newpage
 \subsection{Tipi primitivi}
 I tipi primitivi sono degli oggetti valore particolari che rappresentano i valori puri del linguaggio come
 i numeri, le stringhe di testo, i valori booleani.
@@ -81,10 +80,11 @@ rappresentati dalle parole chiave "true" per il valore vero e "false" per il val
 Il valore null non è un tipo primitivo in sé ma serve per indicare l'assenza del valore in una variabile,
 Ogni tipo può assumere il valore null.
 
-\subsection{Collezioni}
+\subsection{Collezioni} % Aggiungere la sintassi generica, ispirata dalla sintassi dei generics di c# e java
 Una collezione é un qualsiasi gruppo di oggetti che sono rappresentati come una singola unità,
 in altri linguaggi esistono varie tipologie di collezioni come array, hashtables, vectors, ect\dots \\
-Attualmente sono supportate tre tipologie: lista, table, stack.
+Attualmente sono supportate tre tipologie: lista, table, stack, la cui sintassi è inspirata dalle
+collezioni generiche del linguaggio C\#
 
 \subsubsection{Liste}
 Le liste forniscono un insieme di oggetti accessibili tramite indici numerici interi, che mantiene l'ordine d'inserimento. \cite{CSharpLang} \\
@@ -136,7 +136,7 @@ Le seguenti funzionalità sono supportate dalle liste: \\
 \end{center}
 
 \subsubsection{Table}
-Ispirata dalla omonima struttura dati del famoso linguaggio di scripting \cite{LUA},
+Ispirata dalla omonima struttura dati del famoso linguaggio di scripting LUA \cite{LUA},
 sono array associativi, ovvero che possono essere indicizzati non solo con dei 
 numeri ma con qualsiasi oggetto eccetto il valore null. \\
 Per dichiarare una table si utilizza il tipo table, composto dalla parola chiave
@@ -173,8 +173,6 @@ Le seguenti funzionionalità sono supportate per le table: \\
     \hline
 \end{tabular}
 \end{center}
-
-\newpage
 
 \subsubsection{Stack}
 Gli stack sono una raccolta di oggetti di tipo LIFO (Last-in, First-out) \cite{CSharpLang}.
@@ -317,8 +315,9 @@ In base all'espressione si accederà a tipologie di oggetti diversi.
     }
 \end{itemize}
 
-\subsubsection{Espressione tipo}
-Le espressioni tipo, o type expression, sono tutte quelle espressioni che si occupano della 
+\subsubsection{Espressione tipo} 
+Ispirate dal linguaggio C\# per la loro chiarezza,
+le espressioni tipo o type expression sono tutte quelle espressioni che si occupano della 
 gestione dei tipi degli oggetti:
 \begin{itemize}
     \item

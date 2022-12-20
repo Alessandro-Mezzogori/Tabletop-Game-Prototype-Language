@@ -1,17 +1,20 @@
-Parte del "General Game Playing Project" dell'università di Stanford,
-è stata concepita da Michael Genesereth come una rappresentazione di alto livello per 
-la descrizione delle regole di qualsiasi gioco. \\
-È basato sulla concenzione dei giochi da tavolo come macchine a stati finiti, in cui il singolo stato
-è un record di un database. \\
-Permette di condividere un singolo agente, con la conoscenza logica della sintassi di GDL,
-attraverso molteplici possibili giochi; \\ 
-al contrario dei modelli super specializzati in uno solo o 
-in un piccolo insieme come DeepMind \textit{AlphaStar} \cite{AlphaStar},
-che ha superato i limiti umani nel famoso videogioco di strategia in tempo reale \textit{StarCraft 2},
-o DeepMind \textit{AlphaZero} \cite{AlphaZero} che conquistò scacchi, shogi e Go. \\
+\textit{Game Description Language} é un formalismo di alto livello per descrivere le meccaniche 
+e regole di un generico gioco,
+basato sulla visione di quest'ultimo come una macchina a stati finiti. \\
+È stato proposto da Michael Genesereth \cite{GDLSpecification}, professore nel dipartimento d'informatica
+all'università di Stanford, come parte del \textit{General Game Playing Project}.
+Il progetto ha l'obiettivo di sviluppare degli agenti generici che possano interagire 
+con un gioco sconosciuto senza nessuno intervento umano. \\
+Al contrario dei modelli specializzati in uno o in un piccolo insieme di giochi come 
+DeepMind \textit{AlphaZero} \cite{AlphaZero} che conquistò scacchi, 
+shogi e Go battendo anche i rispettivi migliori giocatori al mondo, sia umani sia digitali. \\
 La flessibilitá dei giocatori generali apre la possibilitá di creare dei modelli d'intelligenza artificiale 
 che possano dedurre dalla sola descrizione logica un metodo efficacie per risolvere qualsiasi tipologia di gioco,
-sia complessa come scacchi e go ma anche semplice come tris.  
+sia complessa come scacchi e go, ma anche semplice come tris. \\
+\textit{GDL} permette agli agenti GGP (\textit{General Game Playing Agents}) di avere un' 
+unica sintassi capace di descrivere un qualsiasi ambiente di gioco, consentendo 
+ai sudetti agenti di estrapolare le relazioni tra i vari nodi di sintassi del linguaggio,
+imparando i concetti di alto livello necessari per una prestazione generale.
 
 \section{Sintassi}
 Esistono quattro classi di simboli: le costanti di oggetto, 
