@@ -1,3 +1,7 @@
+\textit{Tabletop Game Prototype Language} é una nuova possibile sintassi 
+per un linguaggio specializzato nella prototipizzazione dei giochi da tavolo,
+proposto in questa tesi e illustrato nelle pagine successive.
+
 \section{Nozioni Fondamentali}
 
 \subsection{Identificatori}
@@ -476,11 +480,11 @@ Si divide in tre parti principali:
 \end{enumerate}
 
 \subsubsection{Istruzione continue}
-\lstinline|continue;|
+\lstinline|continue;| \\
 L'istruzione continue avvia una nuova iterazione dell'istruzione di ciclo più vicina che la racchiude.
 
 \subsubsection{Istruzione break}
-\lstinline|break;|
+\lstinline|break;| \\
 L'istruzione break termina l'istruzione di ciclo più vicina che la racchiude.
 
 \subsubsection{Istruzione di fine partita}
@@ -498,9 +502,8 @@ Ha lo stesso comportamento degli input di azioni e funzioni \ref{InputAzione}, l
 creata dall'input ha visibilità dello scope in cui è definita. \\
 Non sono ammessi modificatori \lstinline|function| \ref{ModificatoreFunction}.
 
-
 \subsection{Direttive}
-Le direttive sono istruzioni particolare definite solamente all'inizio del file, esterne a 
+Le direttive sono istruzioni particolari definite solamente all'inizio del file, esterne a 
 tutti i blocchi.
 
 \subsubsection{Direttiva d'importazione}
@@ -509,10 +512,10 @@ file, evitando dei possibili conflitti e permettendo di avere un progetto ben or
 Per maggiori informazioni vedere \ref{MultipleFiles}
 
 \subsubsection{Direttiva di gioco}
+\lstinline|game "<nome del gioco>";| \\
 La direttiva di gioco ha il compito di definire il nome del progetto e il file principale
 che deve contenere il tag \lstinline|setup|; é utilizzabile solamente all'inizio del file 
 come primo elemento. \\
-
 
 \section{Classi}
 \lstinline|<visibilita> class <identificatore> <blocco classe>| \\
