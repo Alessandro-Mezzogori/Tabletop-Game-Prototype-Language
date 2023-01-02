@@ -50,7 +50,7 @@
     language=TGDL,
     numbers=none,
     %basicstyle=\lst@ifdisplaystyle\color{blue}\fi,
-    basicstyle=\ttfamily,
+    basicstyle=\ttfamily\color{darkgray},
     tabsize=3,
     escapeinside={(*}{*)}
 }
@@ -62,10 +62,12 @@
     linktoc=all
 }
 
+\usepackage{tabularx}
+\usepackage{makecell}
+
 \usepackage{csquotes}
 \usepackage{biblatex}
 \addbibresource{bibliografia.bib}
-
 
 %Custom header and foot
 %TODO Ricordarsi di utilizzare durante la stampa conl'opzione twoside
@@ -108,6 +110,8 @@
 }
 %------------------------------
 
+
+
 \title{
     {Proposta per la prototipizzazione digitale di generici giochi da tavolo} \\
     {\large Università di Modena e Reggio} \\
@@ -116,6 +120,7 @@
 \date{Lunedì 19 Dicembre 2022}
 
 \begin{document}
+
 \maketitle
 \blankpage
 \tableofcontents

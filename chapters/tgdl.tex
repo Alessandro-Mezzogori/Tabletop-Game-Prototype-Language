@@ -105,18 +105,17 @@ List<<tipo>> <identificatore> = {
     ...
 };
 \end{lstlisting}
-La lista accetta anche valori nulli, l'indice corrispondente presenterà un valore nullo quando
-si farà accesso. \\
-Le seguenti funzionalità sono supportate dalle liste: \\
+La lista accetta anche valori nulli, l'indice corrispondente presenterà un valore nullo quando si farà accesso. 
+Le seguenti funzionalità sono supportate dalle liste: 
 \begin{center}
-\begin{tabular}{| p{2cm} | c | p{4.2cm} |}
+\begin{tabularx}{\linewidth}{| X | c | X |}
     \hline 
     Lunghezza & \lstinline|<lista>.lenght| & calcola il numero d'indici occupati \\
     \hline
     Accesso & \lstinline|<lista>[<numero>]| & accede all'indice numero, se non é intero la parte decimale verrà
      troncata. \\
     \hline
-    Aggiungere una lista & \lstinline|<lista>.append(<altra lista>)| & aggiunge tutti gli elementi di una lista in code \\
+    Aggiungere \newline una lista & \lstinline|<lista>.append(<lista>)| & aggiunge tutti gli elementi di una lista in code \\
     \hline
     Rimuovere tutto & \lstinline|<lista>.clear()|& rimuove tutti gli oggetti dalla lista\\
     \hline
@@ -132,13 +131,14 @@ Le seguenti funzionalità sono supportate dalle liste: \\
     Rimuovi elemento all'indice & \lstinline|<lista>.removeAt(<indice>)|& rimuove l'oggetto all'indice corrispondente,
     sposta il resto della lista avanti di una posizione \\
     \hline    
-    Ordinamento casuale & \lstinline|<lista>.shuffle()| & mescola casualmente la lista \\
+    Ordinamento \newline casuale & \lstinline|<lista>.shuffle()| & mescola casualmente la lista \\
     \hline
     Copia & \lstinline|<lista>.copy()| & crea una copia shallow della lista \\
     \hline
-\end{tabular}
+\end{tabularx}
 \end{center}
 
+\newpage
 \subsubsection{Table}
 Ispirata dalla omonima struttura dati del famoso linguaggio di scripting LUA \cite{LUA},
 sono array associativi, ovvero che possono essere indicizzati non solo con dei 
@@ -146,7 +146,7 @@ numeri ma con qualsiasi oggetto eccetto il valore null. \\
 Per dichiarare una table si utilizza il tipo table, composto dalla parola chiave
 \lstinline|Table| e una coppia di parentesi angolate con all'loro interno il tipo degli 
 oggeti che si vuole raggruppare \lstinline|Table<<tipo>>|. \\
-Inizializzazione é effetuata tramite un blocco in cui sono definibili delle coppie
+L'inizializzazione é effettuata tramite un blocco in cui sono definibili delle coppie
 di espressioni separate da una virgola.
 \begin{lstlisting}
 Table<<tipo>> <identificatore> = {
@@ -161,7 +161,7 @@ lo stesso tipo definito nella dichiarazione. \\
 In caso una espressione chiave venga valutata an null, il programma terminerà con errore.
 Le seguenti funzionionalità sono supportate per le table: \\
 \begin{center}
-\begin{tabular}{| c | c | p{5cm}|}
+\begin{tabularx}{\linewidth}{| X | c | X |}
     \hline 
     Funzione & Sintassi & Descrizione \\
     \hline 
@@ -175,9 +175,10 @@ Le seguenti funzionionalità sono supportate per le table: \\
     \hline
     Rimozione coppia & \lstinline|<table>[<chiave>]| = null & rimuove una coppia chiave/valore dalla table \\
     \hline
-\end{tabular}
+\end{tabularx}
 \end{center}
 
+\newpage
 \subsubsection{Stack}
 Gli stack sono una raccolta di oggetti di tipo LIFO (Last-in, First-out) \cite{CSharpLang}.
 Per dichiarare uno stack si utilizza il tipo stack, composto dalla parola chiave \lstinline|Stack|
@@ -193,10 +194,10 @@ Stack<<tipo>> <identificatore> = {
 };
 \end{lstlisting}
 Lo stack accetta valori nulli nelle funzioni di push ma non lo aggiunge allo stack, trattandolo quindi
-come un noop (no operation). \\
-Le seguenti funzionalità sono supportate: \\
+come un noop (no operation). \\ 
+Le seguenti funzionalità sono supportate: 
 \begin{center}
-\begin{tabular}{|p{2cm}|c|p{4.5cm}|}
+\begin{tabularx}{\linewidth}{|X|c|X|}
     \hline
     Lunghezza & \lstinline|<stack>.lenght()|& Restituisce il numero di oggetti nello stack \\
     \hline
@@ -212,9 +213,10 @@ Le seguenti funzionalità sono supportate: \\
     \hline
     Ordinamento casuale & \lstinline|<stack>.shuffle()| & Mescola casualmente lo stack\\
     \hline
-\end{tabular}
+\end{tabularx}
 \end{center}
 
+\newpage
 \subsection{Espressioni}
 Una espressione è una qualsiasi operazione che coinvolge zero o più operatori e uno o più operandi 
 (o espressioni) che può essere valutata all’interno del linguaggio. \\
@@ -226,7 +228,7 @@ Nella definizione delle espressioni, con il tipo del valore si intende una quals
 un oggetto dello stesso tipo.
 
 \subsubsection{Espressioni letterali}
-Le espressioni letterali sono un qualsiasi valore puro di un tipo primitivo (number, string, bool). \\
+Le espressioni letterali sono un qualsiasi valore puro di un tipo primitivo (number, string, bool). \\ 
 Seguono alcuni esempi di espressioni letterali separata dalla virgola: 1, 0.2, “hello world”, true, false
 
 \subsubsection{Espressioni matematiche}
@@ -810,13 +812,13 @@ Le operazioni effettuabili su un mazzo sono le stesse che possono essere eseguit
 collezione \lstinline|Stack|. \\
 Inoltre sono presenti le seguenti funzioni
 \begin{center}
-\begin{tabular}{|p{4cm}|c|p{5cm}|}
+\begin{tabularx}{\linewidth}{|l|c|X|}
     \hline
-    Rimescola il mazzo corrente & \lstinline|<mazzo>.shuffle()| & rimescola il mazzo corrente ignorando gli scarti \\
+    Rimescola & \lstinline|<mazzo>.shuffle()| & rimescola il mazzo corrente ignorando gli scarti \\
     \hline
     Rimescola con scarti & \lstinline|<mazzo>.reshuffle()| & Rimescola il mazzo compreso gli scarti \\ 
     \hline
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 \subsection{Scarti di un mazzo}
@@ -848,13 +850,13 @@ per selezionare un altro giocatore da un certo di partenza (\ref{EspressioniGioc
 Le funzioni generali dei giocatori forniscono delle utilità globali  per recuperare informazioni 
 su i players. 
 \begin{center}
-\begin{tabular}{|c|c|p{7cm}|}
+\begin{tabularx}{\linewidth}{|l|c|X|}
     \hline
     Tutti i giocatori & \lstinline|player.all()| & Restituisce una lista contenente tutti i giocatori \\
     \hline
     Giocatore attivo & \lstinline|player.active()| & Restituisce il giocatore attualmente attivo \\
     \hline
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 \section{Turni}
@@ -903,19 +905,25 @@ dei turni, come trovare chi é il giocatore attivo oppure passare alla prossima
 fase / giocatore in base alla implementazione del default. \\
 
 \begin{center}
-\begin{tabular}{|p{1.5cm}|c|p{5cm}|}
+\begin{tabularx}{\linewidth}{|l|p{6cm}|X|}
    \hline 
    Turno attivo & \lstinline|turn.active()| & Restituisce il turno attivo \\
    \hline
    Fase attiva & \lstinline|turn.phase.active()| & Restituisce la fase del turno attiva \\
    \hline
-   Passare al turno & \lstinline|turn.pass(player p, optional string phase)| & % TODO trovare un modo per spezzare 
+   Passare al turno &
+    \lstinline|turn.pass(|\newline
+    \lstinline|player p,|\newline
+    \lstinline[keepspaces]|optional string phase|\newline
+    \lstinline|)|
+    &
    Passa il controllo al giocatore richiesto, 
-   e se specificata nella specifica fase \\
+   e se specificata in una precisa fase \\
    \hline
-   Passare il turno & \lstinline|turn.pass()| & Passa il controllo al prossimo giocatore, valutato dal tag di defualt \\
+   Passare il turno & \lstinline|turn.pass()| & Passa il controllo al prossimo giocatore, 
+   valutato dal tag di default \\
    \hline 
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 \section{Tabellone}
@@ -1105,9 +1113,13 @@ setup
 Il linguaggio possiede una gestione automatica della memoria tramite garbage collector.
 
 \subsection{Garbage Collector}
-Il garbage collector si occupa di liberare la memoria degli oggetti che sono usciti 
-dalla loro visibilità e non possiedono nessun altro riferimento, rendendo di fatto 
-inaccessibile la specifica istanza. 
+Il garbage collector si occupa di liberare la memoria allocata degli oggetti 
+che non possiedono nessun riferimento visible, recuperando la memoria utilizzata
+per poterla riallocare in un momento futuro. \\ 
+Internamente viene utilizzato un contatore che mantiene il numero di riferimenti 
+allo stesso oggeto, quando si crea una copia di un oggetto il contatore aumenta
+pari al numero di copie create e viceversa decrementa quando un riferimento 
+esce dalla visibiltá corrente.
 
 \subsection{Input injector}
 L'input injector é un componente del linguaggio che si occupa tenere traccia degli
