@@ -780,7 +780,7 @@ hello(toPlayer: 1, msg: "hello world");
 
 \section{Interactables}
 \lstinline|interactable <identificatore> <blocco>| \\
-Un interagibile é una classa particolare specializzata per modellare i componenti che interagiscono
+Un interagibile é una classe particolare specializzata per modellare i componenti che interagiscono
 direttamente con il giocatore, come le pedine, carte, ecc... \\
 All'interno del blocco identificatore é possibile, come nelle classi, definire attributi,
 funzioni e azioni al suo interno. 
@@ -791,7 +791,7 @@ difatti tutte le nozioni sulla visibilità di una classe si applicano agli inter
 
 \paragraph{Interazione con la board}
 Gli interagibili possono essere piazzati nelle tile di una board, nel momento in cui sono piazzati
-in una tile, l'attributo \lstinline|<tile| viene valorizatto con la tile in cui è stato messo. \\
+in una tile, l'attributo \lstinline|tile| viene valorizatto con la tile in cui è stato messo. \\
 Per muovere un interagibile a una tile si utilizza la funzione \lstinline|move_to(tile t)| che
 sposta interagibile alla tile passata come argomento. \\ 
 
@@ -842,8 +842,8 @@ default
 \end{lstlisting}
 
 \section{Giocatori}
-I giocatori sono rappresentati da un numero intero da zero al numero di giocatori meno uno,
-questo permette di avere una corrispondenza uno a uno utilizzabile in delle espressioni matematiche
+I giocatori sono rappresentati da un numero intero compreso tra zero e il numero di giocatori meno uno (estremi inclusi),
+questo permette di avere una corrispondenza uno a uno utilizzabile in espressioni matematiche
 per selezionare un altro giocatore da un certo di partenza (\ref{EspressioniGiocatore}). \\
 
 \subsection{Funzioni dei giocatori}
@@ -917,8 +917,8 @@ fase / giocatore in base alla implementazione del default. \\
     \lstinline[keepspaces]|optional string phase|\newline
     \lstinline|)|
     &
-   Passa il controllo al giocatore richiesto, 
-   e se specificata in una precisa fase \\
+   Passa il controllo al giocatore richiesto,
+   e, se specificata in una precisa fase \\
    \hline
    Passare il turno & \lstinline|turn.pass()| & Passa il controllo al prossimo giocatore, 
    valutato dal tag di default \\
@@ -965,11 +965,11 @@ group <identificatore>
     }
 }
 \end{lstlisting}
-Per accedere direttamente a un gruppo dal tabellone si utilizza la table dei gruppi:
+Per accedere direttamente a un gruppo dal tabellone si utilizza la table dei gruppi
 dove la chiave equivale all'identificatore del gruppo e il valore è il gruppo stesso.
 
 \subsubsection{Geometria tessera}
-Esistono 3 possibili geometrie supportate: quadrate (\lstinline|square|), 
+Esistono tre possibili geometrie supportate: quadrate (\lstinline|square|), 
 esagonali (\lstinline|hex|), adiacenti (\lstinline|graph|). \\
 La geometria di una tessera all'interno del gruppo definisce come si definiscono all'interno del gruppo:
 
@@ -979,15 +979,20 @@ il gruppo con questa geometria ha il suo punto di origine in alto a sinistra (0,
 
 \paragraph{Geometria esagonale}
 In questo caso é necessario definire un ulteriore tag body-less chiamato \lstinline|orientation <orientazione>|,
-infatti la geometria esagonlale possiede due possibili orientazioni, \lstinline|row| (esagono a punta in alto) 
+infatti la geometria esagonale possiede due possibili orientazioni, \lstinline|row| (esagono a punta in alto) 
 o \lstinline|column| (esagono con faccia in alto); 
 le orientazioni cambiano come la definizione del gruppo è interpretata:
 \begin{itemize}
     \item Nel caso dell'orientazione row: si hanno le righe pari spostate di una unitá verso destra
-    \item Nel caso dell'orientazione col: si hanno le colonne pari spostate di una unitá verso il bassso.
+    \item Nel caso dell'orientazione col: si hanno le colonne pari spostate di una unitá verso il basso.
 \end{itemize}
 
-% TODO tikz grafo per esplicitare il concetto di direzione
+\begin{figure}[h]
+\begin{center}
+    \subfigure[Esempio coordinate con orientazione \textbf{row}]{\includegraphics{hex_row_num.png}}
+    \subfigure[Esempio coordinate con orientazione \textbf{col}]{\includegraphics{hex_col_num.png}}
+\end{center}    
+\end{figure}
 
 \paragraph{Geometria adiacente}
 È utilizzata per poter rappresentare qualsiasi tipo di tabella creando un grafo bidirezionale, dove
@@ -1029,8 +1034,7 @@ destinataria della connessione.
 
 \section{Ereditarietà}
 Ereditarietà consente di definire delle classi derivate che ereditano o eseguono un override degli attributi, funzioni e azioni 
-da una certa classe base \\
-
+da una certa classe base
 \paragraph{Ereditare da una classe base} 
 Significa avere accesso a tutte le funzionalità della classe padre come se appartenessero alla classe figlia,
 ovvero tramite l'operatore di auto riferimento \lstinline|this|.
@@ -1038,19 +1042,18 @@ ovvero tramite l'operatore di auto riferimento \lstinline|this|.
 class base {}
 class derived : base {}
 \end{lstlisting}
-
 \paragraph{Controllo sul tipo}
 Un tipo derivato é anche dello stesso tipo di tutti i suoi tipi base, ovvero tutte le istanze
 della classe figlia restituiranno il valore \lstinline|true| se confrontate con una classe 
 antenata nella espressione di controllo del tipo. 
 
 \subsection{Conversione del tipo}
-Un tipo base é convertibile a un tipo antenato senza dover utilizzare l'operatore di casting,
-questa operazione è chiamata "upcasting", convertire un tipo derivato a un tipo base. \\
+Un tipo derivato é convertibile a un tipo antenato senza dover utilizzare l'operatore di casting,
+questa operazione è chiamata "upcasting". \\
 È importante sapere che le funzioni e le azioni chiamate dal tipo convertito avranno 
 lo stesso comportamento che avrebbero se fossero chiamate su il tipo derivato. \\
 Il caso contrario, il "downcasting" o conversione da tipo base a tipo derivato, è ammessa solamente
-se in origine l'istanza era del tipo derivato o figlia del tipo derivato. \\
+se in origine l'istanza era del tipo derivato o figlia del tipo derivato. 
 
 \paragraph{Collezioni}
 Le collezioni possono essere convertite ad altre collezioni il cui tipo che contengono segua 
@@ -1080,7 +1083,7 @@ class Derived : Base
 Nell'effetto dell'override è possibile accedere agli stessi input dell'originale. 
 Inoltre all'interno del blocco della classe derivata è possibile avviare la implementazione 
 della base tramite il riferimento alla base \lstinline|base|, che racchiude
-tutte le funzionalità definite nella classe padre. \\
+tutte le funzionalità definite nella classe padre. 
 
 \section{Moltiplici file} \label{MultipleFiles}
 L'utilizzo di piú di un file é supportato attraverso l'utilizzo di speciali sintassi
@@ -1097,7 +1100,8 @@ prima di qualsiasi definizione o tag.
 
 \section{Punto di entrata}
 L'entry point è definito tramite il tag setup nello stesso file in cui 
-si utilizza la direttiva di gioco. \\ 
+si utilizza la direttiva di gioco. 
+\newpage
 Dentro il blocco del tag si possono definire qualsiasi istruzioni che verrano eseguite
 prima di far partire il primo turno di gioco.
 \begin{lstlisting}
@@ -1113,11 +1117,11 @@ setup
 Il linguaggio possiede una gestione automatica della memoria tramite garbage collector.
 
 \subsection{Garbage Collector}
-Il garbage collector si occupa di liberare la memoria allocata degli oggetti 
+Il garbage collector si occupa di liberare la memoria allocata degli oggetti
 che non possiedono nessun riferimento visible, recuperando la memoria utilizzata
 per poterla riallocare in un momento futuro. \\ 
 Internamente viene utilizzato un contatore che mantiene il numero di riferimenti 
-allo stesso oggeto, quando si crea una copia di un oggetto il contatore aumenta
+allo stesso oggetto, quando si crea una copia del riferimento il contatore aumenta
 pari al numero di copie create e viceversa decrementa quando un riferimento 
 esce dalla visibiltá corrente.
 

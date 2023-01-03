@@ -1,0 +1,5 @@
+game "tris";
+
+players 2;
+
+turn 
