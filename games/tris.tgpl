@@ -1,5 +1,182 @@
+// Nome del gioco descritto, definisce il file contenente 
+// il punto di entrata
 game "tris";
 
+// Numero di giocatori coinvolti nel gioco
 players 2;
 
-turn 
+setup 
+{
+    // Crea ed assegna il tabellone di default allo stato globale
+    GameState.Board = new TrisBoard();
+
+    // Crea ed assegna al giocatore 0 una classe PlayerState
+    PlayerState firstState = new PlayerState()
+    firstState.assign(0);
+
+    // Crea ed assegna al giocatore 1 una classe PlayerState
+    PlayerState secondState = new PlayerState()
+    firstState.assign(1);
+
+    // Dichiara il turno utilizzato 
+    turn.use("GameTurn");
+    // Avvia il gioco passando il controllo al primo giocatore 
+    // in fase di Tick
+    turn.pass(0, "TickPhase");
+}
+
+global class GameState
+{
+    TrisBoard Board = null;
+    number TickedCount = 0;
+}
+
+function WinCheck
+{
+    function input TickTile a;
+    function input TickTile b;
+    function input TickTile c;
+    returns PlayerState
+    effect
+    {
+        // Controllo sulla riga
+        if( a.AssignedTo != null && 
+            a.AssignedTo == b.AssignedTo && 
+            b.AssignedTo == c.AssignedTo)
+        {
+            return a.AssignedTo;
+        }
+        
+        return null;
+    }   
+}
+
+turn GameTurn
+{
+    phase TickPhase { }
+    phase WinCheckPhase 
+    {
+        // prende tutte le tile della board
+        Table<Table<TickTile>> tiles = {};
+        for(number x = 0; x < 3; x += 1)
+        {
+            for(number y = 0; y < 3; y += 1)
+            {
+                tiles[x][y] = GameState.Board.TrisGrid[x][y] as TickTile;
+            }
+        }
+
+        PlayerState winnerState = none;
+        for(number i = 0; i < 3: i += 1)
+        {
+            // Controllo sulla riga
+            winnerState = WinCheck(
+                a: tiles[0][i], 
+                b: tiles[1][i], 
+                c: tiles[2][i]
+            );
+            if(winnerState != null) { break; }
+
+            // Controllo sulla colonna
+            winnerState = WinCheck(
+                a: tiles[i][0], 
+                b: tiles[i][1], 
+                c: tiles[i][2]
+            );
+            if(winnerState != null) { break; }
+        }
+
+        // diagonal check
+        if(winnerState == null) 
+        { 
+            winnerState = WinCheck(
+                a: tiles[0][0], 
+                b: tiles[1][1], 
+                c: tiles[2][2]
+            );
+        }
+
+        if(winnerState == null) 
+        { 
+            winnerState = WinCheck(
+                a: tiles[2][0], 
+                b: tiles[1][1], 
+                c: tiles[0][2]
+            );
+        }
+
+        // Se trovato un giocatore dichiaralo vincitore
+        if(winnerState != null)
+        {
+            winner winnerState.player;
+        }
+        else if(GameState.TickedCount == 9) 
+        {
+            // Crea la lista dei vincitori per imitare il pareggio
+            List<List<player>> winners = { {0, 1} }; 
+            winner winners;
+        }
+    }
+    default
+    {
+        player active_player = player.active();
+        string active_phase = turn.phase.active();
+
+        if(active_phase == "WinCheckPhase")
+        {
+            // finita la fase di controllo della condizione di vittoria 
+            // continua con il prossimo turno
+            turn.pass(active_player + 1, "TickPhase");
+        }
+        else
+        {
+            // fatto un segno passa
+            // al controllo della condizione di vittoria
+            turn.pass(active_player, "WinCheckPhase");
+        }
+    }
+}
+
+tile TickTile
+{
+    PlayerState AssignedTo = null;
+}
+
+board TrisBoard 
+{
+    group TrisGrid
+    {
+        geometry square;
+        grid
+        {
+            TickTile, TickTile, TickTile;
+            TickTile, TickTile, TickTile;
+            TickTile, TickTile, TickTile;
+        }
+    }
+}
+
+class PlayerState
+{
+    action Tick
+    {
+        input TickTile chosenTile 
+        {
+            return chosenTile.AssignedTo == null;
+        }
+
+        trigger PlayerChoiceEvent 
+        {
+            return true;
+        }
+
+        effect
+        {
+            chosenTile.AssignedTo = this;
+            GameState.TickedCount += 1;
+
+            turn.pass();
+        }
+    }
+}
+

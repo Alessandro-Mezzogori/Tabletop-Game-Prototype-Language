@@ -28,33 +28,40 @@
 
 % Custom listing 
 \usepackage{listings}
-\usepackage[dvipsnames]{xcolor}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\usepackage{mdframed}
+
+\definecolor{light-gray}{gray}{0.95} %the shade of grey that stack exchange uses
 
 \lstdefinelanguage{TGDL}
 {
     % list of keywords
-    % morekeywords={
-    %     return, break, continue, if, else, else if,
-    %     number, string, bool, player,
-    %     function, class, action,
-    %     effect, trigger, require, phase,
-    %     true, false,
-    %     this, attribute, returns, default,
-    %     interactable
-    % },
+    morekeywords={
+        return, break, continue, if, else, else if,
+        number, string, bool, player,
+        function, class, action,
+        effect, trigger, require, phase,
+        true, false,
+        this, base, attribute, returns, default,
+        interactable, board, tile, setup, turn
+    },
+    keywordstyle=\color{RoyalBlue},
+    tabsize=3,
+    literate={\  \  }{{\ }}1,
     sensitive=false,
     morecomment=[l]{//},
     morestring=[b]",
-    morestring=[b]'
+    morestring=[b]',
+    commentstyle=\color{OliveGreen},
+    stringstyle=\color{RedOrange},
+    numbers=none,
+    basicstyle=\fontencoding{T1}\ttfamily\color{darkgray},
+    escapeinside={(*}{*)}
 }
 
 \lstset{
-    language=TGDL,
-    numbers=none,
-    %basicstyle=\lst@ifdisplaystyle\color{blue}\fi,
-    basicstyle=\ttfamily\color{darkgray},
-    tabsize=3,
-    escapeinside={(*}{*)}
+    language=TGDL
 }
 
 \usepackage{hyperref}
@@ -70,6 +77,7 @@
 \usepackage{csquotes}
 \usepackage{biblatex}
 \addbibresource{bibliografia.bib}
+
 
 %Custom header and foot
 %TODO Ricordarsi di utilizzare durante la stampa conl'opzione twoside

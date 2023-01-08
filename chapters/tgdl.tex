@@ -519,6 +519,11 @@ La direttiva di gioco ha il compito di definire il nome del progetto e il file p
 che deve contenere il tag \lstinline|setup|; é utilizzabile solamente all'inizio del file 
 come primo elemento. \\
 
+\subsubsection{Direttiva giocatori}
+\lstinline|players <numero di giocatori>; | \\
+La direttiva giocatori definisce il numero di giocatori, come \textit{number} con parte decimale troncata, 
+che saranno considerati per il gioco; definibile unicamente nel file contenente la direttiva di gioco.
+
 \section{Classi}
 \lstinline|<visibilita> class <identificatore> <blocco classe>| \\
 Una classe é utilizzata per definire un insieme di dati correlati, detti attributi, e di 
@@ -875,9 +880,9 @@ turn <identificatore>
 }
 \end{lstlisting}
 Si possono definire molteplici turni che sono attivabili in qualsiasi momento lo si desideri 
-attraverso la funzione \lstinline|turns.use(string turn, optional string phase)|, dove
+attraverso la funzione \lstinline|turn.use(string turn, optional string phase)|, dove
 turn e phase sono rispettivamente l'identificatore del turno della fase prescelti. \\
-Quando la funzione use é chiamata, il turno attivo è disattivato e sostituito da quello richiesto.
+Quando la funzione use è chiamata, il turno attivo è disattivato e sostituito da quello richiesto.
 
 \subsection{Definizione default del turno}
 Il turno di default, o tag di default del turno, é un blocco d'istruzioni di tipo player
@@ -887,6 +892,14 @@ per definirlo si utilizza l'omonimo tag:
 \begin{lstlisting}
 turn <identificatore>
 {
+    phase <identificatore>
+    {
+        <inputs>
+        effect
+        {
+            <istruzioni>
+        }
+    }
     default
     {
         <istruzioni>
@@ -899,6 +912,14 @@ Alcune funzioni molto utili per creare dei turni complessi si trovano tra le
 funzioni generali dei turni e dei giocatori, come \lstinline|turn.phase.active()| e
 \lstinline|player.active()|.
 
+\paragraph*{Fasi dei turni}
+Un turno deve definire almeno una fase tramite il blocco \lstinline|phase|, il cui rappresenta 
+una azione speciale della classe non richiamabile dall'esterno come le azioni di una classe. \\
+All'interno del blocco fase è legale definire un unico tag effetto e zero o piú tag input utilizzabili 
+all'interno dell'effetto. \\ 
+Le istruzioni contenute all'interno del blocco effetto definito nella fase sono eseguite immediatamente
+dopo la chiamata per il cambio di fase.
+
 \subsection{Funzioni dei turni}
 Le funzioni generali sono delle utilità che forniscono dei metodi per la gestione
 dei turni, come trovare chi é il giocatore attivo oppure passare alla prossima 
@@ -906,23 +927,29 @@ fase / giocatore in base alla implementazione del default. \\
 
 \begin{center}
 \begin{tabularx}{\linewidth}{|l|p{6cm}|X|}
-   \hline 
-   Turno attivo & \lstinline|turn.active()| & Restituisce il turno attivo \\
-   \hline
-   Fase attiva & \lstinline|turn.phase.active()| & Restituisce la fase del turno attiva \\
-   \hline
-   Passare al turno &
+    \hline
+    Usa turno & 
+    \lstinline|turn.use(|\newline 
+    \lstinline|string turn, |\newline
+    \lstinline|optional string phase|\newline
+    \lstinline|)| & Attiva il turno richiesto, e se specificata, in una precisa fase.\\
+    \hline 
+    Turno attivo & \lstinline|turn.active()| & Restituisce il turno attivo \\
+    \hline
+    Fase attiva & \lstinline|turn.phase.active()| & Restituisce la fase del turno attiva \\
+    \hline
+    Passare al turno &
     \lstinline|turn.pass(|\newline
-    \lstinline|player p,|\newline
-    \lstinline[keepspaces]|optional string phase|\newline
+    \lstinline|player p, |\newline
+    \lstinline|optional string phase|\newline
     \lstinline|)|
     &
-   Passa il controllo al giocatore richiesto,
-   e, se specificata in una precisa fase \\
-   \hline
-   Passare il turno & \lstinline|turn.pass()| & Passa il controllo al prossimo giocatore, 
-   valutato dal tag di default \\
-   \hline 
+    Passa il controllo al giocatore richiesto,
+    e, se specificata in una precisa fase \\
+    \hline
+    Passare il turno & \lstinline|turn.pass()| & Passa il controllo al prossimo giocatore, 
+    valutato dal tag di default \\
+    \hline 
 \end{tabularx}
 \end{center}
 
@@ -967,6 +994,11 @@ group <identificatore>
 \end{lstlisting}
 Per accedere direttamente a un gruppo dal tabellone si utilizza la table dei gruppi
 dove la chiave equivale all'identificatore del gruppo e il valore è il gruppo stesso.
+
+\subsubsection{Matrice delle tessere}
+La matrice delle tessere is occupa di definire la struttura di default del gruppo. \\
+All'interno del tag grid si definisce una riga come una lista d'identificatori tessera
+separati da una virgola e terminante con un punto e virgola.
 
 \subsubsection{Geometria tessera}
 Esistono tre possibili geometrie supportate: quadrate (\lstinline|square|), 
@@ -1128,3 +1160,50 @@ esce dalla visibiltá corrente.
 L'input injector é un componente del linguaggio che si occupa tenere traccia degli
 oggetti che hanno uno o piú riferimenti visibili per poterli utilizzare all'interno 
 dei tag input, tramite i filtri oppure direttamente creando una collezione adatta. 
+
+\section{Esempio di utilizzo: Tris}
+\begin{mdframed}[
+    backgroundcolor=light-gray, 
+    roundcorner=10pt,leftmargin=1, 
+    rightmargin=1,
+    innerleftmargin=15, 
+    innertopmargin=15,
+    innerbottommargin=15, 
+    outerlinewidth=1, 
+    linecolor=light-gray]
+\lstinputlisting[
+    basicstyle=\fontencoding{T1}\ttfamily\footnotesize,
+    numberstyle=\scriptsize
+]{./games/tris.tgpl}
+\end{mdframed}
+
+\section{Suggerimenti per l'implementazione}
+Il linguaggio è stato formulato come linguaggio  interpretato. 
+In questa sezione vengono discusse delle possibili implementazioni 
+delle parti maggiormente interessanti del linguaggio:
+\begin{itemize}
+    \item Gestore degli eventi
+    \item Input injector
+\end{itemize}
+Non prese in considerazione le parti di tokenizzazione e parsing dei file, 
+presupponendo la presenza di tutte le informazioni necessarie pronte all'utilizzo estratte
+dall'albero di sintassi derivato dal passo precedenti di parsing.
+
+\subsection{Processore di gioco}
+Il game loop parte con l'avvio dell'entry point, tag setup:
+\begin{enumerate}
+    \item avvio del setup e passaggio del primo turno
+    \item passaggio di turno 
+	\item controllo al giocatore definito 
+    \item avvio della funzione di fase
+	\item sblocco delle azioni con PlayerChoice 
+    \item controllo dei require
+	\item fino ad altro passaggio di turno
+\end{enumerate}
+
+\subsection{Gestore degli eventi}
+Il gestore degli eventi è il cuore dell'interprete si occupa di eseguire il codice 
+del punto di entrata all'avvio, astratto tramite un evento speciale di avvio che 
+da inizio al programma
+
+\subsection{Input injector}
