@@ -66,6 +66,20 @@ handler sono al Func<EventBase, bool> e sono le funzioni di filtro
 
 oggetto con 1 funzione => GetHandlers(EventMetadata metadata) -> List<Handlers>
 
+
+il gestore eventi a tempo di avvio si salva tutte le azioni con EventTrigger attribute.
+
+ActionInput assomiglia all'entitá del crm ovver un dizionario identificatore object con un unico metodo di get dei valori in formato tipizzato tramite generics, che atutomatizza semplicemente il casting e la presenza del valore
+
+l'applicazione / motore si occupa di ricevere i file di sviluppo e fornire un interfaccia utente, l'analizzatore del sysntax tree crea un dll per il gioco contenente le classi
+tradotte con nomi standard per poter recuperare tutte le classi neceassarie per il funzionamento con i loro metadati.
+
+i tipi sono recuperati dall'assebmly tramite reflection
+
+si hanno quindi due parti principali:
+- il tradutorre composto dal tokenizer, parser e generatore di codice
+- il runner che carica gli elementi dalla dll generata il cui risultato é utilizzato dal processore per poter effettuare il codice 
+
 # Reference Registrar
 si occupa di mantenere tutte le referenze create tramite la new keyword e il loro conto, quando 
 il conto scende a zero o segna la reference da trashare / la elimina dal registrar.
@@ -76,6 +90,8 @@ classe con tre funzioni:
     - CreateRef()
     - RemoveRef()
     - GetTypeRefs(Type t)
+
+# traduzione a csharp
 
 fare che viene transpiled in c# e mostare alcuni dei pezzi come processore ( alcuni pezzi ), event manager e il reference registrar.
 
@@ -99,6 +115,7 @@ action => diventato una classe contentente tutte le informazioni necessarie:
 i metadati sono considerati come attributi e vengono messi in cache nel processore / altro componente dopo la prima volta che vengono incontrati, alcuni metadati possono essere:
 - i modificatori degli input
 
+# Eventi
 EventBase
 {
     string Identifier;
@@ -111,6 +128,7 @@ EventGenerated ( creato dal transpiler )
     // attributi dell'evento
 }
 
+# Classe
 classe => 
 {
     attributi,
@@ -143,11 +161,7 @@ public class Test
     {
         List<Func<bool>> Require; // possono prendere solo globali / catturare gli attributi della classe
         List<Func<EventBase, bool>> Triggers;
-        List<InputInjector, input> Inputs;
-        Action<InputInjector> Action;
+        List<ActionInput, input> Inputs;
+        Action<ActionInput> Action;
     }
 }
-
-il gestore eventi a tempo di avvio si salva tutte le azioni con EventTrigger attribute.
-
-problema class Action generica: come recupero i suoi metadati per input

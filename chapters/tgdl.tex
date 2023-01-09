@@ -715,6 +715,7 @@ valore di ritorno booleano per poter valutare se eseguire o no l'azione.
 \paragraph{Blocco trigger}
 Ogni trigger osserva un particolare evento che è accessibile nel blocco tramite la parola chiave 
 \lstinline|event|, usata per creare delle logiche di attivazione più sofisticate riutilizzando gli stessi eventi. \\
+In una specifica azione non è possibile definire molteplici triggers per il medesimo evento.
 
 \paragraph{Priorità dell'azione}
 L'architettura a eventi tramite i trigger introduce delle possibili condizioni di gara tra le varie azioni,
@@ -762,7 +763,8 @@ Gli input funzionano esattamente come gli argomenti delle azioni di una classe m
 possibile definire un ulteriore tipologia d'input chiamata input della funzione,
 tramite il modificatore \lstinline|function|. \\
 Il modificatore obbliga a fornire tutti gli input che non possiedono un valore di default,
-ovvero che sono stati assegnati un valore null, quando si chiama la funzione.
+ovvero che sono stati assegnati un valore null, quando si chiama la funzione. \\
+Il modificatore function non permette la definizione dei filtri per il determinato input.
 
 \subsubsection{Effetto}
 È equivalente al blocco effetto di un’azione. 
@@ -1156,11 +1158,6 @@ allo stesso oggetto, quando si crea una copia del riferimento il contatore aumen
 pari al numero di copie create e viceversa decrementa quando un riferimento 
 esce dalla visibiltá corrente.
 
-\subsection{Input injector}
-L'input injector é un componente del linguaggio che si occupa tenere traccia degli
-oggetti che hanno uno o piú riferimenti visibili per poterli utilizzare all'interno 
-dei tag input, tramite i filtri oppure direttamente creando una collezione adatta. 
-
 \section{Esempio di utilizzo: Tris}
 \begin{mdframed}[
     backgroundcolor=light-gray, 
@@ -1171,39 +1168,177 @@ dei tag input, tramite i filtri oppure direttamente creando una collezione adatt
     innerbottommargin=15, 
     outerlinewidth=1, 
     linecolor=light-gray]
-\lstinputlisting[
-    basicstyle=\fontencoding{T1}\ttfamily\footnotesize,
-    numberstyle=\scriptsize
-]{./games/tris.tgpl}
+\lstinputlisting[language=tgpl_small]{./games/tris.tgpl}
 \end{mdframed}
 
 \section{Suggerimenti per l'implementazione}
-Il linguaggio è stato formulato come linguaggio  interpretato. 
+Il linguaggio è stato formulato come linguaggio tradotto. 
 In questa sezione vengono discusse delle possibili implementazioni 
-delle parti maggiormente interessanti del linguaggio:
-\begin{itemize}
-    \item Gestore degli eventi
-    \item Input injector
-\end{itemize}
-Non prese in considerazione le parti di tokenizzazione e parsing dei file, 
-presupponendo la presenza di tutte le informazioni necessarie pronte all'utilizzo estratte
-dall'albero di sintassi derivato dal passo precedenti di parsing.
+supponendo come linguaggio bersaglio C\#, principalmente i due passaggi di 
+traduzione dal linguaggio TGPL a CSharp e l'utilizzo dell'assembly compilato dal
+codice generato.
 
-\subsection{Processore di gioco}
-Il game loop parte con l'avvio dell'entry point, tag setup:
+\subsection{Traduzione}
+I vari elementi del linguaggio sono tradotti ognuno in una equivalente 
+struttura in c sharp.
+
+\begin{lstlisting}[language=tgpl_small, caption=Codice in TGPL]
+class Test
+{
+    action TestAction
+    {
+        input player Classe classe { ... }
+        trigger OnChange { }
+        effect { classe.Call(); }
+    }
+
+    function TestFunction
+    {
+        function input number N;
+        return number;
+        effect { return N * 2; }
+    }
+}
+\end{lstlisting}
+ 
+\begin{lstlisting}[style=sharpc_small, caption=Traduzione in CSharp]
+// dichiarata in un file apposito
+public class OnChange : EventBase { } 
+
+public class Test
+{
+    public double test {get; set; } = 0;
+
+    [EventTrigger(typeof(OnChange), 0)] // Type, priority
+    [InjectedInput(typeof(Classe), "classe", ActionInputType.Player]
+    public TGPLAction TestAction { get; }
+
+    [FunctionInput(typeof(double), "N"]
+    public TGPLFunction TestFunction()
+    public double TestFunction(FunctionInput input) { get; }
+}
+\end{lstlisting}
+
+\subsubsection{Eventi}
+Gli eventi sono convertiti in una classe derivante da una classe base vuota utilizzata chiamata \lstinline|EventBase|,
+la classe tradotta contiene tutti gli attributi sotto forma di proprietà publiche.
+
+\subsubsection{Funzioni}
+Le funzioni sono tradotte in una classe composta da due componenti, rispettivamente tradotti dal codice sorgente TGPL
+\begin{lstlisting}[style=sharpc_small]
+public class TGPLFunction
+{
+    public Dictionary<string, Func<ActionInput, bool>> Inputs {get; set;}
+    public Action<InjectedInput> Effect {get; set;}
+}
+\end{lstlisting}
+Per aiutare l'esecuzione del codice ogni proprietà di tipo \textit{TGPLFunction} è decorata  con degli attributi specifici 
+rappresentanti i metadati della funzione, come i vari input da popolare. \\
+\textit{Effect} é definito con argomento \textit{InjectedInput}, 
+una classe contenente una collezione chiave-valore dove la chiave è l'identificatore dell'input
+e il valore è l'oggetto inserito, popolato dall'\textit{InputInjector}. \\
+Questo meccanismo è condiviso nella traduzione di qualsiasi input, cambiando solo la modalità
+di acquisizione di esso dipendende dal modificatore definito.
+
+\paragraph{Funzioni globali}
+Le funzioni globali sono aggregate all'interno di una classe statica globale 
+per fornire un accesso semplice al codice convertito.
+
+\subsubsection{Azioni}
+Le azioni sono tradotte in una classe composta da quattro componenti principali, rispettivamente tradotti dal codice sorgente TGPL:
+\begin{lstlisting}[style=sharpc_small]
+// attributi di input e di triggers in ordine di definizione
+public class TGPLAction
+{
+    public List<Func<bool>> Requires {get; set;} 
+    public List<Func<EventBase, bool>> Triggers {get; set;}
+    public Dictionary<string, Func<ActionInput, bool>> Inputs {get; set;}
+    public Action<InjectedInput> Effect {get; set;}
+}
+\end{lstlisting}
+Per aiutare l'esecuzione del codice, come descritto in precedenza per \textit{TGPLFunction},
+ogni proprietà di tipo Action è decorata con degli attributi specifici 
+rappresentanti i metadati dell'azione, come gli eventi di trigger e i vari input da popolare.
+vertite secondo le modalità descritte
+precedentemente.
+
+\paragraph*{Modificatori delle classi} I modificatori delle classi influenzano la traduzione:
+\begin{itemize}
+    \item \lstinline|local| viene tradotto con una proprietà Player associata rappresentante l'associazione al giocatore
+    \item \lstinline|group| viene tradotto con una proprietà lista di player per rappresentare il gruppo di giocatori associato
+    \item \lstinline|global| viene tradotta tramite la design pattern singleton, nello specifico possiede una proprietà statica che è l'istanza della classe
+\end{itemize}
+
+\subsubsection{Classi}
+Le classi sono tradotte nell'equivalente in CSharp, dove gli attributi diventano 
+proprietà publiche e le azioni e funzioni sono con
+\subsection{Utilizzo della assembly generato}
+Il secondo componente principale del software di traduzione si occupa di avviare 
+il codice tradotto, ovvero di estrarre tutte le classi utili per l'esecuzione 
+del gioco, detto anche \textit{ExecutionUnit} si compone di quattro componenti principali:
+\begin{itemize}
+    \item \textit{CodeProcessor}
+    \item \textit{EventManager}
+    \item \textit{InputInjector}
+\end{itemize}
+
+\subsubsection{InputInjector}
+L'\textit{InputInjector} è il componente del processore con lo scopo di gestire la popolazione, secondo le specifiche del modificatore,
+degli input utilizzati nelle varie azioni e funzioni. \\ 
+Il comportamento di recupero di uno specifico input è definito dal relativo attributo di metadati \textit{InjectedInputAttribute},
+in cui si definisce il tipo di oggetto, l'identificatore da utilizzare e la modalitá di recupero:
+\begin{itemize}
+    \item Player: dopo aver effettuato i filtri definiti richiede a un giocatore di scegliere l'input tramite l'interfaccia utente
+    \item Auto: dopo aver effettuato i filtri popola direttamente l'input se valido
+    \item Function: il valore é fornito direttamente dalla chiamata  
+\end{itemize}
+
+\paragraph{ReferenceRegistrar}
+Il \textit{ReferenceRegistrar} ha il compito di mantenere tutti i riferimenti e il loro numero
+creati durante l'esecuzione del gioco, è possibile concepirlo come dizionario CSharp:
+\begin{lstlisting}[style=sharpc_small]
+Dictionary<Type, List<(object, int)>>    
+\end{lstlisting}
+ovvero una collezione che associa a un certo tipo la lista degli oggetti creati durante l'esecuzione 
+e il numero di riferimenti visibili. \\
+Il registrar é principalmente interrogato dal \textit{InputInjector} durante la fase di recupero degli input
+di una azione o funzione, restituendo in risposta alla richiesta del processore di tutte le istanze di un certo tipo 
+per poterle filtrare secondo le specifiche dei filtri applicati a quell'input.
+
+\subsubsection{EventManager}
+L' \textit{EventManager} si occupa di mantenere, per ogni tipo di evento definito nel gioco, 
+le azioni che ne sono in ascolto e il trigger specifico dell'azione associato all'evento ascoltato. 
+Una delle possibili implementazioni è un semplice dizionario
+\begin{lstlisting}[style=sharpc_small]
+Dictionary<Type, List<(Action, Func<EventBase, bool>)>>
+\end{lstlisting}
+interrogato dal processore per recuperare le azioni correlate a uno specifico evento generato all'interno di un blocco d'istruzioni.
+L'\textit{EventManager} risponde alla richiesta del processore con la lista delle azioni e del trigger associato. \\ 
+In questa semplice implementazione, a ogni istanziazione di una classe contenente azioni è necessario registrare nell'EventManager
+i triggers dell'azione. Ovviamente non è un sistema ottimizzato: un modo piú efficiente sarebbe creare dei metadati di ogni azione definita 
+all'interno della classe, che ne descriva i filtri utilizzati nel flusso di esecuzione delle azioni.
+I metadati conterrebbero non solo le informazioni per i triggers ma anche per i require e gli input dell'azione associata.
+Nondimeno, a scopo di mantenere semplice la implementazione suggerita e, di conseguenza, la sua descrizione, 
+si é scelto di optare per la versione meno efficiente.
+
+\subsubsection{CodeProcessor}
+L'\textit{CodeProcessor} é il responsabile di eseguire effettivamente le istruzioni contenute nei blocchi tradotti, durante l'esecuzione 
+di un blocco se si presenta una generazione di eventi (sincrona o asincrona) la gestisce con le tecniche opportune:
+\begin{itemize}
+    \item Sincrona: blocco dell'esecuzione fino a risoluzione dell'intero albero degli eventi
+    \item Asincrona: posticipazione dell'esecuzione dell'albero degli eventi alla termine del blocco corrente
+\end{itemize}
+In entrambi le modalità contatta l'\textit{EventManager} che gli restituisce la lista di tutte le azioni in ascolto di un certo evento,
+per ogni azione contenuta all'interno della risposta del gestore degli eventi si avvia il flusso azione:
+
+\paragraph{Flusso azione} Il flusso azione si divide in x passaggi principali:
 \begin{enumerate}
-    \item avvio del setup e passaggio del primo turno
-    \item passaggio di turno 
-	\item controllo al giocatore definito 
-    \item avvio della funzione di fase
-	\item sblocco delle azioni con PlayerChoice 
-    \item controllo dei require
-	\item fino ad altro passaggio di turno
+    \item Valutazione dei require, ovvero se l'azione è attivata oppure disattivata
+    \item Nel caso sia attivati si procede con la valutazione del trigger associato all'evento
+    \item Se positiva si recuperano gli input tramite l'\textit{InputInjector}
+    \item Se non si sono presentate eccezioni si esegue effetto dell'azione
+    \item Infine se al suo interno sono presenti degli eventi generati si risolvono
 \end{enumerate}
 
-\subsection{Gestore degli eventi}
-Il gestore degli eventi è il cuore dell'interprete si occupa di eseguire il codice 
-del punto di entrata all'avvio, astratto tramite un evento speciale di avvio che 
-da inizio al programma
-
-\subsection{Input injector}
+\paragraph{Interfaccia utente} Il processore utilizza un interfaccia utente dell'applicativo per mostrare informazioni
+di esecuzione o gioco necessarie al giocatore, come il tabellone.

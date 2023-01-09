@@ -34,6 +34,7 @@
 
 \definecolor{light-gray}{gray}{0.95} %the shade of grey that stack exchange uses
 
+
 \lstdefinelanguage{TGDL}
 {
     % list of keywords
@@ -59,6 +60,38 @@
     basicstyle=\fontencoding{T1}\ttfamily\color{darkgray},
     escapeinside={(*}{*)}
 }
+
+\lstdefinelanguage{tgpl_small}
+{
+    % list of keywords
+    morekeywords={
+        return, break, continue, if, else, else if,
+        number, string, bool, player,
+        function, class, action,
+        effect, trigger, require, phase,
+        true, false,
+        this, base, attribute, returns, default,
+        interactable, board, tile, setup, turn
+    },
+    keywordstyle=\color{RoyalBlue},
+    tabsize=3,
+    literate={\  \  }{{\ }}1,
+    sensitive=false,
+    morecomment=[l]{//},
+    morestring=[b]",
+    morestring=[b]',
+    commentstyle=\color{OliveGreen},
+    stringstyle=\color{RedOrange},
+    numbers=none,
+    basicstyle=\fontencoding{T1}\ttfamily\color{darkgray}\scriptsize,
+    escapeinside={(*}{*)}
+}
+\lstdefinestyle{sharpc_small}{
+    language=[Sharp]C, 
+    rulecolor=\color{blue!80!black},
+    basicstyle=\fontencoding{T1}\ttfamily\color{darkgray}\scriptsize
+}
+
 
 \lstset{
     language=TGDL
