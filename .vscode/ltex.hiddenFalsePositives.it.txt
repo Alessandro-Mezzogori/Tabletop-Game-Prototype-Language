@@ -24,3 +24,5 @@
 {"rule":"ST_04_001","sentence":"^\\QSeguono alcuni esempi di espressioni letterali separata dalla virgola: 1, 0.2, “hello world”, true, false\\E$"}
 {"rule":"ARTICOLATA_SOSTANTIVO","sentence":"^\\Q|[optional] [<mod>] input <tipo> <identificatore> [<filtri>];| Ha lo stesso comportamento degli input di azioni e funzioni \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, la variabile creata dall'input ha visibilità dello scope in cui è definita.\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qla mancanza di strutture e funzionalità base che sono condivise con la maggior parte dei giochi: carte, tabelloni, mazzi, ect...\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Qmorekeywords= return, break, continue, if, else, else if, number, string, bool, player, function, class, action, effect, trigger, require, phase, true, false, this, base, attribute, returns, default, interactable, board, tile, setup, turn ., keywordstyle=, tabsize=3, literate= .\\E$"}
+{"rule":"ST_04_001","sentence":"^\\Q.1, sensitive=false, morecomment=[l]//., morestring=[b]\", morestring=[b]', commentstyle=, stringstyle=, numbers=none, basicstyle=T1., escapeinside=(*.*).\\E$"}
