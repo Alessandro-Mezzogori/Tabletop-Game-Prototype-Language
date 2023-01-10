@@ -750,6 +750,28 @@ event PlayerChoiceEvent
 }
 \end{lstlisting}
 
+\subsection{Funzioni degli eventi}
+Le funzioni generali degli eventi forniscono delle utilità globali generarli:  
+\begin{center}
+\begin{tabularx}{\linewidth}{|l|c|X|}
+    \hline
+    lancia evento & 
+    \lstinline|event.throw(event e)|\newline &
+    Lancia l'evento richiesto in modalità asincrona \\
+    \hline
+    lancia evento & 
+    \lstinline|event.throw_sync(event e)|\newline &
+    Lancia l'evento richiesto in modalità sincrona \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\paragraph*{Sincronicità}
+Un evento sincrono interrompe il flusso d'esecuzione del blocco corrente aspettando
+la risoluzione del l'albero degli eventi generato, al contrario un evento asincrono
+posticipa la risoluzione dell'evento dopo aver terminato l'esecuzione del blocco corrente.
+
+
 \section{Funzioni}
 Le funzioni sono utilizzate per raggruppare e riutilizzare facilmente un insieme d'istruzioni 
 su uno specifico set d'input. \\ 
@@ -1137,27 +1159,8 @@ L'entry point è definito tramite il tag setup nello stesso file in cui
 si utilizza la direttiva di gioco.
 Dentro il blocco del tag si possono definire qualsiasi istruzioni che verrano eseguite
 prima di far partire il primo turno di gioco.
-\begin{lstlisting}
-setup 
-{
-    <istruzione>
-    <istruzione>
-    ...
-}
-\end{lstlisting}
 
-\section{Gestione della memoria}
-Il linguaggio possiede una gestione automatica della memoria tramite garbage collector.
-
-\subsection{Garbage Collector}
-Il garbage collector si occupa di liberare la memoria allocata degli oggetti
-che non possiedono nessun riferimento visible, recuperando la memoria utilizzata
-per poterla riallocare in un momento futuro. \\ 
-Internamente viene utilizzato un contatore che mantiene il numero di riferimenti 
-allo stesso oggetto, quando si crea una copia del riferimento il contatore aumenta
-pari al numero di copie create e viceversa decrementa quando un riferimento 
-esce dalla visibiltá corrente.
-
+\newpage
 \section{Esempio di utilizzo: Tris}
 \begin{mdframed}[
     backgroundcolor=light-gray, 
@@ -1171,8 +1174,9 @@ esce dalla visibiltá corrente.
 \lstinputlisting[language=tgpl_small]{./games/tris.tgpl}
 \end{mdframed}
 
+\newpage
 \section{Suggerimenti per l'implementazione}
-Il linguaggio è stato formulato come linguaggio tradotto. 
+Il linguaggio è stato formulato come linguaggio tradotto. \\
 In questa sezione vengono discusse delle possibili implementazioni 
 supponendo come linguaggio bersaglio C\#, principalmente i due passaggi di 
 traduzione dal linguaggio TGPL a CSharp e l'utilizzo dell'assembly compilato dal
@@ -1180,7 +1184,8 @@ codice generato.
 
 \subsection{Traduzione}
 I vari elementi del linguaggio sono tradotti ognuno in una equivalente 
-struttura in c sharp.
+struttura in c sharp, di seguito si possono trovare alcune delle conversioni 
+meno triviali.
 
 \begin{lstlisting}[language=tgpl_small, caption=Codice in TGPL]
 class Test
@@ -1225,6 +1230,7 @@ la classe tradotta contiene tutti gli attributi sotto forma di proprietà public
 
 \subsubsection{Funzioni}
 Le funzioni sono tradotte in una classe composta da due componenti, rispettivamente tradotti dal codice sorgente TGPL
+\newpage
 \begin{lstlisting}[style=sharpc_small]
 public class TGPLFunction
 {
@@ -1271,11 +1277,13 @@ precedentemente.
 
 \subsubsection{Classi}
 Le classi sono tradotte nell'equivalente in CSharp, dove gli attributi diventano 
-proprietà publiche e le azioni e funzioni sono con
+proprietà publiche e le azioni e funzioni sono convertite secondo le speciche precedentemente
+descritte.
+
 \subsection{Utilizzo della assembly generato}
-Il secondo componente principale del software di traduzione si occupa di avviare 
+Il secondo modulo principale del software di traduzione si occupa di avviare 
 il codice tradotto, ovvero di estrarre tutte le classi utili per l'esecuzione 
-del gioco, detto anche \textit{ExecutionUnit} si compone di quattro componenti principali:
+del gioco, detto anche \textit{ExecutionUnit} si compone di tre componenti principali:
 \begin{itemize}
     \item \textit{CodeProcessor}
     \item \textit{EventManager}
@@ -1285,7 +1293,7 @@ del gioco, detto anche \textit{ExecutionUnit} si compone di quattro componenti p
 \subsubsection{InputInjector}
 L'\textit{InputInjector} è il componente del processore con lo scopo di gestire la popolazione, secondo le specifiche del modificatore,
 degli input utilizzati nelle varie azioni e funzioni. \\ 
-Il comportamento di recupero di uno specifico input è definito dal relativo attributo di metadati \textit{InjectedInputAttribute},
+Il comportamento di recupero di uno specifico input è definito dai valori del relativo attributo di metadati \textit{InjectedInputAttribute},
 in cui si definisce il tipo di oggetto, l'identificatore da utilizzare e la modalitá di recupero:
 \begin{itemize}
     \item Player: dopo aver effettuato i filtri definiti richiede a un giocatore di scegliere l'input tramite l'interfaccia utente
@@ -1295,20 +1303,20 @@ in cui si definisce il tipo di oggetto, l'identificatore da utilizzare e la moda
 
 \paragraph{ReferenceRegistrar}
 Il \textit{ReferenceRegistrar} ha il compito di mantenere tutti i riferimenti e il loro numero
-creati durante l'esecuzione del gioco, è possibile concepirlo come dizionario CSharp:
+creati durante l'esecuzione del gioco, è possibile concepirlo come un dizionario CSharp:
 \begin{lstlisting}[style=sharpc_small]
 Dictionary<Type, List<(object, int)>>    
 \end{lstlisting}
 ovvero una collezione che associa a un certo tipo la lista degli oggetti creati durante l'esecuzione 
 e il numero di riferimenti visibili. \\
 Il registrar é principalmente interrogato dal \textit{InputInjector} durante la fase di recupero degli input
-di una azione o funzione, restituendo in risposta alla richiesta del processore di tutte le istanze di un certo tipo 
+di una azione o funzione, restituendo, in risposta alla richiesta del processore, tutte le istanze di un certo tipo 
 per poterle filtrare secondo le specifiche dei filtri applicati a quell'input.
 
 \subsubsection{EventManager}
 L' \textit{EventManager} si occupa di mantenere, per ogni tipo di evento definito nel gioco, 
 le azioni che ne sono in ascolto e il trigger specifico dell'azione associato all'evento ascoltato. 
-Una delle possibili implementazioni è un semplice dizionario
+Una delle possibili implementazioni è un semplice dizionario:
 \begin{lstlisting}[style=sharpc_small]
 Dictionary<Type, List<(Action, Func<EventBase, bool>)>>
 \end{lstlisting}
@@ -1329,9 +1337,8 @@ di un blocco se si presenta una generazione di eventi (sincrona o asincrona) la 
     \item Asincrona: posticipazione dell'esecuzione dell'albero degli eventi alla termine del blocco corrente
 \end{itemize}
 In entrambi le modalità contatta l'\textit{EventManager} che gli restituisce la lista di tutte le azioni in ascolto di un certo evento,
-per ogni azione contenuta all'interno della risposta del gestore degli eventi si avvia il flusso azione:
-
-\paragraph{Flusso azione} Il flusso azione si divide in x passaggi principali:
+per ogni azione, contenuta all'interno della risposta del gestore degli eventi, il processore avvia il flusso azione:
+\paragraph{Flusso azione} Il flusso azione si divide in cinque passaggi principali:
 \begin{enumerate}
     \item Valutazione dei require, ovvero se l'azione è attivata oppure disattivata
     \item Nel caso sia attivati si procede con la valutazione del trigger associato all'evento
