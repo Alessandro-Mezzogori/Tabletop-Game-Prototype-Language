@@ -1,12 +1,12 @@
 \textit{Game Description Language} é un formalismo di alto livello per descrivere 
-le meccaniche e regole di un generico gioco,
+le meccaniche e le regole di un generico gioco,
 basato sulla visione di quest'ultimo come una macchina a stati finiti. \\
 È stato proposto da Michael Genesereth \cite{GDLSpecification}, professore nel dipartimento d'informatica
 all'università di Stanford, come parte del \textit{General Game Playing Project}. \\ 
 \textit{GGPP} si pone l'obiettivo di sviluppare degli agenti generici che possano interagire efficacemente
 con un gioco sconosciuto tramite la sola descrizione in \textit{Game Description Language} 
 senza nessuno intervento umano. \\
-In opposizione ai modelli specializzati in un piccolo insieme di giochi come 
+In opposizione si trovano i modelli specializzati in un piccolo insieme di giochi come 
 DeepMind \textit{AlphaZero} \cite{AlphaZero} che conquistò scacchi, 
 shogi e Go battendo alcuni tra migliori giocatori al mondo in tutti e tre. \\
 La flessibilitá dei giocatori generali apre la possibilitá di creare dei modelli 
@@ -22,11 +22,11 @@ imparando i concetti di alto livello necessari per comprendere gli stati del gio
 Esistono quattro classi di simboli: le costanti di oggetto, 
 le costanti di funzione, le costanti di relazione e le variabili: 
 \begin{itemize}
-    \item Termine: é o una costante di oggetto o una variabile o un termine funzionale.
-    \item Atomo: é un espressione formata dalla relazione tra una costante e n termini
-    \item Letterale: un atomo o la negazione di un atomo
+    \item Termine: é o una costante di oggetto o una variabile o un termine funzionale;
+    \item Atomo: é un'espressione formata dalla relazione tra una costante e n termini;
+    \item Letterale: un atomo o la negazione di un atomo;
     \item {
-        Regola: un espressione composta da una testa, l'operator \lstinline|:-| e una congiunzione, 
+        Regola: un'espressione composta da una testa, l'operatore \lstinline|:-| e una congiunzione, 
         marcata dall'operatore \lstinline|&|, di zero o piú letterali.
     }
 \end{itemize}
@@ -37,7 +37,7 @@ le costanti di funzione, le costanti di relazione e le variabili:
     \hline
     base(p) & definisce una proposizione base \lstinline|p| del gioco \\
     \hline
-    input(r, a) & definisce \lstinline|a| come un azione del ruolo \lstinline|r| \\
+    input(r, a) & definisce \lstinline|a| come un'azione del ruolo \lstinline|r| \\
     \hline
     init(p) & definisce la proposizione \lstinline|p| come vera nello stato iniziale del gioco \\ 
     \hline
@@ -57,10 +57,10 @@ le costanti di funzione, le costanti di relazione e le variabili:
 \end{center}
 Inoltre per avere un programma legale si hanno le seguenti regole:
 \begin{itemize}
-    \item Si richiede una definizione precisa di role, base, action e init
-    \item Bisogna definire legal, goal e terminal, in funzione di una relazione true 
-    \item Bisogna definire next in termini di relazioni true e does
-    \item Bisogna che non ci siano regole con nessuna relazione true o does nella testa
+    \item Si richiede una definizione precisa di role, base, action e init;
+    \item Bisogna definire legal, goal e terminal, in funzione di una relazione true; 
+    \item Bisogna definire next in termini di relazioni true e does;
+    \item Bisogna che non ci siano regole con delle relazioni true o does nella testa.
 \end{itemize} 
 \begin{lstlisting}[caption=Esempio: definizione cella di tris]
 base(cell(M,N,x)) :- index(M) & index(N)
@@ -96,21 +96,21 @@ lato della prototipizzazione, ricerca e utilizzo del prototipo tramite giocatore
 Le principali carenze di GDL come linguaggio di protipizzazione sono:
 \begin{itemize}
     \item { 
-        é difficoltoso creare un gioco tramite la sua rappresentazione come macchina a stati finiti, 
+        é difficoltoso creare un gioco tramite la sua rappresentazione come macchina a stati finiti; 
     }
     \item {
         un gioco in stato embrionale non avrá i concetti base ben delimitati, segue che non sará 
-        possibile definire le primitive del gioco in maniera efficacie.
+        possibile definire le primitive del gioco in maniera efficacie;
     }
     \item {
         la mancanza di strutture e funzionalità base che sono condivise con la maggior parte dei         
         giochi: carte, tabelloni, mazzi, ect...
     }
 \end{itemize}
-Nel prossimo capitolo si esplorerá una proposta a un linguaggio di prototipizzazione, che 
+Nel prossimo capitolo si esplorerá una proposta per un linguaggio di prototipizzazione, che 
 tenta di risolvere le problematiche identificate:
 \begin{itemize}
-    \item Rappresentazione del gioco tramite eventi e risposte a eventi.
-    \item Senza bisogno di concetti ben definiti da utilizzare come fondamenta.
-    \item Fornisce alcune implementazioni base di funzionalità e strutture dati come liste, stack, mazzi, ecc... 
+    \item Tramite una rappresentazione del gioco tramite eventi e risposte a eventi;
+    \item Senza bisogno di concetti ben definiti da utilizzare come fondamenta;
+    \item Fornendo alcune implementazioni base di funzionalità e strutture dati.
 \end{itemize}
