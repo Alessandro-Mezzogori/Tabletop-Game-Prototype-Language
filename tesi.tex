@@ -1,5 +1,5 @@
-\documentclass[12pt, oneside]{report}
-%\documentclass[12pt, twoside]{report}
+%\documentclass[12pt, oneside]{report}
+\documentclass[12pt, twoside]{report}
 %TODO Ricordarsi di stampare con l'opzione twoside
 
 \usepackage{array}
@@ -114,19 +114,19 @@
 
 %Custom header and foot
 %TODO Ricordarsi di utilizzare durante la stampa conl'opzione twoside
-%\fancyhead{}
-%\fancyhead[RO, LE]{Proposta sulla descrizione logica  di generici giochi da tavolo}
-%\fancyfoot{}
-%\fancyfoot[LE, RO]{\thepage}
-%\fancyfoot[LO, CE]{Capitolo \thechapter}
-%\fancyfoot[CO, RE]{Alessandro Mezzogori}
-
 \fancyhead{}
-\fancyhead[RO]{Proposta per la prototipizzazione digitale di generici giochi da tavolo}
+\fancyhead[RO, LE]{Proposta per la prototipizzazione digitale di generici giochi da tavolo}
 \fancyfoot{}
-\fancyfoot[RO]{\thepage}
-\fancyfoot[LO]{Capitolo \thechapter}
-\fancyfoot[CO]{Alessandro Mezzogori}
+\fancyfoot[LE, RO]{\thepage}
+\fancyfoot[CO, CE]{Capitolo \thechapter}
+\fancyfoot[LO, RE]{Alessandro Mezzogori}
+
+% \fancyhead{}
+% \fancyhead[RO]{Proposta per la prototipizzazione digitale di generici giochi da tavolo}
+% \fancyfoot{}
+% \fancyfoot[RO]{\thepage}
+% \fancyfoot[LO]{Capitolo \thechapter}
+% \fancyfoot[CO]{Alessandro Mezzogori}
 
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -155,16 +155,21 @@
 
 
 
-\title{
-    {Proposta per la prototipizzazione digitale di generici giochi da tavolo} \\
-    {\large Università di Modena e Reggio} \\
-}
-\author{Alessandro Mezzogori\\[0.5cm]{Relatore: Maurizio Vincini}}
-\date{Lunedì 19 Dicembre 2022}
+% \title{
+%     {Proposta per la prototipizzazione digitale di generici giochi da tavolo} \\
+%     {\large Università di Modena e Reggio} \\
+%     {\large Corso di Laurea in Ingegneria Informatica} \\
+% }
+% \author{Laureando: Alessandro Mezzogori\\[0.5cm]{Relatore: Maurizio Vincini}}
+% \date{A.A. 2021/2022}
+
+\usepackage{pdfpages}
 
 \begin{document}
 
-\maketitle
+\includepdf{cover.pdf}
+
+\input{chapters/titlepage.tex}
 \blankpage
 \tableofcontents
 
