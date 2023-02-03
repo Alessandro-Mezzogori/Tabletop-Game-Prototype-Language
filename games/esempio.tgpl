@@ -1,0 +1,43 @@
+class PlayerState
+{
+    number Health = 10;
+    List<DefenseMethod> DefenseMethods = {};
+    List<AttackMethod> AttackMethods = {};
+
+    action 
+    {
+        require 
+        { 
+            // Attiva la difesa solo se
+            // ha una difesa
+            return this.DefenseMethods.length > 0;
+        }
+
+        triggers OnAttackEvent prio 0
+        {
+            // Difendi solo se il giocatore 
+            // viene attaccato
+            return event.player == this;
+        }
+
+        player input this.player DefenseMethod defenseMethod
+        {
+            // Scegli un metodo di 
+            // difesa del giocatore
+            return this.DefenseMethods.contains(defenseMethod);
+        }
+
+        player input AttackMethod attackMethod
+        {
+            // Scegli un metodo di 
+            // attacco dall'attacante
+            return this.AttackMethods.contains(attackMethod);
+        }
+
+        effect
+        {
+            // Applica il danno
+            this.Health = attackMethod.Damage - defenseMethod.Defense;
+        }
+    }
+}
